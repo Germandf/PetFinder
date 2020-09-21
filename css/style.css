@@ -1,0 +1,15 @@
+.lastPetsTitle{
+    font-size: 24px;
+}
+
+@media (min-width: 768px) {
+    .lastPetsTitle{
+        font-size: 32px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lastPetsTitle{
+        font-size: 40px;
+    }
+}
