@@ -28,19 +28,26 @@
     <section class="container-fluid bg-orange-dark ">
         <form id="petFilterForm" action="" method="get" class="row">
             <div class="col-12 col-md-auto">
-                <select class="d-inline form-control mt-3 mb-3" name="city">
+                <select id="inputCity" class="d-inline form-control mt-3" name="city">
                     <option value="none" selected disabled hidden>Ciudad</option>
-                    <option value="">Tres Arroyos</option>
-                    <option value="">Tandil</option>
-                    <option value="">Rauch</option>
+                    <option value="tresarroyos">Tres Arroyos</option>
+                    <option value="tandil">Tandil</option>
+                    <option value="rauch">Rauch</option>
                 </select>
             </div>
             <div class="col-12 col-md-auto">
-                <select class="d-inline form-control mt-md-3 mb-3" name="pet">
+                <select id="inputAnimalType" class="d-inline form-control mt-3" name="animalType">
                     <option value="none" selected disabled hidden>Tipo de mascota</option>
-                    <option value="">Perro</option>
-                    <option value="">Gato</option>
-                    <option value="">Otro</option>
+                    <option value="dog">Perro</option>
+                    <option value="cat">Gato</option>
+                    <option value="other">Otro</option>
+                </select>
+            </div>
+            <div class="col-12 col-md-auto">
+                <select id="inputLostType" class="d-inline form-control mt-3" name="lostType">
+                    <option value="none" selected disabled hidden>Estado</option>
+                    <option value="lookingFor">En búsqueda</option>
+                    <option value="founded">Encontrado</option>
                 </select>
             </div>
             <div class="col-12 col-md-auto d-flex justify-content-center">
