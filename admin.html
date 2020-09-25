@@ -8,17 +8,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/f4ded6fe16.css">
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <a class="navbar-brand" href="#">PetFinder</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Admin</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#">Admin</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Categorías</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Acerca de</a></li>
             </ul>
@@ -28,18 +30,18 @@
             </ul>
         </div>
     </nav>
-    <section class="container-fluid bg-info">
+    <section class="container-fluid bg-orange-dark">
         <div class="row ">
             <div class="col-12 mt-3 mb-3">
-                <button type="button" class="btn btn-success mr-2 mt-1">
+                <button type="button" class="btn bg-orange text-white mr-2 mt-1">
                     <span><i class="fa fa-paw"></i></span>
                     <span>Añadir mascota perdida</span>
                 </button>
-                <button type="button" class="btn btn-success mr-2 mt-1">
+                <button type="button" class="btn bg-orange text-white mr-2 mt-1">
                     <span><i class="fa fa-plus"></i></span>
                     <span>Añadir tipo de animal</span>
                 </button>
-                <button type="button" class="btn btn-success mt-1">
+                <button type="button" class="btn bg-orange text-white mt-1">
                     <span><i class="fa fa-map-marker"></i></span>
                     <span>Añadir ciudad</span>
                 </button>
@@ -60,7 +62,7 @@
                             <input type="text" class="form-control" id="tipodeanimal" placeholder="Tipo de animal">
                         </div>
                         <div class="col-6 text-right">
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn bg-orange text-white">
                                 <span><i class="fa fa-plus"></i></span>
                                 <span>Agregar</span>
                             </button>
@@ -84,7 +86,7 @@
                             <input type="text" class="form-control" id="tipodeanimal" placeholder="Tipo de animal">
                         </div>
                         <div class="col-6 text-right">
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn bg-orange text-white">
                                 <span><i class="fa fa-plus"></i></span>
                                 <span>Agregar</span>
                             </button>
@@ -99,7 +101,7 @@
         <div class="row">
             <div class="col-12 col-md-6 mt-4">
                 <ul class="list-group">
-                    <li class="list-group-item active">Ciudades</li>
+                    <li class="list-group-item bg-orange text-white card-title">Ciudades</li>
                     <li class="list-group-item">Dapibus ac facilisis in</li>
                     <li class="list-group-item">Morbi leo risus</li>
                     <li class="list-group-item">Porta ac consectetur ac</li>
@@ -108,7 +110,7 @@
             </div>
             <div class="col-12 col-md-6 mt-4">
                 <ul class="list-group">
-                    <li class="list-group-item active">Tipo de animal</li>
+                    <li class="list-group-item  bg-orange text-white card-title">Tipo de animal</li>
                     <li class="list-group-item">Dapibus ac facilisis in</li>
                     <li class="list-group-item">Morbi leo risus</li>
                     <li class="list-group-item">Porta ac consectetur ac</li>
@@ -123,7 +125,7 @@
         </div>
         <div class="row">
             <div class="col-12 mb-3 col-md-6 col-lg-4">
-                <div class="card" >
+                <div class="card shadow" >
                     <img class="card-img-top" src="https://www.petrelocation.com/uploads/images/general/dog_1804690_1920.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Toto</h5>
@@ -132,13 +134,13 @@
                             <li class="list-group-item">Hace...</li>
                             <li class="list-group-item">Gato</li>
                         </ul>
-                        <a href="#" class="btn btn-primary">Lo encontré</a>
-                        <a href="#" class="btn btn-success">Editar</a>
+                        <a href="#" class="btn bg-orange text-white">Lo encontré</a>
+                        <a href="#" class="btn bg-orange-dark text-white">Editar</a>
                     </div>
                 </div>
             </div>
             <div class="col-12 mb-3 col-md-6 col-lg-4">
-                <div class="card" >
+                <div class="card shadow" >
                     <img class="card-img-top" src="https://www.petrelocation.com/uploads/images/general/dog_1804690_1920.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Toto</h5>
@@ -147,13 +149,13 @@
                             <li class="list-group-item">Hace...</li>
                             <li class="list-group-item">Gato</li>
                         </ul>
-                        <a href="#" class="btn btn-primary">Lo encontré</a>
-                        <a href="#" class="btn btn-success">Editar</a>
+                        <a href="#" class="btn bg-orange text-white">Lo encontré</a>
+                        <a href="#" class="btn bg-orange-dark text-white">Editar</a>
                     </div>
                 </div>
             </div>
             <div class="col-12 mb-3 col-md-6 col-lg-4">
-                <div class="card" >
+                <div class="card shadow" >
                     <img class="card-img-top" src="https://www.petrelocation.com/uploads/images/general/dog_1804690_1920.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Toto</h5>
@@ -162,13 +164,13 @@
                             <li class="list-group-item">Hace...</li>
                             <li class="list-group-item">Gato</li>
                         </ul>
-                        <a href="#" class="btn btn-primary">Lo encontré</a>
-                        <a href="#" class="btn btn-success">Editar</a>
+                        <a href="#" class="btn bg-orange text-white">Lo encontré</a>
+                        <a href="#" class="btn bg-orange-dark text-white">Editar</a>
                     </div>
                 </div>
             </div>
             <div class="col-12 mb-3 col-md-6 col-lg-4">
-                <div class="card" >
+                <div class="card shadow" >
                     <img class="card-img-top" src="https://www.petrelocation.com/uploads/images/general/dog_1804690_1920.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Toto</h5>
@@ -177,13 +179,13 @@
                             <li class="list-group-item">Hace...</li>
                             <li class="list-group-item">Gato</li>
                         </ul>
-                        <a href="#" class="btn btn-primary">Lo encontré</a>
-                        <a href="#" class="btn btn-success">Editar</a>
+                        <a href="#" class="btn bg-orange text-white">Lo encontré</a>
+                        <a href="#" class="btn bg-orange-dark text-white">Editar</a>
                     </div>
                 </div>
             </div>
             <div class="col-12 mb-3 col-md-6 col-lg-4">
-                <div class="card" >
+                <div class="card shadow" >
                     <img class="card-img-top" src="https://www.petrelocation.com/uploads/images/general/dog_1804690_1920.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Toto</h5>
@@ -192,13 +194,13 @@
                             <li class="list-group-item">Hace...</li>
                             <li class="list-group-item">Gato</li>
                         </ul>
-                        <a href="#" class="btn btn-primary">Lo encontré</a>
-                        <a href="#" class="btn btn-success">Editar</a>
+                        <a href="#" class="btn bg-orange text-white">Lo encontré</a>
+                        <a href="#" class="btn bg-orange-dark text-white">Editar</a>
                     </div>
                 </div>
             </div>
             <div class="col-12 mb-3 col-md-6 col-lg-4">
-                <div class="card" >
+                <div class="card shadow" >
                     <img class="card-img-top" src="https://www.petrelocation.com/uploads/images/general/dog_1804690_1920.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Toto</h5>
@@ -207,8 +209,8 @@
                             <li class="list-group-item">Hace...</li>
                             <li class="list-group-item">Gato</li>
                         </ul>
-                        <a href="#" class="btn btn-primary">Lo encontré</a>
-                        <a href="#" class="btn btn-success">Editar</a>
+                        <a href="#" class="btn bg-orange text-white">Lo encontré</a>
+                        <a href="#" class="btn bg-orange-dark text-white">Editar</a>
                     </div>
                 </div>
             </div>
