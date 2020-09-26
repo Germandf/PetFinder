@@ -26,7 +26,7 @@ body button, body .btn, body select, body input, .list-group, .list-group-item{
     letter-spacing: 1px;
 }
 .lastPetsTitle, .categoriesTitle{
-    font-size: 22px;
+    font-size: 26px;
 }
 @media (min-width: 768px) {
     .lastPetsTitle, .categoriesTitle{
@@ -41,7 +41,7 @@ body button, body .btn, body select, body input, .list-group, .list-group-item{
 }
 .form-signin {
     width: 100%;
-    max-width: 330px;
+    max-width: 500px;
     padding: 15px;
     margin: 0 auto;
 }
