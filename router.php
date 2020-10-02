@@ -18,6 +18,21 @@ switch ($params[0]) {
     case 'index':
         echo('Index');
         break;
+    case 'admin':
+        echo('Admin');
+        break;
+    case 'categories':
+        echo('Categories');
+        break;
+    case 'about':
+        echo('About');
+        break;
+    case 'login':
+        echo('Login');
+        break;
+    case 'signup':
+        echo('Signup');
+        break;
     default:
         header("HTTP/1.0 404 Not Found");
         echo('404 Page not found');
