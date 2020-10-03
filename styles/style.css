@@ -1,0 +1,76 @@
+/* Fonts */
+/*Zona fuentes*/
+@font-face {
+    font-family: 'VAG-Rounded-Bold';
+    src: url('./fonts/VAG-Rounded-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'VAGRoundedLtNormal';
+    src: url('./fonts/VAGRoundedLtNormal.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1, .card-title, .list-group-item.card-title{
+    font-family: 'VAG-Rounded-Bold';
+    color: #CF5D28;
+}
+body, li{
+    font-family: 'VAGRoundedLtNormal !important';
+    letter-spacing: 1px;
+}
+body button, body .btn, body select, body input, .list-group, .list-group-item{
+    font-family: 'VAGRoundedLtNormal';
+    letter-spacing: 1px;
+}
+.lastPetsTitle, .categoriesTitle{
+    font-size: 26px;
+}
+@media (min-width: 768px) {
+    .lastPetsTitle, .categoriesTitle{
+        font-size: 32px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lastPetsTitle, .categoriesTitle{
+        font-size: 40px;
+    }
+}
+.form-signin {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.nav-link{
+    font-family: 'VAG-Rounded-Bold';
+    letter-spacing: 1px;
+    color: #646365 !important;
+}
+.nav-link.active{
+    background-color: #CF5D28;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    color: white !important;
+    border-radius: 8px;
+}
+body .bg-orange{
+    background: #DF9226;
+}
+body .bg-gray{
+    background: #4D4C4E;
+}
+body .bg-gray-whiter{
+    background: #E7E7E8;
+}
+body .bg-orange-dark{
+    background: #CF5D28;
+}
+.categoriesLink, .categoriesLink:hover{
+    text-decoration: none;
+    color: black;
+}
