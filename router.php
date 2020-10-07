@@ -1,6 +1,6 @@
 <?php
 
-include_once('app/controllers/pet.controller.php');
+include_once('app/controllers/menu.controller.php');
 
 // defino la base url para la construccion de links con urls semánticas
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
@@ -18,28 +18,28 @@ $params = explode('/', $action);
 // determina que camino seguir según la acción
 switch ($params[0]) {
     case 'home':
-        $menu = new PetController();
-        $menu->showHome();
+        $controller = new MenuController();
+        $controller->showHome();
         break;
     case 'admin':
-        $menu = new PetController();
-        $menu->showAdmin();
+        $controller = new MenuController();
+        $controller->showAdmin();
         break;
     case 'categorias':
-        $menu = new PetController();
-        $menu->showCategories();
+        $controller = new MenuController();
+        $controller->showCategories();
         break;
     case 'about':
-        $menu = new PetController();
-        $menu->showAbout();
+        $controller = new MenuController();
+        $controller->showAbout();
         break;
     case 'login':
-        $menu = new PetController();
-        $menu->showLogin();
+        $controller = new MenuController();
+        $controller->showLogin();
         break;
     case 'signup':
-        $menu = new PetController();
-        $menu->showSignup();
+        $controller = new MenuController();
+        $controller->showSignup();
         break;
     default:
         header("HTTP/1.0 404 Not Found");
