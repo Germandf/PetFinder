@@ -18,14 +18,6 @@
                     <option value="other">Otro</option>
                 </select>
             </div>
-            <!-- Lost Type -->
-            <div class="col-12 col-md-auto">
-                <select id="inputLostType" class="d-inline form-control mt-3" name="lostType">
-                    <option value="none" selected disabled hidden>Estado</option>
-                    <option value="lookingFor">En búsqueda</option>
-                    <option value="founded">Encontrado</option>
-                </select>
-            </div>
             <!-- Gender -->
             <div class="col-12 col-md-auto">
                 <select id="inputGender" class="d-inline form-control mt-3" name="gender">

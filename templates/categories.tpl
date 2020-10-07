@@ -24,16 +24,16 @@
         </div>
         <div class="col-12 col-md-6 mt-3">
             <ul class="list-group">
-                <li class="list-group-item  bg-orange text-white card-title m-0">Estado</li>
-                <li class="list-group-item"><a class="categoriesLink" href="">En búsqueda</a></li>
-                <li class="list-group-item"><a class="categoriesLink" href="">Encontrado</a></li>
+                <li class="list-group-item  bg-orange text-white card-title m-0">Género</li>
+                <li class="list-group-item"><a class="categoriesLink" href="">Masculino</a></li>
+                <li class="list-group-item"><a class="categoriesLink" href="">Femenino</a></li>
             </ul>
         </div>
         <div class="col-12 col-md-6 mt-3">
             <ul class="list-group">
-                <li class="list-group-item  bg-orange text-white card-title m-0">Género</li>
-                <li class="list-group-item"><a class="categoriesLink" href="">Masculino</a></li>
-                <li class="list-group-item"><a class="categoriesLink" href="">Femenino</a></li>
+                <li class="list-group-item  bg-orange text-white card-title m-0">Estado</li>
+                <li class="list-group-item"><a class="categoriesLink" href="">En búsqueda</a></li>
+                <li class="list-group-item"><a class="categoriesLink" href="">Encontrado</a></li>
             </ul>
         </div>
     </div>

@@ -1,5 +1,7 @@
 <?php
 
+include_once 'app/helpers/config.php';
+
 class PetModel {
 
     private $db;
@@ -10,51 +12,52 @@ class PetModel {
 
     // Abre conexión a la base de datos
     private function connect() {
-        $db = new PDO('mysql:host=localhost;'.'dbname=petfinder;charset=utf8', 'root', '');                 //¡¡CORREGIR!!
+        $db = new PDO('mysql:host='.DB_HOST.';'.'dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASSWORD);
         return $db;
     }
 
-    // Devuelve todas las mascotas de la base de datos
-    function getAll() {
-
-        // Envio la consulta
-        $query = $this->db->prepare('SELECT * FROM lost_pets');                                             //¡¡CORREGIR!!
+    // Devuelve todas las mascotas sin encontrar de la base de datos
+    function getAllNotFound() {
+        $query = $this->db->prepare('SELECT * FROM pet WHERE found = 0');
         $query->execute();
-
-        // Obtengo conjunto de respuestas con un fetchAll
         $pets = $query->fetchAll(PDO::FETCH_OBJ);
+        return $pets;
+    }
 
+    // Devuelve todas las mascotas encontradas de la base de datos
+    function getAllFound() {
+        $query = $this->db->prepare('SELECT * FROM pet WHERE found = 1');
+        $query->execute();
+        $pets = $query->fetchAll(PDO::FETCH_OBJ);
         return $pets;
     }
 
     // Obtengo una mascota de la base de datos
     function get($id) {
-        $query = $this->db->prepare('SELECT * FROM lost_pets WHERE id = ?');                                //¡¡CORREGIR!!
+        $query = $this->db->prepare('SELECT * FROM pet WHERE id = ?');
         $query->execute([$id]);
         $pet = $query->fetch(PDO::FETCH_OBJ);
         return $pet;
     }
 
     // Inserta la mascota en la base de datos
-    function insert($id, $name, $animal_type_id, $city_id, $lost_type_id, $gender_id, $date, $phone_number, $photo, $description, $user_id) {                                                    //¡¡CORREGIR!!
-
-        // Envio la consulta
-        $query = $this->db->prepare('INSERT INTO lost_pets (`id`, `name`, `animal_type_id`, `city_id`, `lost_type_id`, `gender_id`, `date`, `phone_number`, `photo`, `description`, `user_id`) VALUES (?,?,?,?,?,?,?,?,?,?,?)');  //¡¡CORREGIR!!
-        $query->execute([$id, $name, $animal_type_id, $city_id, $lost_type_id, $gender_id, $date, $phone_number, $photo, $description, $user_id]);                                               //¡¡CORREGIR!!
-
-        // Obtengo y devuelo el ID de la mascota nueva
+    function add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $user_id) {
+        $query = $this->db->prepare('   INSERT INTO pet (`name`, `animal_type_id`, `city_id`, `gender_id`, `date`, `phone_number`, `photo`, `description`, `user_id`) 
+                                        VALUES (?,?,?,?,?,?,?,?,?)');
+        $query->execute([$name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $user_id]);
+        // Obtengo y devuelvo el ID de la mascota nueva
         return $this->db->lastInsertId();
     }
 
     // Elimina la mascota de la base de datos
-    function remove($id) {  
-        $query = $this->db->prepare('DELETE FROM lost_pets WHERE id = ?');                                  //¡¡CORREGIR!!
+    function remove($id) {
+        $query = $this->db->prepare('DELETE FROM pet WHERE id = ?');
         $query->execute([$id]);
     }
 
     // Finaliza la busqueda de la mascota
-    function finalize($id) {
-        $query = $this->db->prepare('UPDATE lost_pets SET founded = 1 WHERE id = ?');                       //¡¡CORREGIR!!
+    function find($id) {
+        $query = $this->db->prepare('UPDATE pet SET found = 1 WHERE id = ?');
         $query->execute([$id]);
     }
 }
