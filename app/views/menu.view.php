@@ -22,10 +22,6 @@ class MenuView{
         $this->smarty->display('templates/footer.tpl');  
     }
 
-    function showPetFilter(){
-        $this->smarty->display('templates/petfilter.tpl');  
-    }
-
     function showAdminMenu(){
         $this->smarty->display('templates/adminmenu.tpl');  
     }

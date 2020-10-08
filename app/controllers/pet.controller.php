@@ -23,6 +23,14 @@ class PetController {
     }
 
     // Muestra las tablas en admin segun la informacion en la db
+    function showPetFilter() {
+        $animaltypes = $this->model->getAllAnimalTypes();
+        $cities = $this->model->getAllCities();
+        $genders = $this->model->getAllGenders();
+        $this->view->showPetFilter($animaltypes, $cities, $genders);
+    }
+
+    // Muestra las tablas en admin segun la informacion en la db
     function showAdminTables() {
         $animaltypes = $this->model->getAllAnimalTypes();
         $cities = $this->model->getAllCities();

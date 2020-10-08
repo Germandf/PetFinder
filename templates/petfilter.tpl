@@ -4,26 +4,27 @@
             <div class="col-12 col-md-auto">
                 <select id="inputCity" class="d-inline form-control mt-3" name="city">
                     <option value="none" selected disabled hidden>Ciudad</option>
-                    <option value="tresarroyos">Tres Arroyos</option>
-                    <option value="tandil">Tandil</option>
-                    <option value="rauch">Rauch</option>
+                    {foreach from=$cities item=city}
+                        <option value="{$city->name}">{$city->name}</option>
+                    {/foreach}
                 </select>
             </div>
             <!-- Animal Type -->
             <div class="col-12 col-md-auto">
                 <select id="inputAnimalType" class="d-inline form-control mt-3" name="animalType">
                     <option value="none" selected disabled hidden>Tipo de mascota</option>
-                    <option value="dog">Perro</option>
-                    <option value="cat">Gato</option>
-                    <option value="other">Otro</option>
+                    {foreach from=$animaltypes item=animaltype}
+                        <option value="{$animaltype->name}">{$animaltype->name}</option>
+                    {/foreach}
                 </select>
             </div>
             <!-- Gender -->
             <div class="col-12 col-md-auto">
                 <select id="inputGender" class="d-inline form-control mt-3" name="gender">
                     <option value="none" selected disabled hidden>Género</option>
-                    <option value="male">Macho</option>
-                    <option value="female">Hembra</option>
+                    {foreach from=$genders item=gender}
+                        <option value="{$gender->name}">{$gender->name}</option>
+                    {/foreach}
                 </select>
             </div>
             <!-- Filter -->

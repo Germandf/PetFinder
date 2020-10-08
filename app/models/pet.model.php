@@ -74,4 +74,11 @@ class PetModel {
         $cities = $query->fetchAll(PDO::FETCH_OBJ);
         return $cities;
     }
+
+    function getAllGenders(){
+        $query = $this->db->prepare('SELECT * FROM gender');
+        $query->execute();
+        $genders = $query->fetchAll(PDO::FETCH_OBJ);
+        return $genders;
+    }
 }

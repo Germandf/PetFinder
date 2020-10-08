@@ -16,7 +16,7 @@ class MenuController{
     function showHome(){
         $this->view->showHeader();
         $this->view->showNavbar();
-        $this->view->showPetFilter();
+        $this->petController->showPetFilter();
         $this->petController->showAllNotFound();
         $this->view->showFooter();
     }

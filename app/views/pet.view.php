@@ -15,6 +15,13 @@ class PetView{
         $this->smarty->display('templates/allpetsnotfound.tpl');
     }
 
+    function showPetFilter($animaltypes, $cities, $genders){
+        $this->smarty->assign('animaltypes', $animaltypes);
+        $this->smarty->assign('cities', $cities);
+        $this->smarty->assign('genders', $genders);
+        $this->smarty->display('templates/petfilter.tpl');
+    }
+
     function showAdminTables($animaltypes, $cities){
         $this->smarty->assign('animaltypes', $animaltypes);
         $this->smarty->assign('cities', $cities);
