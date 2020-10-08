@@ -14,7 +14,8 @@ class MenuView{
         $this->smarty->display('templates/header.tpl');  
     }
 
-    function showNavbar(){
+    function showNavbar($isauth = null){
+        $this->smarty->assign('isauth', $isauth);
         $this->smarty->display('templates/navbar.tpl');  
     }
 
@@ -32,10 +33,6 @@ class MenuView{
 
     function showAbout(){
         $this->smarty->display('templates/about.tpl');
-    }
-
-    function showLogin(){
-        $this->smarty->display('templates/login.tpl');
     }
 
     function showSignup(){
