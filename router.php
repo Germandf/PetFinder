@@ -1,6 +1,7 @@
 <?php
 
 include_once('app/controllers/menu.controller.php');
+include_once('app/controllers/auth.controller.php');
 
 // defino la base url para la construccion de links con urls semánticas
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
@@ -41,6 +42,13 @@ switch ($params[0]) {
         $controller = new MenuController();
         $controller->showSignup();
         break;
+    case 'verify':
+        $controller = new AuthController();
+        $controller->signIn();
+        break;
+    case 'logout':
+        $controller = new AuthController();
+        $controller->logOut();
     case 'agregar':
         $controller = new PetController();
         //$controller->add();

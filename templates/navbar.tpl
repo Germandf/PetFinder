@@ -9,9 +9,16 @@
             <li class="nav-item"><a class="nav-link" href="categorias">Categorías</a></li>
             <li class="nav-item"><a class="nav-link" href="about">Acerca de</a></li>
         </ul>
+        
         <ul class="navbar-nav mr-right">
-            <li class="nav-item"><a class="nav-link" href="login">Iniciar Sesión</a></li>
-            <li class="nav-item"><a class="nav-link" href="signup">Registrarse</a></li>
+            {if !isset($isauth)}
+                <li class="nav-item"><a class="nav-link" href="login">Iniciar Sesión</a></li>
+                <li class="nav-item"><a class="nav-link" href="signup">Registrarse</a></li>
+            {else}
+                <li class="nav-item"><a class="nav-link" href="logout">Salir</a></li>
+            {/if}
         </ul>
+        
+        
     </div>
 </nav>

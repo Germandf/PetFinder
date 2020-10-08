@@ -19,15 +19,24 @@ class MenuController{
 
     function showHome(){
         $this->view->showHeader();
-        $this->view->showNavbar();
+        $this->showNavBar();
         $this->view->showPetFilter();
         $this->petController->showAllNotFound();
         $this->view->showFooter();
     }
 
-    function showAdmin(){
+    function showNavBar(){
         $this->view->showHeader();
-        $this->view->showNavbar();
+        if( $this->authController->isAuth()){
+            $this->view->showNavbar(true);
+        }else{
+            $this->view->showNavbar();
+
+        }
+    }
+    function showAdmin(){
+       
+        $this->showNavBar();
         
         $this->view->showFooter();
     }
@@ -41,10 +50,10 @@ class MenuController{
     }
 
     function showLogin(){
-        $this->view->showLogin();
+        $this->authController->showLoginForm();
     }
 
     function showSignup(){
-        $this->view->showSignup();
+        $this->authController->showLoginForm();
     }
 }

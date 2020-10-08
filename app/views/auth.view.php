@@ -10,8 +10,8 @@ class AuthView{
         $this->smarty = new Smarty();
     }
 
-    function showLoginForm(){
-        $this->smarty->assign('pets', $pets);
+    function showLoginForm($err = null){
+        $this->smarty->assign('error', $err);
         $this->smarty->display('templates/login.tpl');
     }
 
