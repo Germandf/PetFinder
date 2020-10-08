@@ -24,7 +24,9 @@ class MenuController{
     function showAdmin(){
         $this->view->showHeader();
         $this->view->showNavbar();
-        
+        $this->view->showAdminMenu();
+        $this->petController->showAdminTables();
+        $this->petController->showAllNotFound();
         $this->view->showFooter();
     }
 

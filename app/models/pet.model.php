@@ -60,4 +60,18 @@ class PetModel {
         $query = $this->db->prepare('UPDATE pet SET found = 1 WHERE id = ?');
         $query->execute([$id]);
     }
+
+    function getAllAnimalTypes(){
+        $query = $this->db->prepare('SELECT * FROM animal_type');
+        $query->execute();
+        $animaltypes = $query->fetchAll(PDO::FETCH_OBJ);
+        return $animaltypes;
+    }
+
+    function getAllCities(){
+        $query = $this->db->prepare('SELECT * FROM city');
+        $query->execute();
+        $cities = $query->fetchAll(PDO::FETCH_OBJ);
+        return $cities;
+    }
 }

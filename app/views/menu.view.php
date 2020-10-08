@@ -26,8 +26,8 @@ class MenuView{
         $this->smarty->display('templates/petfilter.tpl');  
     }
 
-    function showAdmin(){
-        $this->smarty->display('templates/admin.tpl');  
+    function showAdminMenu(){
+        $this->smarty->display('templates/adminmenu.tpl');  
     }
 
     function showCategories(){
