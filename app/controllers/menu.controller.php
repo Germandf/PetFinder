@@ -1,24 +1,31 @@
 <?php
 
-include_once 'app/models/pet.model.php';
 include_once 'app/views/menu.view.php';
+include_once 'app/controllers/pet.controller.php';
 
 class MenuController{
 
-    private $model;
     private $view;
+    private $petController;
 
     function __construct() {
-        $this->model = new PetModel();
         $this->view = new MenuView();
+        $this->petController = new PetController();
     }
 
     function showHome(){
-        $this->view->showHome();
+        $this->view->showHeader();
+        $this->view->showNavbar();
+        $this->view->showPetFilter();
+        $this->petController->showAllNotFound();
+        $this->view->showFooter();
     }
 
     function showAdmin(){
-        $this->view->showAdmin();
+        $this->view->showHeader();
+        $this->view->showNavbar();
+        
+        $this->view->showFooter();
     }
 
     function showCategories(){

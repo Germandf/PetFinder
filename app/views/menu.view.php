@@ -10,8 +10,20 @@ class MenuView{
         $this->smarty =  new Smarty();
     }
 
-    function showHome(){
-        $this->smarty->display('templates/home.tpl');  
+    function showHeader(){
+        $this->smarty->display('templates/header.tpl');  
+    }
+
+    function showNavbar(){
+        $this->smarty->display('templates/navbar.tpl');  
+    }
+
+    function showFooter(){
+        $this->smarty->display('templates/footer.tpl');  
+    }
+
+    function showPetFilter(){
+        $this->smarty->display('templates/petfilter.tpl');  
     }
 
     function showAdmin(){
@@ -32,5 +44,10 @@ class MenuView{
 
     function showSignup(){
         $this->smarty->display('templates/signup.tpl');
+    }
+
+    function showError($msg){
+        $this->smarty->assign('msg', $msg);
+        $this->smarty->display('templates/error.tpl');
     }
 }

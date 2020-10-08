@@ -41,6 +41,29 @@ switch ($params[0]) {
         $controller = new MenuController();
         $controller->showSignup();
         break;
+    case 'agregar':
+        $controller = new PetController();
+        //$controller->add();
+        break;
+    case 'editar':
+        $controller = new PetController();
+        //$controller->edit();
+        break;
+    case 'eliminar':
+        $controller = new PetController();
+        $id = $params[1];
+        $controller->delete($id);
+        break;
+    case 'encontrar':
+        $controller = new PetController();
+        $id = $params[1];
+        $controller->find($id);
+        break;
+    case 'ver':
+        $controller = new PetController();
+        $id = $params[1];
+        //$controller->showDetail($id);
+        break;
     default:
         header("HTTP/1.0 404 Not Found");
         echo('404 Page not found');
