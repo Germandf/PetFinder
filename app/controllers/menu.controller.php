@@ -26,7 +26,6 @@ class MenuController{
     }
 
     function showNavBar(){
-        $this->view->showHeader();
         if( $this->authController->isAuth()){
             $this->view->showNavbar(true);
         }else{
