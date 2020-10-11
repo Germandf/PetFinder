@@ -69,9 +69,9 @@ switch ($params[0]) {
         $controller->find($id);
         break;
     case 'ver':
-        $controller = new PetController();
+        $controller = new MenuController();
         $id = $params[1];
-        //$controller->showDetail($id);
+        $controller->showPet($id);
         break;
     default:
         header("HTTP/1.0 404 Not Found");

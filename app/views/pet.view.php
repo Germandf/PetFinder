@@ -36,6 +36,7 @@ class PetView{
     }
 
     function show($pet){
-
+        $this->smarty->assign('pet', $pet);
+        $this->smarty->display('templates/pet.tpl');
     }
 }

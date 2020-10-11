@@ -13,29 +13,30 @@
     font-style: normal;
 }
 
-h1, .card-title, .list-group-item.card-title{
+h1, h2, h3, .card-title, .list-group-item.card-title{
     font-family: 'VAG-Rounded-Bold';
     color: #CF5D28;
 }
 body, li{
     font-family: 'VAGRoundedLtNormal !important';
-    letter-spacing: 1px;
 }
-body button, body .btn, body select, body input, .list-group, .list-group-item{
+body .navbar-brand{
+    font-family: '-apple-system,BlinkMacSystemFont',"Segoe UI",'Roboto';
+}
+body button, body .btn, body select, body input, .list-group, .list-group-item, p{
     font-family: 'VAGRoundedLtNormal';
-    letter-spacing: 1px;
 }
-.lastPetsTitle, .categoriesTitle{
+.lastPetsTitle, .categoriesTitle, .petTitle{
     font-size: 26px;
 }
 @media (min-width: 768px) {
-    .lastPetsTitle, .categoriesTitle{
+    .lastPetsTitle, .categoriesTitle, .petTitle{
         font-size: 32px;
     }
 }
 
 @media (min-width: 1024px) {
-    .lastPetsTitle, .categoriesTitle{
+    .lastPetsTitle, .categoriesTitle, .petTitle{
         font-size: 40px;
     }
 }
