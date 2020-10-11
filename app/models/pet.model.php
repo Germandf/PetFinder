@@ -18,7 +18,14 @@ class PetModel {
 
     // Devuelve todas las mascotas sin encontrar de la base de datos
     function getAllNotFound() {
-        $query = $this->db->prepare('SELECT * FROM pet WHERE found = 0');
+        $query = $this->db->prepare('   SELECT p.`id`, p.`name`, a.`name` as `animalType`, c.`name` as `city`, g.`name` as `gender`, p.`date`, p.`phone_number`, p.`photo`, p.`description`, u.`id` as `userId`, p.`found`
+                                        FROM `pet` as `p`
+                                        INNER JOIN `animal_type` as `a` ON `p`.`animal_type_id` = `a`.`id`
+                                        INNER JOIN `city` as `c` ON `p`.`city_id` = `c`.`id`
+                                        INNER JOIN `gender` as `g` ON `p`.`gender_id` = `g`.`id`
+                                        INNER JOIN `user` as `u` ON `p`.`user_id` = `u`.`id`
+                                        WHERE p.`found` = 0
+                                        ');
         $query->execute();
         $pets = $query->fetchAll(PDO::FETCH_OBJ);
         return $pets;

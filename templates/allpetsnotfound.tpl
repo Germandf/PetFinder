@@ -10,9 +10,9 @@
                 <div class="card-body">
                     <h3 class="card-title">{$pet->name}</h3>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item pl-0">Perdido en: {$pet->city_id}</li>
-                        <li class="list-group-item pl-0">Año/Mes/Dia: {$pet->date}</li>
-                        <li class="list-group-item pl-0">{$pet->animal_type_id}</li>
+                        <li class="list-group-item pl-0">Perdido en: {$pet->city}</li>
+                        <li class="list-group-item pl-0">El día: {$pet->date}</li>
+                        <li class="list-group-item pl-0">{$pet->animalType}</li>
                     </ul>
                     <div class="text-right">
                         <a href="editar/{$pet->id}" class="btn bg-orange-dark text-white">Editar</a>
