@@ -28,6 +28,13 @@ class PetView{
         $this->smarty->display('templates/admintables.tpl');
     }
 
+    function showCategoriesTables($animaltypes, $cities, $genders){
+        $this->smarty->assign('animaltypes', $animaltypes);
+        $this->smarty->assign('cities', $cities);
+        $this->smarty->assign('genders', $genders);
+        $this->smarty->display('templates/categories.tpl');
+    }
+
     function show($pet){
 
     }

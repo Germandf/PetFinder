@@ -22,7 +22,7 @@ class PetController {
         $this->view->showAllNotFound($pets);
     }
 
-    // Muestra las tablas en admin segun la informacion en la db
+    // Muestra los filtros en index segun la informacion en la db
     function showPetFilter() {
         $animaltypes = $this->model->getAllAnimalTypes();
         $cities = $this->model->getAllCities();
@@ -35,6 +35,14 @@ class PetController {
         $animaltypes = $this->model->getAllAnimalTypes();
         $cities = $this->model->getAllCities();
         $this->view->showAdminTables($animaltypes, $cities);
+    }
+
+    // Muestra las tablas en categories segun la informacion en la db
+    function showCategoriesTables(){
+        $animaltypes = $this->model->getAllAnimalTypes();
+        $cities = $this->model->getAllCities();
+        $genders = $this->model->getAllGenders();
+        $this->view->showCategoriesTables($animaltypes, $cities, $genders);
     }
 
     // Muestra mas informacion de la mascota

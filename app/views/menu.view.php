@@ -27,10 +27,6 @@ class MenuView{
         $this->smarty->display('templates/adminmenu.tpl');  
     }
 
-    function showCategories(){
-        $this->smarty->display('templates/categories.tpl');
-    }
-
     function showAbout(){
         $this->smarty->display('templates/about.tpl');
     }

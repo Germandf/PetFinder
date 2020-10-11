@@ -34,7 +34,10 @@ class MenuController{
     }
 
     function showCategories(){
-        $this->view->showCategories();
+        $this->view->showHeader();
+        $this->showNavBar();
+        $this->petController->showCategoriesTables();
+        $this->view->showFooter();
     }
 
     function showAbout(){
