@@ -5,10 +5,12 @@ include_once 'app/controllers/auth.controller.php';
 
 class UserController {
     private $authController;
+    private $menuController;
     private $userModel;
 
     function __construct(){
         $this->authController = new AuthController();
+        $this->menuController = new MenuController();
         $this->userModel  = new UserModel();
     }
     function userExistsByEmail($email){
@@ -27,22 +29,22 @@ class UserController {
         //Valido los datos
         if (empty($email) || empty($password) 
          || empty($name)  || empty($surname) || empty($passwordRepeat)) {
-            $this->authController->showSignup('Debe completar todos los campos.');
+            $this->menuController->showSignup('Debe completar todos los campos.');
             die();
         }
 
         if($password != $passwordRepeat){
-            $this->authController->showSignup('Las contraseñas deben ser iguales');
+            $this->menuController->showSignup('Las contraseñas deben ser iguales');
             die();
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {//Valido el mail
-            $this->authController->showSignup('Email incorrecto');
+            $this->menuController->showSignup('Email incorrecto');
             die();
         }
 
         if($this->userExistsByEmail($email)){
-            $this->authController->showSignup('Ya hay un usuario registrado con ese Email.');
+            $this->menuController->showSignup('Ya hay un usuario registrado con ese Email.');
             die();
         }  
     }
@@ -68,7 +70,7 @@ class UserController {
             $this->authController->loginUserByEmail($email);
         }
         else{
-            $this->authController->showSignup('Ocurrió un error en el servidor, intente nuevamente más tarde');
+            $this->menuController->showSignup('Ocurrió un error en el servidor, intente nuevamente más tarde');
         }
     }
 

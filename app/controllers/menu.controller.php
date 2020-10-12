@@ -70,6 +70,7 @@ class MenuController{
     function showFilterPets(){
         $this->view->showHeader();
         $this->showNavBar();
+        $this->petController->showPetFilter();
         $this->petController->filter();
         $this->view->showFooter();
     }

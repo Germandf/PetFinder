@@ -44,4 +44,9 @@ class PetView{
         $this->smarty->assign('pets', $pets);
         $this->smarty->display('templates/filteredpets.tpl');
     }
+
+    function showAllMyPets($pets){
+        $this->smarty->assign('pets', $pets);
+        $this->smarty->display('templates/mypets.tpl');
+    }
 }

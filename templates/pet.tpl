@@ -1,4 +1,5 @@
 <section class="container">
+    <a href="javascript:history.back()" class="btn bg-orange text-white my-2 w-100">Volver</a>
     <!-- Foto -->
     <div class="row">
         <div class="col-12">
