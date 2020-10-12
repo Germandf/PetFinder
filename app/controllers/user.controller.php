@@ -59,12 +59,17 @@ class UserController {
         $password = $_POST['password'];
         $passwordRepeat = $_POST['passwordrepeat'];
         
+        // Si hay algun error, hace un die
         $this->validateAddUserForm($email, $password, $passwordRepeat, $name, $surname);
-        
+         
+        $hashedPassword = password_hash($password , PASSWORD_DEFAULT);
 
-        if($this->userModel->add($email, $password, $name, $surname)){
+        if($this->userModel->add($email, $hashedPassword, $name, $surname)){
             $this->authController->loginUserByEmail($email);
-        };
+        }
+        else{
+            $this->authController->showSignup('Ocurrió un error en el servidor, intente nuevamente más tarde');
+        }
     }
 
 }
