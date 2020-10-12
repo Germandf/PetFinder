@@ -30,17 +30,7 @@ class AuthController {
         $this->showSignUpForm($err);
 
     }
-    function adduser(){
-        // Compruebo que no este logeado
-        if($this->isAuth()){
-            $this->redirectHome();
-            die();
-        }
-
-        // Seteo datos
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-    }
+    
     function showSignUpForm($err = null) {
         if($this->isAuth()){
             $this->redirectHome();
@@ -105,12 +95,23 @@ class AuthController {
         // Si la contraseña es correcta
         if (password_verify($password, $user->password)) {
             // armo la sesion del usuario
-            $_SESSION['ID_USER'] = $user->id;
-            $_SESSION['EMAIL_USER'] = $user->email;
-
-            $this->redirectHome();            
+            $this->loginUserByEmail($email);
         } else {
             $this->showLogin("Contraseña incorrecta");
+        }
+    }
+
+    function loginUserByEmail($email){
+        $user = $this->userModel->getByEmail($email);
+        
+        if($user){
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['ID_USER'] = $user->id;
+            $_SESSION['EMAIL_USER'] = $user->email; 
+            $this->redirectHome();            
+
         }
     }
 

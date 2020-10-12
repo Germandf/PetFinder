@@ -1,7 +1,7 @@
 <section class="container">
     <div class="row">
         <div class="col-12 mt-5 text-center">
-            <form class="form-signin text-left shadow rounded" method="post" action="/adduser">
+            <form class="form-signin text-left shadow rounded" method="post" action="adduser">
                 <h1 class="h3 mb-3 font-weight-normal">Registrarse</h1>
 
                 <label for="inputName" class="sr-only mt-3 ">Nombre</label>
@@ -23,6 +23,11 @@
                 <div class="d-block text-right">
                     <button class="mt-2  text-white btn-lg bg-orange" type="submit">Registrar</button>
                 </div>
+                {if isset($error)}
+                <div class="alert alert-danger mt-2">
+                    {$error}
+                </div>
+                {/if}
             </form>
         </div>
     </div>
