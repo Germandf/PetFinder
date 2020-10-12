@@ -37,7 +37,7 @@ class MenuController{
         if( $this->authController->isAuth()){
             $this->view->showHeader();
             $this->showNavBar();
-            $this->view->showAdminMenu();
+            $this->view->showMisMascotas();
             $userId = $this->authController->getUserId();
             $this->petController->showAllMyPets($userId);
             $this->view->showFooter();

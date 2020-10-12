@@ -27,6 +27,10 @@ class MenuView{
         $this->smarty->display('templates/adminmenu.tpl');  
     }
 
+    function showMisMascotas(){
+        $this->smarty->display('templates/mypetsmenu.tpl');  
+    }
+
     function showAbout(){
         $this->smarty->display('templates/about.tpl');
     }

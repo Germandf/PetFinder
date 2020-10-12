@@ -62,7 +62,7 @@ switch ($params[0]) {
         break;
     case 'agregar':
         $controller = new PetController();
-        //$controller->add();
+        $controller->showAddPetForm();
         break;
     case 'editar':
         $controller = new PetController();

@@ -3,6 +3,7 @@
 include_once 'app/models/pet.model.php';
 include_once 'app/views/pet.view.php';
 include_once 'app/views/menu.view.php';
+include_once 'app/controllers/auth.controller.php';
 
 class PetController {
 
@@ -13,6 +14,7 @@ class PetController {
     function __construct() {
         $this->model = new PetModel();
         $this->view = new PetView();
+        $this->authController = new AuthController();
         $this->menuView = new MenuView();
     }
 
@@ -35,6 +37,16 @@ class PetController {
         $this->view->showPetFilter($animaltypes, $cities, $genders);
     }
 
+    function showAddPetForm(){
+        if( $this->authController->isAuth()){
+            $this->menuView->showHeader();
+            $this->menuView->showNavBar();
+            $this->view->showAddPetForm();
+            $this->menuView->showFooter();
+        }else{
+            $this->authController->redirectLogin();
+        }
+    }
     // Muestro las tablas en admin segun la informacion en la db
     function showAdminTables() {
         $animaltypes = $this->model->getAllAnimalTypes();
@@ -59,6 +71,10 @@ class PetController {
         else {
             $this->menuView->showError('Mascota no encontrada');
         }
+    }
+
+    function showFormAdd(){
+
     }
 
     // Filtro mascotas utilizando uno o tres parametros
