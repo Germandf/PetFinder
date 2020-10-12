@@ -22,4 +22,16 @@ class UserModel {
         $query->execute([$email]);
         return $query->fetch(PDO::FETCH_OBJ);
     }
+
+    public function add($email, $password, $name, $surname){
+        $query = $this->db->prepare('INSERT INTO `user` (`name`, `surname`, `email`, `password`, `permission_id`)
+         VALUES (?, ?, ?, ?, ?);');        
+        if($query->execute([$name, $surname, $email, $password, USER_PERMISSION]) == 1){
+            //Si se guardo el usuario correctamente
+            return true;
+        }
+
+        return false;
+
+    }
 }

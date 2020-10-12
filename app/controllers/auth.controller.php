@@ -23,10 +23,21 @@ class AuthController {
         $this->menuView->showFooter();
     }
 
-    function showSignup(){
-        $this->authController->showLoginForm();
-    }
+    function showSignup($err = null){
+        $menuController = new MenuController();
+        $this->menuView->showHeader();
+        $menuController->showNavBar();
+        $this->showSignUpForm($err);
 
+    }
+    
+    function showSignUpForm($err = null) {
+        if($this->isAuth()){
+            $this->redirectHome();
+            die();
+        }
+        $this->view->showSignUpForm($err);
+    }
     function showLoginForm($err = null) {
         if($this->isAuth()){
             $this->redirectHome();
@@ -84,12 +95,23 @@ class AuthController {
         // Si la contraseña es correcta
         if (password_verify($password, $user->password)) {
             // armo la sesion del usuario
-            $_SESSION['ID_USER'] = $user->id;
-            $_SESSION['EMAIL_USER'] = $user->email;
-
-            $this->redirectHome();            
+            $this->loginUserByEmail($email);
         } else {
             $this->showLogin("Contraseña incorrecta");
+        }
+    }
+
+    function loginUserByEmail($email){
+        $user = $this->userModel->getByEmail($email);
+        
+        if($user){
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['ID_USER'] = $user->id;
+            $_SESSION['EMAIL_USER'] = $user->email; 
+            $this->redirectHome();            
+
         }
     }
 
