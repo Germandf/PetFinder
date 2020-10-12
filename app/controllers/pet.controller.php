@@ -21,9 +21,10 @@ class PetController {
         $pets = $this->model->getAllNotFound();
         $this->view->showAllNotFound($pets);
     }
+
     // Muestro las ultimas mascotas perdidas
-    function showAllMyPets($userId ) {
-        $pets = $this->model->getAllNotFoundByUser($userId );
+    function showAllMyPets($userId) {
+        $pets = $this->model->getAllNotFoundByUser($userId);
         $this->view->showAllNotFound($pets);
     }
 
@@ -97,16 +98,13 @@ class PetController {
         $photo = $_POST['photo'];
         $description = $_POST['description'];
         $user_id = $_POST['userId'];
-
         // verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
             $this->menuView->showError('Faltan datos obligatorios');
             die();
         }
-
         // inserto la tarea en la DB
         $id = $this->model->add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $user_id);
-
         // redirigimos al listado
         header("Location: " . BASE_URL); 
     }

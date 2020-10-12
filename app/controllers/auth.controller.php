@@ -14,22 +14,6 @@ class AuthController {
         $this->userModel = new UserModel();
         $this->menuView = new MenuView();
     }
-
-    function showLogin($err = null){
-        $menuController = new MenuController();
-        $this->menuView->showHeader();
-        $menuController->showNavBar();
-        $this->showLoginForm($err);
-        $this->menuView->showFooter();
-    }
-
-    function showSignup($err = null){
-        $menuController = new MenuController();
-        $this->menuView->showHeader();
-        $menuController->showNavBar();
-        $this->showSignUpForm($err);
-
-    }
     
     function showSignUpForm($err = null) {
         if($this->isAuth()){
@@ -38,6 +22,7 @@ class AuthController {
         }
         $this->view->showSignUpForm($err);
     }
+
     function showLoginForm($err = null) {
         if($this->isAuth()){
             $this->redirectHome();
@@ -66,11 +51,13 @@ class AuthController {
         }
         return $_SESSION['ID_USER'];
     }
+
     public function logOut(){
         session_start();
         session_destroy();
         $this->redirectHome();
     }
+
     public function redirectLogin(){
         header("Location: login");
     }
@@ -81,35 +68,34 @@ class AuthController {
             $this->redirectHome();
             die();
         }
-
         // Seteo datos
         $email = $_POST['email'];
         $password = $_POST['password'];
-
         // Verifico campos obligatorios
         if (empty($email) || empty($password)) {
-            $this->showLogin("Debe ingresar un email y contraseña");
+            $menuController = new MenuController();
+            $menuController->showLogin("Debe ingresar un email y contraseña");
             die();
         }
-
         // Obtengo el usuario
         $user = $this->userModel->getByEmail($email);
-        
         // Si el usuario no existe le informo que el mail es incorrecto
         if(!$user){
-            $this->showLogin("No se encontró un usuario correspondiente a este email");
+            $menuController = new MenuController();
+            $menuController->showLogin("No se encontró un usuario correspondiente a este email");
             die();
         }
-
         // Si la contraseña es correcta
         if (password_verify($password, $user->password)) {
             // armo la sesion del usuario
             $this->loginUserByEmail($email);
         } else {
-            $this->showLogin("Contraseña incorrecta");
+            $menuController = new MenuController();
+            $menuController->showLogin("Contraseña incorrecta");
         }
     }
 
+    // Logea al usuario, inicia la sesion
     function loginUserByEmail($email){
         $user = $this->userModel->getByEmail($email);
         
@@ -120,8 +106,6 @@ class AuthController {
             $_SESSION['ID_USER'] = $user->id;
             $_SESSION['EMAIL_USER'] = $user->email; 
             $this->redirectHome();            
-
         }
     }
-
 }

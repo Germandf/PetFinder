@@ -34,7 +34,7 @@ class MenuController{
     }
 
     function showMyPets(){
-        if( $this->authController->isAuth()){
+        if($this->authController->isAuth()){
             $this->view->showHeader();
             $this->showNavBar();
             $this->view->showAdminMenu();
@@ -44,7 +44,6 @@ class MenuController{
         }else{
             $this->authController->redirectLogin();
         }
-        
     }
 
     function showCategories(){
@@ -68,11 +67,24 @@ class MenuController{
         $this->view->showFooter();
     }
 
-    function filterPets(){
+    function showFilterPets(){
         $this->view->showHeader();
         $this->showNavBar();
         $this->petController->filter();
         $this->view->showFooter();
+    }
+
+    function showLogin($err = null){
+        $this->view->showHeader();
+        $this->showNavBar();
+        $this->authController->showLoginForm($err);
+        $this->view->showFooter();
+    }
+
+    function showSignup($err = null){
+        $this->view->showHeader();
+        $this->showNavBar();
+        $this->authController->showSignUpForm($err);
     }
 
     function showNavBar(){
