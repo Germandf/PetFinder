@@ -43,7 +43,7 @@ switch ($params[0]) {
         $controller = new AuthController();
         $controller->logOut();
         break;
-    case 'mypets':
+    case 'my-pets':
         $controller = new MenuController();
         $controller->showMyPets();
         break;
@@ -63,6 +63,10 @@ switch ($params[0]) {
     case 'agregar':
         $controller = new PetController();
         $controller->showAddPetForm();
+        break;
+    case 'insertar-mascota':
+        $controller = new PetController();
+        $controller->add();
         break;
     case 'editar':
         $controller = new PetController();

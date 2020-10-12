@@ -37,11 +37,11 @@ class PetController {
         $this->view->showPetFilter($animaltypes, $cities, $genders);
     }
 
-    function showAddPetForm(){
+    function showAddPetForm($err = null){
         if( $this->authController->isAuth()){
             $this->menuView->showHeader();
             $this->menuView->showNavBar();
-            $this->view->showAddPetForm();
+            $this->view->showAddPetForm($err);
             $this->menuView->showFooter();
         }else{
             $this->authController->redirectLogin();
@@ -73,10 +73,6 @@ class PetController {
         }
     }
 
-    function showFormAdd(){
-
-    }
-
     // Filtro mascotas utilizando uno o tres parametros
     function filter(){
         // Me aseguro que haya insertado al menos un dato
@@ -105,26 +101,42 @@ class PetController {
     // Inserto una mascota en el sistema
     function add() {
         $name = $_POST['name'];
-        $animal_type_id = $_POST['animalType'];
-        $city_id = $_POST['city'];
-        $gender_id = $_POST['genderType'];
+        if(isset($_POST['animalType'])){
+            $animal_type_id = $_POST['animalType'];
+        }else{
+            $animal_type_id = null;
+        }
+
+        if(isset($_POST['animalType'])){
+            $city_id = $_POST['city'];
+        }else{
+            $city_id = null;
+        }
+
+        if(isset($_POST['genderType'])){
+            $gender_id = $_POST['genderType'];
+        }else{
+            $gender_id = null;
+        }
+
         $date = $_POST['date'];
         $phone_number = $_POST['phone'];
         $photo = $_POST['photo'];
         $description = $_POST['description'];
-        $user_id = $_POST['userId'];
+       
+        //$user_id = $_POST['userId'];
 
         // verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
-            $this->menuView->showError('Faltan datos obligatorios');
+            $this->showAddPetForm('Faltan datos obligatorios');
             die();
         }
 
         // inserto la tarea en la DB
-        $id = $this->model->add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $user_id);
+        //$id = $this->model->add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $user_id);
 
         // redirigimos al listado
-        header("Location: " . BASE_URL); 
+        //header("Location: " . BASE_URL); 
     }
 
     // Elimino la mascota del sistema
