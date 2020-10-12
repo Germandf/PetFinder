@@ -6,6 +6,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a class="nav-link" href="admin">Admin</a></li>
+            {if isset($isauth)}
+            <li class="nav-item"><a class="nav-link" href="mypets">Mis Mascotas</a></li>
+            {/if}
             <li class="nav-item"><a class="nav-link" href="categorias">Categorías</a></li>
             <li class="nav-item"><a class="nav-link" href="about">Acerca de</a></li>
         </ul>

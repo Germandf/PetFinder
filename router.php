@@ -43,6 +43,11 @@ switch ($params[0]) {
         $controller = new AuthController();
         $controller->logOut();
         break;
+    case 'mypets':
+        $controller = new MenuController();
+        $controller->showMyPets();
+        break;
+    break;
     case 'admin':
         $controller = new MenuController();
         $controller->showAdmin();

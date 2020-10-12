@@ -33,6 +33,20 @@ class MenuController{
         $this->view->showFooter();
     }
 
+    function showMyPets(){
+        if( $this->authController->isAuth()){
+            $this->view->showHeader();
+            $this->showNavBar();
+            $this->view->showAdminMenu();
+            $userId = $this->authController->getUserId();
+            $this->petController->showAllMyPets($userId);
+            $this->view->showFooter();
+        }else{
+            $this->authController->redirectLogin();
+        }
+        
+    }
+
     function showCategories(){
         $this->view->showHeader();
         $this->showNavBar();

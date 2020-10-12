@@ -30,6 +30,21 @@ class PetModel {
         $pets = $query->fetchAll(PDO::FETCH_OBJ);
         return $pets;
     }
+    // Devuelve todas las mascotas sin encontrar de la base de datos
+    function getAllNotFoundByUser($userId) {
+        $query = $this->db->prepare('   SELECT p.`id`, p.`name`, a.`name` as `animalType`, c.`name` as `city`, g.`name` as `gender`, p.`date`, p.`phone_number` as `phoneNumber`, p.`photo`, p.`description`, u.`id` as `userId`, p.`found`
+                                        FROM `pet` as `p`
+                                        INNER JOIN `animal_type` as `a` ON `p`.`animal_type_id` = `a`.`id`
+                                        INNER JOIN `city` as `c` ON `p`.`city_id` = `c`.`id`
+                                        INNER JOIN `gender` as `g` ON `p`.`gender_id` = `g`.`id`
+                                        INNER JOIN `user` as `u` ON `p`.`user_id` = `u`.`id`
+                                        WHERE p.`found` = 0 AND  u.`id` = ?
+                                        ');
+        $query->execute([$userId]);
+        $pets = $query->fetchAll(PDO::FETCH_OBJ);
+        return $pets;
+    }
+
 
     // Devuelve todas las mascotas encontradas de la base de datos
     function getAllFound() {

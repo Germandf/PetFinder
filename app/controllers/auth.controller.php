@@ -60,10 +60,19 @@ class AuthController {
         return false;
     }
 
+    public function getUserId(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        return $_SESSION['ID_USER'];
+    }
     public function logOut(){
         session_start();
         session_destroy();
         $this->redirectHome();
+    }
+    public function redirectLogin(){
+        header("Location: login");
     }
 
     public function logIn() {
