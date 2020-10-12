@@ -23,9 +23,10 @@ class PetController {
         $pets = $this->model->getAllNotFound();
         $this->view->showAllNotFound($pets);
     }
+
     // Muestro las ultimas mascotas perdidas
-    function showAllMyPets($userId ) {
-        $pets = $this->model->getAllNotFoundByUser($userId );
+    function showAllMyPets($userId) {
+        $pets = $this->model->getAllNotFoundByUser($userId);
         $this->view->showAllNotFound($pets);
     }
 
@@ -131,7 +132,6 @@ class PetController {
             $this->showAddPetForm('Faltan datos obligatorios');
             die();
         }
-
         // inserto la tarea en la DB
         //$id = $this->model->add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $user_id);
 

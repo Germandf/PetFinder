@@ -24,11 +24,11 @@ switch ($params[0]) {
         $controller->showHome();
         break;
     case 'login':
-        $controller = new AuthController();
+        $controller = new MenuController();
         $controller->showLogin();
         break;
     case 'signup':
-        $controller = new AuthController();
+        $controller = new MenuController();
         $controller->showSignup();
         break;
     case 'adduser':
@@ -89,7 +89,7 @@ switch ($params[0]) {
         break;
     case 'filtrar':
         $controller = new MenuController();
-        $controller->filterPets();
+        $controller->showFilterPets();
         break;
     default:
         header("HTTP/1.0 404 Not Found");

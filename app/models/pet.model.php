@@ -30,7 +30,8 @@ class PetModel {
         $pets = $query->fetchAll(PDO::FETCH_OBJ);
         return $pets;
     }
-    // Devuelve todas las mascotas sin encontrar de la base de datos
+
+    // Devuelve todas las mascotas de un usuario sin encontrar de la base de datos
     function getAllNotFoundByUser($userId) {
         $query = $this->db->prepare('   SELECT p.`id`, p.`name`, a.`name` as `animalType`, c.`name` as `city`, g.`name` as `gender`, p.`date`, p.`phone_number` as `phoneNumber`, p.`photo`, p.`description`, u.`id` as `userId`, p.`found`
                                         FROM `pet` as `p`
@@ -44,7 +45,6 @@ class PetModel {
         $pets = $query->fetchAll(PDO::FETCH_OBJ);
         return $pets;
     }
-
 
     // Devuelve todas las mascotas encontradas de la base de datos
     function getAllFound() {
@@ -68,6 +68,7 @@ class PetModel {
         return $pet;
     }
 
+    // Obtiene un arreglo de mascotas a partir de los datos insertados en el filtro
     function getByFilter($cityId = null, $animalTypeId = null, $genderId = null){
         $query = $this->db->prepare('   SELECT p.`id`, p.`name`, a.`name` as `animalType`, c.`name` as `city`, g.`name` as `gender`, p.`date`, p.`phone_number` as `phoneNumber`, p.`photo`, p.`description`, u.`id` as `userId`, u.`name` as `userName`, u.`email` as `userEmail`, p.`found`, c.`id` as `cityId`, a.`id` as `animalTypeId`, g.`id` as `genderId`
                                         FROM `pet` as `p`
@@ -104,6 +105,7 @@ class PetModel {
         $query->execute([$id]);
     }
 
+    // Obtiene todos los tipos de animales de la base de datos
     function getAllAnimalTypes(){
         $query = $this->db->prepare('SELECT * FROM animal_type');
         $query->execute();
@@ -111,6 +113,7 @@ class PetModel {
         return $animaltypes;
     }
 
+    // Obtiene todas las ciudades disponibles de la base de datos
     function getAllCities(){
         $query = $this->db->prepare('SELECT * FROM city');
         $query->execute();
@@ -118,6 +121,7 @@ class PetModel {
         return $cities;
     }
 
+    // Obtiene todos los generos de la base de datos
     function getAllGenders(){
         $query = $this->db->prepare('SELECT * FROM gender');
         $query->execute();
