@@ -23,10 +23,31 @@ class AuthController {
         $this->menuView->showFooter();
     }
 
-    function showSignup(){
-        $this->authController->showLoginForm();
-    }
+    function showSignup($err = null){
+        $menuController = new MenuController();
+        $this->menuView->showHeader();
+        $menuController->showNavBar();
+        $this->showSignUpForm($err);
 
+    }
+    function adduser(){
+        // Compruebo que no este logeado
+        if($this->isAuth()){
+            $this->redirectHome();
+            die();
+        }
+
+        // Seteo datos
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+    }
+    function showSignUpForm($err = null) {
+        if($this->isAuth()){
+            $this->redirectHome();
+            die();
+        }
+        $this->view->showSignUpForm($err);
+    }
     function showLoginForm($err = null) {
         if($this->isAuth()){
             $this->redirectHome();

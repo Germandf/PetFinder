@@ -30,6 +30,10 @@ switch ($params[0]) {
         $controller = new AuthController();
         $controller->showSignup();
         break;
+    case 'adduser':
+        $controller = new AuthController();
+        $controller->adduser();
+    break;
     case 'verify':
         $controller = new AuthController();
         $controller->logIn();

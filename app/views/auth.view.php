@@ -15,4 +15,9 @@ class AuthView{
         $this->smarty->display('templates/login.tpl');
     }
 
+    function showSignUpForm($err = null){
+        $this->smarty->assign('error', $err);
+        $this->smarty->display('templates/signup.tpl');
+    }
+
 }
