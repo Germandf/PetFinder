@@ -16,13 +16,13 @@ class PetController {
         $this->menuView = new MenuView();
     }
 
-    // Muestra las ultimas mascotas perdidas
+    // Muestro las ultimas mascotas perdidas
     function showAllNotFound() {
         $pets = $this->model->getAllNotFound();
         $this->view->showAllNotFound($pets);
     }
 
-    // Muestra los filtros en index segun la informacion en la db
+    // Muestro los filtros en index segun la informacion en la db
     function showPetFilter() {
         $animaltypes = $this->model->getAllAnimalTypes();
         $cities = $this->model->getAllCities();
@@ -30,14 +30,14 @@ class PetController {
         $this->view->showPetFilter($animaltypes, $cities, $genders);
     }
 
-    // Muestra las tablas en admin segun la informacion en la db
+    // Muestro las tablas en admin segun la informacion en la db
     function showAdminTables() {
         $animaltypes = $this->model->getAllAnimalTypes();
         $cities = $this->model->getAllCities();
         $this->view->showAdminTables($animaltypes, $cities);
     }
 
-    // Muestra las tablas en categories segun la informacion en la db
+    // Muestro las tablas en categories segun la informacion en la db
     function showCategoriesTables(){
         $animaltypes = $this->model->getAllAnimalTypes();
         $cities = $this->model->getAllCities();
@@ -45,7 +45,7 @@ class PetController {
         $this->view->showCategoriesTables($animaltypes, $cities, $genders);
     }
 
-    // Muestra mas informacion de la mascota
+    // Muestro mas informacion de la mascota
     function show($id) {
         $pet = $this->model->get($id);
         if($pet) {
@@ -56,7 +56,32 @@ class PetController {
         }
     }
 
-    // Inserta una mascota en el sistema
+    // Filtro mascotas utilizando uno o tres parametros
+    function filter(){
+        // Me aseguro que haya insertado al menos un dato
+        if(isset($_GET["city"]) || isset($_GET["animalType"]) || isset($_GET["gender"])){
+            if(isset($_GET["city"])){
+                $cityId = $_GET["city"];
+            } else $cityId = null;
+            if(isset($_GET["animalType"])){
+                $animalTypeId = $_GET["animalType"];
+            } else $animalTypeId = null;
+            if(isset($_GET["gender"])){
+                $genderId = $_GET["gender"];
+            } else $genderId = null;
+            $pets = $this->model->getByFilter($cityId, $animalTypeId, $genderId);
+            // Me aseguro que al menos una mascota corresponda con los datos insertados
+            if (!empty($pets)){
+                $this->view->showByFilter($pets);
+            } else{
+                $this->menuView->showError('No se encontraron mascotas con esos filtros');
+            }
+        } else{
+            $this->menuView->showError('No insertó ningún dato para filtrar');
+        }
+    }
+
+    // Inserto una mascota en el sistema
     function add() {
         $name = $_POST['name'];
         $animal_type_id = $_POST['animalType'];
@@ -81,13 +106,13 @@ class PetController {
         header("Location: " . BASE_URL); 
     }
 
-    // Elimina la mascota del sistema
+    // Elimino la mascota del sistema
     function delete($id) {
         $this->model->remove($id);
         header("Location: " . BASE_URL);
     }
 
-    // Finaliza la busqueda de la mascota
+    // Finalizo la busqueda de la mascota
     function find($id) {
         $this->model->find($id);
         header("Location: " . BASE_URL);

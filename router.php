@@ -73,6 +73,10 @@ switch ($params[0]) {
         $id = $params[1];
         $controller->showPet($id);
         break;
+    case 'filtrar':
+        $controller = new MenuController();
+        $controller->filterPets();
+        break;
     default:
         header("HTTP/1.0 404 Not Found");
         echo('404 Page not found');

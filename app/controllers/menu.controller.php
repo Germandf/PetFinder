@@ -51,6 +51,13 @@ class MenuController{
         $this->view->showFooter();
     }
 
+    function filterPets(){
+        $this->view->showHeader();
+        $this->showNavBar();
+        $this->petController->filter();
+        $this->view->showFooter();
+    }
+
     function showNavBar(){
         if( $this->authController->isAuth()){
             $this->view->showNavbar(true);
