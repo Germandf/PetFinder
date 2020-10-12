@@ -41,7 +41,10 @@ class MenuController{
     }
 
     function showAbout(){
+        $this->view->showHeader();
+        $this->showNavBar();
         $this->view->showAbout();
+        $this->view->showFooter();
     }
 
     function showPet($id){
