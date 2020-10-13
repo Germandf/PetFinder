@@ -71,6 +71,9 @@ body .bg-gray-whiter{
 body .bg-orange-dark{
     background: #CF5D28;
 }
+body .bg-red{
+    background: #df3c26;
+}
 .categoriesLink, .categoriesLink:hover{
     text-decoration: none;
     color: black;

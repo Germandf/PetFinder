@@ -16,6 +16,7 @@ class MenuController{
         $this->authController = new AuthController();
     }
 
+    // Cargo la pagina home
     function showHome(){
         $this->view->showHeader();
         $this->showNavBar();
@@ -24,6 +25,7 @@ class MenuController{
         $this->view->showFooter();
     }
     
+    // Cargo la pagina admin
     function showAdmin(){
         $this->view->showHeader();
         $this->showNavBar();
@@ -33,6 +35,7 @@ class MenuController{
         $this->view->showFooter();
     }
 
+    // Cargo la pagina mypets
     function showMyPets(){
         if($this->authController->isAuth()){
             $this->view->showHeader();
@@ -46,6 +49,7 @@ class MenuController{
         }
     }
 
+    // Cargo la pagina categories
     function showCategories(){
         $this->view->showHeader();
         $this->showNavBar();
@@ -53,6 +57,7 @@ class MenuController{
         $this->view->showFooter();
     }
 
+    // Cargo la pagina about
     function showAbout(){
         $this->view->showHeader();
         $this->showNavBar();
@@ -60,6 +65,7 @@ class MenuController{
         $this->view->showFooter();
     }
 
+    // Muestro mas detalles de una mascota
     function showPet($id){
         $this->view->showHeader();
         $this->showNavBar();
@@ -67,6 +73,7 @@ class MenuController{
         $this->view->showFooter();
     }
 
+    // Muestro todas las mascotas que correspondan con el filtro
     function showFilterPets(){
         $this->view->showHeader();
         $this->showNavBar();
@@ -75,6 +82,7 @@ class MenuController{
         $this->view->showFooter();
     }
 
+    // Cargo la pagina login
     function showLogin($err = null){
         $this->view->showHeader();
         $this->showNavBar();
@@ -82,12 +90,14 @@ class MenuController{
         $this->view->showFooter();
     }
 
+    // Cargo la pagina signup
     function showSignup($err = null){
         $this->view->showHeader();
         $this->showNavBar();
         $this->authController->showSignUpForm($err);
     }
 
+    // Cargo el navbar dependiendo si esta logeado o no
     function showNavBar(){
         if( $this->authController->isAuth()){
             $this->view->showNavbar(true);
