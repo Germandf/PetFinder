@@ -98,13 +98,13 @@ class AuthController {
     // Logea al usuario, inicia la sesion
     function loginUserByEmail($email){
         $user = $this->userModel->getByEmail($email);
-        
         if($user){
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
             }
             $_SESSION['ID_USER'] = $user->id;
-            $_SESSION['EMAIL_USER'] = $user->email; 
+            $_SESSION['EMAIL_USER'] = $user->email;
+            $_SESSION['PERMISSION_USER'] = $user->permission_id;
             $this->redirectHome();            
         }
     }

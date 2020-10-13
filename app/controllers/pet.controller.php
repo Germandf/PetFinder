@@ -40,7 +40,7 @@ class PetController {
     // Muestro las ultimas mascotas perdidas
     function showAllMyPets($userId) {
         $pets = $this->model->getAllNotFoundByUser($userId);
-        $this->view->showAllNotFound($pets);
+        $this->view->showAllMyPets($pets);
     }
 
     // Muestro los filtros en index segun la informacion en la db
