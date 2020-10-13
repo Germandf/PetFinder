@@ -105,27 +105,4 @@ class PetModel {
         $query->execute([$id]);
     }
 
-    // Obtiene todos los tipos de animales de la base de datos
-    function getAllAnimalTypes(){
-        $query = $this->db->prepare('SELECT * FROM animal_type');
-        $query->execute();
-        $animaltypes = $query->fetchAll(PDO::FETCH_OBJ);
-        return $animaltypes;
-    }
-
-    // Obtiene todas las ciudades disponibles de la base de datos
-    function getAllCities(){
-        $query = $this->db->prepare('SELECT * FROM city');
-        $query->execute();
-        $cities = $query->fetchAll(PDO::FETCH_OBJ);
-        return $cities;
-    }
-
-    // Obtiene todos los generos de la base de datos
-    function getAllGenders(){
-        $query = $this->db->prepare('SELECT * FROM gender');
-        $query->execute();
-        $genders = $query->fetchAll(PDO::FETCH_OBJ);
-        return $genders;
-    }
 }

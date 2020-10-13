@@ -32,7 +32,7 @@ class AuthController {
     }
 
     function redirectHome(){
-        header("Location: home");
+        header("Location: " . BASE_URL);
     }
 
     function isAuth(){

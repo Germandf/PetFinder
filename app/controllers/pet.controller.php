@@ -1,21 +1,34 @@
 <?php
 
 include_once 'app/models/pet.model.php';
+include_once 'app/models/city.model.php';
+include_once 'app/models/gender.model.php';
+include_once 'app/models/animaltype.model.php';
+
 include_once 'app/views/pet.view.php';
 include_once 'app/views/menu.view.php';
 include_once 'app/controllers/auth.controller.php';
+include_once 'app/controllers/file.controller.php';
 
 class PetController {
 
     private $model;
     private $view;
     private $menuView;
-
+    private $authController;
+    private $cityModel;
+    private $genderModel;
+    private $fileController; 
+    
     function __construct() {
         $this->model = new PetModel();
         $this->view = new PetView();
         $this->authController = new AuthController();
         $this->menuView = new MenuView();
+        $this->cityModel = new CityModel();
+        $this->genderModel = new GenderModel();
+        $this->animalTypeModel = new AnimalTypeModel();
+        $this->fileController = new FileController();
     }
 
     // Muestro las ultimas mascotas perdidas
@@ -32,17 +45,22 @@ class PetController {
 
     // Muestro los filtros en index segun la informacion en la db
     function showPetFilter() {
-        $animaltypes = $this->model->getAllAnimalTypes();
-        $cities = $this->model->getAllCities();
-        $genders = $this->model->getAllGenders();
+        $animaltypes = $this->animalTypeModel->getAllAnimalTypes();
+        $cities = $this->cityModel->getAllCities();
+        $genders = $this->genderModel->getAllGenders();
         $this->view->showPetFilter($animaltypes, $cities, $genders);
     }
 
     function showAddPetForm($err = null){
         if( $this->authController->isAuth()){
             $this->menuView->showHeader();
-            $this->menuView->showNavBar();
-            $this->view->showAddPetForm($err);
+            $this->menuView->showNavBar(true);
+
+            //Obtengo los generos y las ciudades
+            $cities = $this->cityModel->getAllCities();
+            $genders = $this->genderModel->getAllGenders();
+            $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
+            $this->view->showAddPetForm($err, $cities, $genders, $animalTypes);
             $this->menuView->showFooter();
         }else{
             $this->authController->redirectLogin();
@@ -101,7 +119,6 @@ class PetController {
 
     // Inserto una mascota en el sistema
     function add() {
-        $name = $_POST['name'];
         if(isset($_POST['animalType'])){
             $animal_type_id = $_POST['animalType'];
         }else{
@@ -120,20 +137,38 @@ class PetController {
             $gender_id = null;
         }
 
+        if(isset($_FILES['photo'])){
+            $photo = $_FILES['photo'];
+        }else{
+            $photo = null;
+        }
+        $name = $_POST['name'];
+
         $date = $_POST['date'];
         $phone_number = $_POST['phone'];
-        $photo = $_POST['photo'];
         $description = $_POST['description'];
-       
-        //$user_id = $_POST['userId'];
+        $user_id = $this->authController->getUserId();
 
         // verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
             $this->showAddPetForm('Faltan datos obligatorios');
             die();
         }
+
+
+        //Subo la foto al servidor
+        $resultImageUpload = $this->fileController->uploadImage('photo');
+
+        if(!$resultImageUpload){
+            $this->showAddPetForm('Ocurrio un error en el servidor'); 
+        }else{
+            $id = $this->model->add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $resultImageUpload, $description, $user_id);
+            if($id!=0){
+                //SE GUARDO CORRECTAMENTE, REDIRIGO A LA HOME
+                $this->authController->redirectHome();
+            }
+        }
         // inserto la tarea en la DB
-        //$id = $this->model->add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $user_id);
 
         // redirigimos al listado
         //header("Location: " . BASE_URL); 
