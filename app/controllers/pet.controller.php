@@ -68,17 +68,17 @@ class PetController {
     }
     // Muestro las tablas en admin segun la informacion en la db
     function showAdminTables() {
-        $animaltypes = $this->model->getAllAnimalTypes();
-        $cities = $this->model->getAllCities();
-        $this->view->showAdminTables($animaltypes, $cities);
+        $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
+        $cities = $this->cityModel->getAllCities();
+        $this->view->showAdminTables($animalTypes, $cities);
     }
 
     // Muestro las tablas en categories segun la informacion en la db
     function showCategoriesTables(){
-        $animaltypes = $this->model->getAllAnimalTypes();
-        $cities = $this->model->getAllCities();
-        $genders = $this->model->getAllGenders();
-        $this->view->showCategoriesTables($animaltypes, $cities, $genders);
+        $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
+        $cities = $this->cityModel->getAllCities();
+        $genders = $this->genderModel->getAllGenders();
+        $this->view->showCategoriesTables($animalTypes, $cities, $genders);
     }
 
     // Muestro mas informacion de la mascota
