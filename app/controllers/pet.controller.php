@@ -192,7 +192,8 @@ class PetController {
             $resultImageUpload = $this->fileController->uploadImage('photo');
             // Si no se subio
             if(!$resultImageUpload){
-                $this->showAddPetForm('Ocurrio un error en el servidor'); 
+                $this->showAddPetForm('Ocurrio un error en el servidor');
+                die();
             }
             // Si se subio
             else{
