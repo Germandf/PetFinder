@@ -10,12 +10,13 @@ class PetView{
         $this->smarty = new Smarty();
     }
 
-    function showAddPetForm($err = null, $cities, $genders, $animaltypes){
+    function showAddPetForm($err = null, $cities, $genders, $animaltypes, $pet = null){
         $this->smarty->assign('animaltypes', $animaltypes);
         $this->smarty->assign('cities', $cities);
         $this->smarty->assign('genders', $genders);
 
         $this->smarty->assign('error', $err);
+        $this->smarty->assign('pet', $pet);
         $this->smarty->display('templates/addpetform.tpl');
     }
     function showAllNotFound($pets){

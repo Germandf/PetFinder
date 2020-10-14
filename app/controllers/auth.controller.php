@@ -49,7 +49,10 @@ class AuthController {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        return $_SESSION['ID_USER'];
+        if(isset($_SESSION['ID_USER'])){
+            return $_SESSION['ID_USER'];
+        }
+        return 0;
     }
 
     public function logOut(){
@@ -95,6 +98,15 @@ class AuthController {
         }
     }
 
+    function isAdmin(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(isset($_SESSION['PERMISSION_USER'])){
+            return ($_SESSION['PERMISSION_USER'] === 1); //Si es admin
+        }
+        return false;
+    }
     // Logea al usuario, inicia la sesion
     function loginUserByEmail($email){
         $user = $this->userModel->getByEmail($email);

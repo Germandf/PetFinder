@@ -50,8 +50,26 @@ class PetController {
         $genders = $this->genderModel->getAllGenders();
         $this->view->showPetFilter($animaltypes, $cities, $genders);
     }
+    
+    function edit($id){
+        //Primero obtengo la mascota apartir del ID
+        $pet = $this->model->get($id);
+        $currentUserId = $this->authController->getUserId();
+        if($pet->userId == $currentUserId || $this->authController->isAdmin()){
+            //Tenemos que mostrar todos los datos en el form
+            $cities = $this->cityModel->getAllCities();
+            $genders = $this->genderModel->getAllGenders();
+            $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
+            $this->showAddPetForm(null, $pet); //Estamos editando
 
-    function showAddPetForm($err = null){
+        }else{
+            $this->menuView->showHeader();
+            $this->menuView->showNavBar(true);
+            $this->menuView->showError('Acceso denegado');
+            $this->menuView->showFooter();
+        }
+    }
+    function showAddPetForm($err = null, $pet = null){
         if( $this->authController->isAuth()){
             $this->menuView->showHeader();
             $this->menuView->showNavBar(true);
@@ -60,7 +78,7 @@ class PetController {
             $cities = $this->cityModel->getAllCities();
             $genders = $this->genderModel->getAllGenders();
             $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
-            $this->view->showAddPetForm($err, $cities, $genders, $animalTypes);
+            $this->view->showAddPetForm($err, $cities, $genders, $animalTypes, $pet);
             $this->menuView->showFooter();
         }else{
             $this->authController->redirectLogin();

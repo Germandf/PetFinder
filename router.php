@@ -70,7 +70,8 @@ switch ($params[0]) {
         break;
     case 'editar':
         $controller = new PetController();
-        //$controller->edit();
+        $idMascota = $params[1];
+        $controller->edit($idMascota);
         break;
     case 'eliminar':
         $controller = new PetController();
