@@ -33,12 +33,10 @@ class MenuController{
             $this->view->showAdminMenu();
             $this->petController->showAdminTables();
             $this->petController->showAllNotFound();
-            
         }else{
             $this->view->showError("Acceso denegado");
         }
         $this->view->showFooter();
-        
     }
 
     // Cargo la pagina mypets
@@ -101,6 +99,13 @@ class MenuController{
         $this->view->showHeader();
         $this->showNavBar();
         $this->authController->showSignUpForm($err);
+    }
+
+    function showAccessDenied(){
+        $this->view->showHeader();
+        $this->view->showNavBar(true);
+        $this->view->showError('Acceso denegado');
+        $this->view->showFooter();
     }
 
     // Cargo el navbar dependiendo si esta logeado o no

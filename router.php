@@ -19,10 +19,6 @@ $params = explode('/', $action);
 
 // determina que camino seguir según la acción
 switch ($params[0]) {
-    case 'home':
-        $controller = new MenuController();
-        $controller->showHome();
-        break;
     case 'login':
         $controller = new MenuController();
         $controller->showLogin();
@@ -34,7 +30,7 @@ switch ($params[0]) {
     case 'adduser':
         $controller = new UserController();
         $controller->adduser();
-    break;
+        break;
     case 'verify':
         $controller = new AuthController();
         $controller->logIn();
@@ -43,22 +39,34 @@ switch ($params[0]) {
         $controller = new AuthController();
         $controller->logOut();
         break;
-    case 'my-pets':
+    case 'home':
         $controller = new MenuController();
-        $controller->showMyPets();
+        $controller->showHome();
         break;
-    break;
     case 'admin':
         $controller = new MenuController();
         $controller->showAdmin();
+        break;
+    case 'mis-mascotas':
+        $controller = new MenuController();
+        $controller->showMyPets();
         break;
     case 'categorias':
         $controller = new MenuController();
         $controller->showCategories();
         break;
-    case 'about':
+    case 'sobre-nosotros':
         $controller = new MenuController();
         $controller->showAbout();
+        break;
+    case 'filtrar':
+        $controller = new MenuController();
+        $controller->showFilterPets();
+        break;
+    case 'ver':
+        $controller = new MenuController();
+        $id = $params[1];
+        $controller->showPet($id);
         break;
     case 'agregar':
         $controller = new PetController();
@@ -73,7 +81,6 @@ switch ($params[0]) {
         $idMascota = $params[1];
         $controller->edit($idMascota);
         break;
-        
     case 'actualizar-mascota':
         $controller = new PetController();
         $idMascota = $params[1];
@@ -88,15 +95,6 @@ switch ($params[0]) {
         $controller = new PetController();
         $id = $params[1];
         $controller->find($id);
-        break;
-    case 'ver':
-        $controller = new MenuController();
-        $id = $params[1];
-        $controller->showPet($id);
-        break;
-    case 'filtrar':
-        $controller = new MenuController();
-        $controller->showFilterPets();
         break;
     default:
         header("HTTP/1.0 404 Not Found");

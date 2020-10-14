@@ -14,11 +14,11 @@ class PetView{
         $this->smarty->assign('animaltypes', $animaltypes);
         $this->smarty->assign('cities', $cities);
         $this->smarty->assign('genders', $genders);
-
         $this->smarty->assign('error', $err);
         $this->smarty->assign('pet', $pet);
         $this->smarty->display('templates/addpetform.tpl');
     }
+
     function showAllNotFound($pets){
         $this->smarty->assign('pets', $pets);
         $this->smarty->display('templates/allpetsnotfound.tpl');

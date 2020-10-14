@@ -23,5 +23,4 @@ class AnimalTypeModel {
         $genders = $query->fetchAll(PDO::FETCH_OBJ);
         return $genders;
     }
-
 }

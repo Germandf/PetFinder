@@ -7,17 +7,21 @@ include_once 'app/models/animaltype.model.php';
 
 include_once 'app/views/pet.view.php';
 include_once 'app/views/menu.view.php';
+
 include_once 'app/controllers/auth.controller.php';
 include_once 'app/controllers/file.controller.php';
 
 class PetController {
 
     private $model;
-    private $view;
-    private $menuView;
-    private $authController;
     private $cityModel;
     private $genderModel;
+    private $animalTypeModel;
+
+    private $view;
+    private $menuView;
+
+    private $authController;
     private $fileController; 
     
     function __construct() {
@@ -52,35 +56,34 @@ class PetController {
     }
     
     function edit($id){
-        //Primero obtengo la mascota apartir del ID
+        // Primero obtengo la mascota apartir del ID
         $pet = $this->model->get($id);
+        // Obtengo el usuario
         $currentUserId = $this->authController->getUserId();
+        // Miro si el usuario es dueño o tiene permisos
         if($pet->userId == $currentUserId || $this->authController->isAdmin()){
-            //Tenemos que mostrar todos los datos en el form
-            $cities = $this->cityModel->getAllCities();
-            $genders = $this->genderModel->getAllGenders();
-            $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
-            $this->showAddPetForm(null, $pet); //Estamos editando
-
-        }else{
-            $this->showAccesDenied();
+            $this->showAddPetForm(null, $pet);
+        } else{
+            $menuController = new MenuController();
+            $menuController->showAccessDenied();
         }
     }
+
     function showAddPetForm($err = null, $pet = null){
         if( $this->authController->isAuth()){
             $this->menuView->showHeader();
             $this->menuView->showNavBar(true);
-
             //Obtengo los generos y las ciudades
             $cities = $this->cityModel->getAllCities();
             $genders = $this->genderModel->getAllGenders();
             $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
             $this->view->showAddPetForm($err, $cities, $genders, $animalTypes, $pet);
             $this->menuView->showFooter();
-        }else{
+        } else{
             $this->authController->redirectLogin();
         }
     }
+
     // Muestro las tablas en admin segun la informacion en la db
     function showAdminTables() {
         $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
@@ -107,12 +110,6 @@ class PetController {
         }
     }
 
-    function showAccesDenied(){
-        $this->menuView->showHeader();
-        $this->menuView->showNavBar(true);
-        $this->menuView->showError('Acceso denegado');
-        $this->menuView->showFooter();
-    }
     function update($id){
         $pet = $this->model->get($id);
         $currentUserId = $this->authController->getUserId();
@@ -122,10 +119,10 @@ class PetController {
             $this->add($pet);
             $this->showAddPetForm(null, $pet); //Estamos editando
         }else{
-            $this->showAccesDenied();
+            $menuController = new MenuController();
+            $menuController->showAccessDenied();
         }
     }
-
   
     // Filtro mascotas utilizando uno o tres parametros
     function filter(){
@@ -152,79 +149,78 @@ class PetController {
         }
     }
 
-    // Inserto una mascota en el sistema
+    // Inserto una mascota en el sistema o edito una
     function add($pet = null) {
         if(isset($_POST['animalType'])){
             $animal_type_id = $_POST['animalType'];
         }else{
             $animal_type_id = null;
         }
-
-        if(isset($_POST['animalType'])){
+        if(isset($_POST['city'])){
             $city_id = $_POST['city'];
         }else{
             $city_id = null;
         }
-
         if(isset($_POST['genderType'])){
             $gender_id = $_POST['genderType'];
         }else{
             $gender_id = null;
         }
-
         if(isset($_FILES['photo'])){
             $photo = $_FILES['photo'];
-            
-            if($pet != null && $photo['size'] == 0) //Estamos editando y no se envio foto
-                $photo = $pet->photo; //Como no envio ninguna foto asumo que la esta editan
+            // Compruebo si estamos editando y no envio foto
+            if($pet != null && $photo['size'] == 0) 
+                // A foto le asigno la URL que ya tenemos en la base de datos
+                $photo = $pet->photo;
         }else{
             $photo = null;
         }
         $name = $_POST['name'];
-
         $date = $_POST['date'];
         $phone_number = $_POST['phone'];
         $description = $_POST['description'];
         $user_id = $this->authController->getUserId();
 
-        // verifico campos obligatorios
+        // Verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
             $this->showAddPetForm('Faltan datos obligatorios');
             die();
         }
-
-        
-
-        if($_FILES['photo']['size']>0){ //Si no estamos editando Subo la foto al servidor
+        // Detecto si estamos subiendo una foto
+        if($_FILES['photo']['size']>0){
+            // Devuelve la ruta de la foto una vez que se subio o false en caso de que no
             $resultImageUpload = $this->fileController->uploadImage('photo');
-
+            // Si no se subio
             if(!$resultImageUpload){
                 $this->showAddPetForm('Ocurrio un error en el servidor'); 
-            }else{
+            }
+            // Si se subio
+            else{
+                // Si no estoy editando
                 if($pet == null){
                     $id = $this->model->add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $resultImageUpload, $description, $user_id);
                     if($id!=0){
-                        //SE GUARDO CORRECTAMENTE, REDIRIGO A LA HOME
                         $this->authController->redirectHome();
                     }
-                }else{
-                    $result = $this->model->update($pet->id, $name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $resultImageUpload, $description);
-                    print_r($result);
+                }
+                // Si estoy editando
+                else{
+                    $this->model->update($pet->id, $name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $resultImageUpload, $description);
                 }
             }
-        }elseif($pet != null){
-            $result = $this->model->update($pet->id, $name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description);
         }
-
+        // Si no estamos subiendo una foto y estamos editando
+        elseif($pet != null){
+            $this->model->update($pet->id, $name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description);
+        }
+        // Si estamos editando, redirige a editar con los datos actualizados
         if($pet != null){
             header("Location: ".BASE_URL.'editar/'.$pet->id); 
-        }else{
+        }
+        // Si no estamos editando, volvemos al inicio
+        else{
             header("Location: " . BASE_URL);
         }
-        
-
-        // redirigimos al listado
-         
     }
 
     // Elimino la mascota del sistema

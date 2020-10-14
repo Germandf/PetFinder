@@ -16,14 +16,6 @@ class CityModel {
         return $db;
     }
 
-    // Obtiene todos los generos de la base de datos
-    function getAllGenders(){
-        $query = $this->db->prepare('SELECT * FROM gender');
-        $query->execute();
-        $genders = $query->fetchAll(PDO::FETCH_OBJ);
-        return $genders;
-    }
-
     // Obtiene todas las ciudades disponibles de la base de datos
     function getAllCities(){
         $query = $this->db->prepare('SELECT * FROM city');

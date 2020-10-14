@@ -78,3 +78,6 @@ body .bg-red{
     text-decoration: none;
     color: black;
 }
+.imgPetCard{
+    max-height: 215px;
+}

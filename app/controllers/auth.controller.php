@@ -98,15 +98,17 @@ class AuthController {
         }
     }
 
+    // Consulta si el usuario es admin
     function isAdmin(){
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         if(isset($_SESSION['PERMISSION_USER'])){
-            return ($_SESSION['PERMISSION_USER'] === 1); //Si es admin
+            return ($_SESSION['PERMISSION_USER'] == 1);
         }
         return false;
     }
+    
     // Logea al usuario, inicia la sesion
     function loginUserByEmail($email){
         $user = $this->userModel->getByEmail($email);

@@ -1,6 +1,6 @@
 <div class="col-12 mb-3 col-md-6 col-lg-4">
     <div class="card shadow" >
-        <a href="ver/{$pet->id}"><img class="card-img-top" src="{$pet->photo}" alt="Card image cap"></a>
+        <a href="ver/{$pet->id}"><img class="card-img-top imgPetCard" src="{$pet->photo}" alt="Card image cap"></a>
         <div class="card-body">
             <h3 class="card-title">{$pet->name}</h3>
             <ul class="list-group list-group-flush">
