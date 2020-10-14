@@ -29,10 +29,16 @@ class MenuController{
     function showAdmin(){
         $this->view->showHeader();
         $this->showNavBar();
-        $this->view->showAdminMenu();
-        $this->petController->showAdminTables();
-        $this->petController->showAllNotFound();
+        if($this->authController->isAuth() && $this->authController->isAdmin()){
+            $this->view->showAdminMenu();
+            $this->petController->showAdminTables();
+            $this->petController->showAllNotFound();
+            
+        }else{
+            $this->view->showError("Acceso denegado");
+        }
         $this->view->showFooter();
+        
     }
 
     // Cargo la pagina mypets
