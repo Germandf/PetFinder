@@ -93,6 +93,15 @@ class PetModel {
         return $this->db->lastInsertId();
     }
 
+    function update($id, $name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description) {
+
+        $query = $this->db->prepare('UPDATE `pet` SET `name`=?, `animal_type_id`=?, `city_id`=?, `gender_id` = ?, `date` = ?, `phone_number`=?, `photo` = ?, `description` = ?  WHERE `pet`.`id` = ?');
+        
+        $result = $query->execute([$name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $id]);
+        return $result;
+
+    }
+
     // Elimina la mascota de la base de datos
     function remove($id) {
         $query = $this->db->prepare('DELETE FROM pet WHERE id = ?');

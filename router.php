@@ -73,6 +73,11 @@ switch ($params[0]) {
         $idMascota = $params[1];
         $controller->edit($idMascota);
         break;
+    case 'actualizar-mascota':
+        $controller = new PetController();
+        $idMascota = $params[1];
+        $controller->update($idMascota);
+        break;
     case 'eliminar':
         $controller = new PetController();
         $id = $params[1];

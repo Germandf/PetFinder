@@ -1,5 +1,12 @@
 <div class="row">
     <div class="col-12 mt-5 text-center">
+
+        {if isset($pet)}
+        <form id="addPetForm" method="post"  enctype= "multipart/form-data" action="actualizar-mascota/{$pet->id}" class="form-signin text-left shadow rounded">
+        {else}
+        <form id="addPetForm" method="post"  enctype= "multipart/form-data" action="insertar-mascota" class="form-signin text-left shadow rounded">
+        {/if}
+
         <form id="addPetForm" method="post"  enctype= "multipart/form-data" action="insertar-mascota" class="form-signin text-left shadow rounded">
             {if isset($pet)}
             <h1 class="h3 mb-3 font-weight-normal">Editar</h1>
@@ -9,7 +16,7 @@
             <!-- Pet -->
             <label for="inputName" class="sr-only mt-3 ">Nombre</label>
             {if isset($pet)}
-            <input id="inputName" value={$pet->name} type="text" class="mt-3 form-control" placeholder="Nombre" required autofocus="" name="name">
+            <input id="inputName" value="{$pet->name}" type="text" class="mt-3 form-control" placeholder="Nombre" required autofocus="" name="name">
             {else}
             <input id="inputName" type="text" class="mt-3 form-control" placeholder="Nombre" required autofocus="" name="name">
             {/if}
@@ -89,11 +96,16 @@
                 <div class="custom-file">
                     {if isset($pet)}
                     <input type="file"  class="custom-file-input" id="photo" name="photo">
+                    
+
                     {else}
                     <input type="file"  required class="custom-file-input" id="photo" name="photo">
                     {/if}
                     <label class="custom-file-label" for="photo">Elegir foto</label>
                 </div>
+                {if isset($pet)}
+                    <img src="{$pet->photo}" class="w-100 mt-2">
+                {/if}
             </div>
             <!-- Description -->
             <label for="inputDescription" class="sr-only mt-3 ">Descripción</label>
