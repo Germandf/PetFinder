@@ -216,7 +216,7 @@ class PetController {
         }
         // Si estamos editando, redirige a editar con los datos actualizados
         if($pet != null){
-            header("Location: ".BASE_URL.'editar/'.$pet->id); 
+            header("Location: ".BASE_URL.'mis-mascotas'); 
         }
         // Si no estamos editando, volvemos al inicio
         else{
