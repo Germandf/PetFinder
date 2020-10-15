@@ -56,7 +56,7 @@ class PetController {
     }
     
     function edit($id){
-        // Primero obtengo la mascota apartir del ID
+        // Primero obtengo la mascota a partir del ID
         $pet = $this->model->get($id);
         // Obtengo el usuario
         $currentUserId = $this->authController->getUserId();
@@ -70,9 +70,9 @@ class PetController {
     }
 
     function showAddPetForm($err = null, $pet = null){
-        if( $this->authController->isAuth()){
+        if($this->authController->isAuth()){
             $this->menuView->showHeader();
-            $this->menuView->showNavBar(true);
+            $this->menuView->showNavBar();
             //Obtengo los generos y las ciudades
             $cities = $this->cityModel->getAllCities();
             $genders = $this->genderModel->getAllGenders();
@@ -123,7 +123,7 @@ class PetController {
             $menuController->showAccessDenied();
         }
     }
-  
+
     // Filtro mascotas utilizando uno o tres parametros
     function filter(){
         // Me aseguro que haya insertado al menos un dato

@@ -8,11 +8,9 @@
         {else}
         <form id="addPetForm" method="post"  enctype= "multipart/form-data" action="insertar-mascota" class="form-signin text-left shadow rounded">
         {/if}
-        <!-- Formulario -->
-        <form id="addPetForm" method="post"  enctype= "multipart/form-data" action="insertar-mascota" class="form-signin text-left shadow rounded">
             <!-- Muestra el titulo correspondiente -->
             {if isset($pet)}
-            <h1 class="h3 mb-3 font-weight-normal">Editar</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Editar mascota</h1>
             {else}
             <h1 class="h3 mb-3 font-weight-normal">Añadir mascota</h1>
             {/if}

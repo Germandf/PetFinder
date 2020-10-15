@@ -14,8 +14,10 @@ class MenuView{
         $this->smarty->display('templates/header.tpl');  
     }
 
-    function showNavbar($isauth = null){
-        $this->smarty->assign('isauth', $isauth);
+    function showNavbar(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         $this->smarty->display('templates/navbar.tpl');  
     }
 

@@ -3,6 +3,7 @@
 include_once('app/controllers/menu.controller.php');
 include_once('app/controllers/auth.controller.php');
 include_once('app/controllers/user.controller.php');
+include_once('app/controllers/city.controller.php');
 
 // defino la base url para la construccion de links con urls semánticas
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
@@ -78,13 +79,13 @@ switch ($params[0]) {
         break;
     case 'editar':
         $controller = new PetController();
-        $idMascota = $params[1];
-        $controller->edit($idMascota);
+        $id = $params[1];
+        $controller->edit($id);
         break;
     case 'actualizar-mascota':
         $controller = new PetController();
-        $idMascota = $params[1];
-        $controller->update($idMascota);
+        $id = $params[1];
+        $controller->update($id);
         break;
     case 'eliminar':
         $controller = new PetController();
@@ -95,6 +96,29 @@ switch ($params[0]) {
         $controller = new PetController();
         $id = $params[1];
         $controller->find($id);
+        break;
+    case 'agregar-ciudad':
+        $controller = new CityController();
+        $controller->showAddNewCity();
+        break;
+    case 'insertar-ciudad':
+        $controller = new CityController();
+        $controller->add();
+        break;
+    case 'editar-ciudad':
+        $controller = new CityController();
+        $id = $params[1];
+        $controller->edit($id);
+        break;
+    case 'actualizar-ciudad':
+        $controller = new CityController();
+        $id = $params[1];
+        $controller->update($id);
+        break;
+    case 'eliminar-ciudad':
+        $controller = new CityController();
+        $id = $params[1];
+        $controller->delete($id);
         break;
     default:
         header("HTTP/1.0 404 Not Found");

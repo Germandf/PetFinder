@@ -19,7 +19,7 @@ class MenuController{
     // Cargo la pagina home
     function showHome(){
         $this->view->showHeader();
-        $this->showNavBar();
+        $this->view->showNavBar();
         $this->petController->showPetFilter();
         $this->petController->showAllNotFound();
         $this->view->showFooter();
@@ -28,7 +28,7 @@ class MenuController{
     // Cargo la pagina admin
     function showAdmin(){
         $this->view->showHeader();
-        $this->showNavBar();
+        $this->view->showNavBar();
         if($this->authController->isAuth() && $this->authController->isAdmin()){
             $this->view->showAdminMenu();
             $this->petController->showAdminTables();
@@ -43,7 +43,7 @@ class MenuController{
     function showMyPets(){
         if($this->authController->isAuth()){
             $this->view->showHeader();
-            $this->showNavBar();
+            $this->view->showNavBar();
             $this->view->showMisMascotas();
             $userId = $this->authController->getUserId();
             $this->petController->showAllMyPets($userId);
@@ -56,7 +56,7 @@ class MenuController{
     // Cargo la pagina categories
     function showCategories(){
         $this->view->showHeader();
-        $this->showNavBar();
+        $this->view->showNavBar();
         $this->petController->showCategoriesTables();
         $this->view->showFooter();
     }
@@ -64,7 +64,7 @@ class MenuController{
     // Cargo la pagina about
     function showAbout(){
         $this->view->showHeader();
-        $this->showNavBar();
+        $this->view->showNavBar();
         $this->view->showAbout();
         $this->view->showFooter();
     }
@@ -72,7 +72,7 @@ class MenuController{
     // Muestro mas detalles de una mascota
     function showPet($id){
         $this->view->showHeader();
-        $this->showNavBar();
+        $this->view->showNavBar();
         $this->petController->show($id);
         $this->view->showFooter();
     }
@@ -80,7 +80,7 @@ class MenuController{
     // Muestro todas las mascotas que correspondan con el filtro
     function showFilterPets(){
         $this->view->showHeader();
-        $this->showNavBar();
+        $this->view->showNavBar();
         $this->petController->showPetFilter();
         $this->petController->filter();
         $this->view->showFooter();
@@ -89,7 +89,7 @@ class MenuController{
     // Cargo la pagina login
     function showLogin($err = null){
         $this->view->showHeader();
-        $this->showNavBar();
+        $this->view->showNavBar();
         $this->authController->showLoginForm($err);
         $this->view->showFooter();
     }
@@ -97,23 +97,14 @@ class MenuController{
     // Cargo la pagina signup
     function showSignup($err = null){
         $this->view->showHeader();
-        $this->showNavBar();
+        $this->view->showNavBar();
         $this->authController->showSignUpForm($err);
     }
 
     function showAccessDenied(){
         $this->view->showHeader();
-        $this->view->showNavBar(true);
+        $this->view->showNavBar();
         $this->view->showError('Acceso denegado');
         $this->view->showFooter();
-    }
-
-    // Cargo el navbar dependiendo si esta logeado o no
-    function showNavBar(){
-        if( $this->authController->isAuth()){
-            $this->view->showNavbar(true);
-        }else{
-            $this->view->showNavbar();
-        }
     }
 }
