@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.6.5.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2020 a las 00:34:18
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.10
+-- Tiempo de generación: 15-10-2020 a las 04:37:40
+-- Versión del servidor: 10.1.21-MariaDB
+-- Versión de PHP: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -32,6 +31,15 @@ CREATE TABLE `animal_type` (
   `name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `animal_type`
+--
+
+INSERT INTO `animal_type` (`id`, `name`) VALUES
+(1, 'Perro'),
+(2, 'Gato'),
+(3, 'Otro');
+
 -- --------------------------------------------------------
 
 --
@@ -43,6 +51,15 @@ CREATE TABLE `city` (
   `name` varchar(35) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `city`
+--
+
+INSERT INTO `city` (`id`, `name`) VALUES
+(1, 'Tres Arroyos'),
+(5, 'Tandil'),
+(6, 'Rauch');
+
 -- --------------------------------------------------------
 
 --
@@ -53,6 +70,14 @@ CREATE TABLE `gender` (
   `id` int(11) NOT NULL,
   `name` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `gender`
+--
+
+INSERT INTO `gender` (`id`, `name`) VALUES
+(1, 'Macho'),
+(3, 'Hembra');
 
 -- --------------------------------------------------------
 
@@ -68,10 +93,10 @@ CREATE TABLE `pet` (
   `gender_id` int(11) NOT NULL,
   `date` date NOT NULL,
   `phone_number` int(11) NOT NULL,
-  `photo` varchar(30) NOT NULL,
+  `photo` varchar(100) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
-  `found` tinyint(1) NOT NULL DEFAULT 0
+  `found` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -89,6 +114,13 @@ CREATE TABLE `user` (
   `permission_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `surname`, `email`, `password`, `permission_id`) VALUES
+(10, 'Administrador', 'Administrador', 'admin@petfinder.com.ar', '$2y$10$B16LtQxP9ezw9V7j1rFBR.K2xkF94ANyE/y99vxGuCqNAZtwJZvxW', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -97,8 +129,16 @@ CREATE TABLE `user` (
 
 CREATE TABLE `user_permission` (
   `id` int(11) NOT NULL,
-  `name` int(11) NOT NULL
+  `name` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `user_permission`
+--
+
+INSERT INTO `user_permission` (`id`, `name`) VALUES
+(1, 'admin'),
+(2, 'user');
 
 --
 -- Índices para tablas volcadas
@@ -153,38 +193,32 @@ ALTER TABLE `user_permission`
 -- AUTO_INCREMENT de la tabla `animal_type`
 --
 ALTER TABLE `animal_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `city`
 --
 ALTER TABLE `city`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `gender`
 --
 ALTER TABLE `gender`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT de la tabla `user_permission`
 --
 ALTER TABLE `user_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Restricciones para tablas volcadas
 --
@@ -203,7 +237,6 @@ ALTER TABLE `pet`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`permission_id`) REFERENCES `user_permission` (`id`) ON UPDATE NO ACTION;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
