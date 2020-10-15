@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-10-2020 a las 04:37:40
+-- Tiempo de generación: 15-10-2020 a las 04:41:43
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 7.1.1
 
@@ -119,7 +119,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `surname`, `email`, `password`, `permission_id`) VALUES
-(10, 'Administrador', 'Administrador', 'admin@petfinder.com.ar', '$2y$10$B16LtQxP9ezw9V7j1rFBR.K2xkF94ANyE/y99vxGuCqNAZtwJZvxW', 2);
+(10, 'Administrador', 'Administrador', 'admin@petfinder.com.ar', '$2y$10$B16LtQxP9ezw9V7j1rFBR.K2xkF94ANyE/y99vxGuCqNAZtwJZvxW', 1);
 
 -- --------------------------------------------------------
 
