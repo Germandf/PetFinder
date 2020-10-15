@@ -3,3 +3,7 @@ Un sitio web que permite reportar mascotas perdidas junto a su última ubicació
 
 # IMPORTANTE
 Es necesario crear una carpeta "images" en la raiz del proyecto y dentro una carpeta "pets" para que el mismo funcione, si no, no va a guardar las imágenes de las mascotas.
+
+# CUENTA DE ADMINISTRADOR
+Mail: admin@petfinder.com.ar 
+Password: sysadmin
