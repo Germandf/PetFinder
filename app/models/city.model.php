@@ -49,7 +49,6 @@ class CityModel {
                                         SET `name`= ?
                                         WHERE `city`.`id` = ?');
         $result = $query->execute([$name, $id]);
-        print_r([$name, $id]);
         return $result;
     }
 

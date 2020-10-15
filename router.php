@@ -4,6 +4,7 @@ include_once('app/controllers/menu.controller.php');
 include_once('app/controllers/auth.controller.php');
 include_once('app/controllers/user.controller.php');
 include_once('app/controllers/city.controller.php');
+include_once('app/controllers/animaltype.controller.php');
 
 // defino la base url para la construccion de links con urls semánticas
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
@@ -117,6 +118,29 @@ switch ($params[0]) {
         break;
     case 'eliminar-ciudad':
         $controller = new CityController();
+        $id = $params[1];
+        $controller->delete($id);
+        break;
+    case 'agregar-tipo-de-animal':
+        $controller = new AnimalTypeController();
+        $controller->showAddNewAnimalType();
+        break;
+    case 'insertar-tipo-de-animal':
+        $controller = new AnimalTypeController();
+        $controller->add();
+        break;
+    case 'editar-tipo-de-animal':
+        $controller = new AnimalTypeController();
+        $id = $params[1];
+        $controller->edit($id);
+        break;
+    case 'actualizar-tipo-de-animal':
+        $controller = new AnimalTypeController();
+        $id = $params[1];
+        $controller->update($id);
+        break;
+    case 'eliminar-tipo-de-animal':
+        $controller = new AnimalTypeController();
         $id = $params[1];
         $controller->delete($id);
         break;
