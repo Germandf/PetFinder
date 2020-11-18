@@ -2,18 +2,18 @@
 
 include_once 'app/views/menu.view.php';
 include_once 'app/controllers/pet.controller.php';
-include_once 'app/controllers/auth.controller.php';
+include_once 'app/controllers/user.controller.php';
 
 class MenuController{
 
     private $view;
     private $petController;
-    private $authController;
+    private $userController;
 
     function __construct() {
         $this->view = new MenuView();
         $this->petController = new PetController();
-        $this->authController = new AuthController();
+        $this->userController = new UserController();
     }
 
     // Cargo la pagina home
@@ -29,7 +29,7 @@ class MenuController{
     function showAdmin(){
         $this->view->showHeader();
         $this->view->showNavBar();
-        if($this->authController->isAuth() && $this->authController->isAdmin()){
+        if($this->userController->isAuth() && $this->userController->isAdmin()){
             $this->view->showAdminMenu();
             $this->petController->showAdminTables();
             $this->petController->showAllNotFound();
@@ -41,15 +41,15 @@ class MenuController{
 
     // Cargo la pagina mypets
     function showMyPets(){
-        if($this->authController->isAuth()){
+        if($this->userController->isAuth()){
             $this->view->showHeader();
             $this->view->showNavBar();
             $this->view->showMisMascotas();
-            $userId = $this->authController->getUserId();
+            $userId = $this->userController->getUserId();
             $this->petController->showAllMyPets($userId);
             $this->view->showFooter();
         }else{
-            $this->authController->redirectLogin();
+            $this->userController->redirectLogin();
         }
     }
 
@@ -84,21 +84,6 @@ class MenuController{
         $this->petController->showPetFilter();
         $this->petController->filter();
         $this->view->showFooter();
-    }
-
-    // Cargo la pagina login
-    function showLogin($err = null){
-        $this->view->showHeader();
-        $this->view->showNavBar();
-        $this->authController->showLoginForm($err);
-        $this->view->showFooter();
-    }
-
-    // Cargo la pagina signup
-    function showSignup($err = null){
-        $this->view->showHeader();
-        $this->view->showNavBar();
-        $this->authController->showSignUpForm($err);
     }
 
     function showAccessDenied(){

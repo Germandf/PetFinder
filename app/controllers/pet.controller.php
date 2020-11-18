@@ -8,7 +8,7 @@ include_once 'app/models/animaltype.model.php';
 include_once 'app/views/pet.view.php';
 include_once 'app/views/menu.view.php';
 
-include_once 'app/controllers/auth.controller.php';
+include_once 'app/controllers/user.controller.php';
 include_once 'app/controllers/file.controller.php';
 
 class PetController {
@@ -21,13 +21,13 @@ class PetController {
     private $view;
     private $menuView;
 
-    private $authController;
+    private $userController;
     private $fileController; 
     
     function __construct() {
         $this->model = new PetModel();
         $this->view = new PetView();
-        $this->authController = new AuthController();
+        $this->userController = new UserController();
         $this->menuView = new MenuView();
         $this->cityModel = new CityModel();
         $this->genderModel = new GenderModel();
@@ -59,9 +59,9 @@ class PetController {
         // Primero obtengo la mascota a partir del ID
         $pet = $this->model->get($id);
         // Obtengo el usuario
-        $currentUserId = $this->authController->getUserId();
+        $currentUserId = $this->userController->getUserId();
         // Miro si el usuario es dueño o tiene permisos
-        if($pet->userId == $currentUserId || $this->authController->isAdmin()){
+        if($pet->userId == $currentUserId || $this->userController->isAdmin()){
             $this->showAddPetForm(null, $pet);
         } else{
             $menuController = new MenuController();
@@ -70,7 +70,7 @@ class PetController {
     }
 
     function showAddPetForm($err = null, $pet = null){
-        if($this->authController->isAuth()){
+        if($this->userController->isAuth()){
             $this->menuView->showHeader();
             $this->menuView->showNavBar();
             //Obtengo los generos y las ciudades
@@ -80,7 +80,7 @@ class PetController {
             $this->view->showAddPetForm($err, $cities, $genders, $animalTypes, $pet);
             $this->menuView->showFooter();
         } else{
-            $this->authController->redirectLogin();
+            $this->userController->redirectLogin();
         }
     }
 
@@ -112,8 +112,8 @@ class PetController {
 
     function update($id){
         $pet = $this->model->get($id);
-        $currentUserId = $this->authController->getUserId();
-        if($pet->userId == $currentUserId || $this->authController->isAdmin()){
+        $currentUserId = $this->userController->getUserId();
+        if($pet->userId == $currentUserId || $this->userController->isAdmin()){
             //Tenemos que mostrar todos los datos en el form
             
             $this->add($pet);
@@ -179,7 +179,7 @@ class PetController {
         $date = $_POST['date'];
         $phone_number = $_POST['phone'];
         $description = $_POST['description'];
-        $user_id = $this->authController->getUserId();
+        $user_id = $this->userController->getUserId();
 
         // Verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
@@ -201,7 +201,7 @@ class PetController {
                 if($pet == null){
                     $id = $this->model->add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $resultImageUpload, $description, $user_id);
                     if($id!=0){
-                        $this->authController->redirectHome();
+                        $this->userController->redirectHome();
                     }
                 }
                 // Si estoy editando

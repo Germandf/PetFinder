@@ -1,59 +1,126 @@
 <?php
 
 include_once 'app/models/user.model.php';
-include_once 'app/controllers/auth.controller.php';
+include_once 'app/views/user.view.php';
 
 class UserController {
-    private $authController;
-    private $menuController;
-    private $userModel;
+    private $model;
+    private $view;
 
-    function __construct(){
-        $this->authController = new AuthController();
-        $this->menuController = new MenuController();
-        $this->userModel  = new UserModel();
+    function __construct() {
+        $this->model = new UserModel();
+        $this->view = new UserView();
     }
 
-    // Chequea si ya existe un usuario con ese mail
-    function userExistsByEmail($email){
+    function showLogin($err = null) {
+        if($this->isAuth()){
+            $this->redirectHome();
+            die();
+        }
+        $this->view->showLoginForm($err);
+    }
+
+    function showSignUp($err = null) {
+        if($this->isAuth()){
+            $this->redirectHome();
+            die();
+        }
+        $this->view->showSignUpForm($err);
+    }
+
+    function redirectHome(){
+        header("Location: " . BASE_URL);
+    }
+
+    function isAuth(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(isset($_SESSION['ID_USER'])){
+            return true;
+        }
+        return false;
+    }
+
+    public function getUserId(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if(isset($_SESSION['ID_USER'])){
+            return $_SESSION['ID_USER'];
+        }
+        return 0;
+    }
+
+    public function logOut(){
+        session_start();
+        session_destroy();
+        $this->redirectHome();
+    }
+
+    public function redirectLogin(){
+        header("Location: login");
+    }
+
+    public function logIn() {
+        // Compruebo que no este logeado
+        if($this->isAuth()){
+            $this->redirectHome();
+            die();
+        }
+        // Seteo datos
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        // Verifico campos obligatorios
+        if (empty($email) || empty($password)) {
+            $this->view->showLoginForm("Debe ingresar un email y contraseña");
+            die();
+        }
         // Obtengo el usuario
-        $user = $this->userModel->getByEmail($email);
-        // Si el usuario no existe devuelvo false
+        $user = $this->model->getByEmail($email);
+        // Si el usuario no existe le informo que el mail es incorrecto
         if(!$user){
-            return false;
+            $this->view->showLoginForm("No se encontró un usuario correspondiente a este email");
+            die();
         }
-        // Si existe devuelvo true
-        return true;
+        // Si la contraseña es correcta
+        if (password_verify($password, $user->password)) {
+            // armo la sesion del usuario
+            $this->loginUserByEmail($email);
+        } else {
+            $this->view->showLoginForm("Contraseña incorrecta");
+        }
     }
 
-    // Valida que todos los datos del registro sean correctos
-    function validateAddUserForm($email, $password, $passwordRepeat, $name, $surname){
-        // Valido los datos
-        if (empty($email) || empty($password) || empty($name) || empty($surname) || empty($passwordRepeat)) {
-            $this->menuController->showSignup('Debe completar todos los campos.');
-            die();
+    // Consulta si el usuario es admin
+    function isAdmin(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
         }
-        // Si las contraseñas no son iguales
-        if($password != $passwordRepeat){
-            $this->menuController->showSignup('Las contraseñas deben ser iguales');
-            die();
+        if(isset($_SESSION['PERMISSION_USER'])){
+            return ($_SESSION['PERMISSION_USER'] == 1);
         }
-        // Si el mail es incorrecto
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->menuController->showSignup('Email incorrecto');
-            die();
+        return false;
+    }
+    
+    // Logea al usuario, inicia la sesion
+    function loginUserByEmail($email){
+        $user = $this->model->getByEmail($email);
+        if($user){
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['ID_USER'] = $user->id;
+            $_SESSION['EMAIL_USER'] = $user->email;
+            $_SESSION['PERMISSION_USER'] = $user->permission_id;
+            $this->redirectHome();            
         }
-        // Si ya existe un usuario registrado con ese mail
-        if($this->userExistsByEmail($email)){
-            $this->menuController->showSignup('Ya hay un usuario registrado con ese Email.');
-            die();
-        }  
     }
 
     // Agrega un usuario
-    function AddUser(){
-        if($this->authController->isAuth()){
-            $this->authController->redirectHome();
+    function addUser(){
+        if($this->isAuth()){
+            $this->redirectHome();
             die();
         }
         // Seteo datos
@@ -67,11 +134,47 @@ class UserController {
          
         $hashedPassword = password_hash($password , PASSWORD_DEFAULT);
 
-        if($this->userModel->add($email, $hashedPassword, $name, $surname)){
-            $this->authController->loginUserByEmail($email);
+        if($this->model->add($email, $hashedPassword, $name, $surname)){
+            $this->loginUserByEmail($email);
         }
         else{
-            $this->menuController->showSignup('Ocurrió un error en el servidor, intente nuevamente más tarde');
+            $this->view->showSignupForm('Ocurrió un error en el servidor, intente nuevamente más tarde');
         }
+    }
+
+    // Valida que todos los datos del registro sean correctos
+    function validateAddUserForm($email, $password, $passwordRepeat, $name, $surname){
+        // Valido los datos
+        if (empty($email) || empty($password) || empty($name) || empty($surname) || empty($passwordRepeat)) {
+            $this->view->showSignupForm('Debe completar todos los campos.');
+            die();
+        }
+        // Si las contraseñas no son iguales
+        if($password != $passwordRepeat){
+            $this->view->showSignupForm('Las contraseñas deben ser iguales');
+            die();
+        }
+        // Si el mail es incorrecto
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->view->showSignupForm('Email incorrecto');
+            die();
+        }
+        // Si ya existe un usuario registrado con ese mail
+        if($this->userExistsByEmail($email)){
+            $this->view->showSignupForm('Ya hay un usuario registrado con ese Email.');
+            die();
+        }  
+    }
+
+    // Chequea si ya existe un usuario con ese mail
+    function userExistsByEmail($email){
+        // Obtengo el usuario
+        $user = $this->model->getByEmail($email);
+        // Si el usuario no existe devuelvo false
+        if(!$user){
+            return false;
+        }
+        // Si existe devuelvo true
+        return true;
     }
 }

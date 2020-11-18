@@ -1,7 +1,6 @@
 <?php
 
 include_once('app/controllers/menu.controller.php');
-include_once('app/controllers/auth.controller.php');
 include_once('app/controllers/user.controller.php');
 include_once('app/controllers/city.controller.php');
 include_once('app/controllers/animaltype.controller.php');
@@ -22,11 +21,11 @@ $params = explode('/', $action);
 // determina que camino seguir según la acción
 switch ($params[0]) {
     case 'login':
-        $controller = new MenuController();
+        $controller = new UserController();
         $controller->showLogin();
         break;
     case 'signup':
-        $controller = new MenuController();
+        $controller = new UserController();
         $controller->showSignup();
         break;
     case 'adduser':
@@ -34,11 +33,11 @@ switch ($params[0]) {
         $controller->adduser();
         break;
     case 'verify':
-        $controller = new AuthController();
+        $controller = new UserController();
         $controller->logIn();
         break;
     case 'logout':
-        $controller = new AuthController();
+        $controller = new UserController();
         $controller->logOut();
         break;
     case 'home':

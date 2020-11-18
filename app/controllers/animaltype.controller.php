@@ -1,25 +1,25 @@
 <?php
 
-include_once 'app/controllers/auth.controller.php';
+include_once 'app/controllers/user.controller.php';
 include_once 'app/models/animaltype.model.php';
 include_once 'app/views/animaltype.view.php';
 include_once 'app/views/menu.view.php';
 
 class AnimalTypeController {
-    private $authController;
+    private $userController;
     private $model;
     private $view;
     private $menuView;
 
     function __construct(){
-        $this->authController = new AuthController();
+        $this->userController = new UserController();
         $this->model = new AnimalTypeModel();
         $this->view = new AnimalTypeView();
         $this->menuView = new MenuView();
     }
 
     function showAddNewAnimalType($err = null, $animalType = null){
-        if($this->authController->isAuth() && $this->authController->isAdmin()){
+        if($this->userController->isAuth() && $this->userController->isAdmin()){
             $this->menuView->showHeader();
             $this->menuView->showNavBar();
             $this->view->showAddNewAnimalType($err, $animalType);
@@ -51,7 +51,7 @@ class AnimalTypeController {
 
     function edit($id){
         $animalType = $this->model->get($id);
-        if($this->authController->isAdmin()){
+        if($this->userController->isAdmin()){
             $this->showAddNewAnimalType(null, $animalType);
         }else{
             $menuController = new MenuController();
@@ -63,7 +63,7 @@ class AnimalTypeController {
         // Primero obtengo la ciudad a partir del ID
         $animalType = $this->model->get($id);
         // Miro si el usuario tiene permisos
-        if($this->authController->isAdmin()){
+        if($this->userController->isAdmin()){
             $this->add($animalType);
         } else{
             $menuController = new MenuController();
@@ -74,7 +74,7 @@ class AnimalTypeController {
     // Elimino la ciudad del sistema
     function delete($id) {
         // Miro si el usuario tiene permisos
-        if($this->authController->isAdmin()){
+        if($this->userController->isAdmin()){
             $this->model->remove($id);
             header("Location: " . BASE_URL . "admin");
         } else{

@@ -1,25 +1,25 @@
 <?php
 
-include_once 'app/controllers/auth.controller.php';
+include_once 'app/controllers/user.controller.php';
 include_once 'app/models/city.model.php';
 include_once 'app/views/city.view.php';
 include_once 'app/views/menu.view.php';
 
 class CityController {
-    private $authController;
+    private $userController;
     private $model;
     private $view;
     private $menuView;
 
     function __construct(){
-        $this->authController = new AuthController();
+        $this->userController = new UserController();
         $this->model = new CityModel();
         $this->view = new CityView();
         $this->menuView = new MenuView();
     }
 
     function showAddNewCity($err = null, $city = null){
-        if($this->authController->isAuth() && $this->authController->isAdmin()){
+        if($this->userController->isAuth() && $this->userController->isAdmin()){
             $this->menuView->showHeader();
             $this->menuView->showNavBar();
             $this->view->showAddNewCity($err, $city);
@@ -51,7 +51,7 @@ class CityController {
 
     function edit($id){
         $city = $this->model->get($id);
-        if($this->authController->isAdmin()){
+        if($this->userController->isAdmin()){
             $this->showAddNewCity(null, $city);
         }else{
             $menuController = new MenuController();
@@ -63,7 +63,7 @@ class CityController {
         // Primero obtengo la ciudad a partir del ID
         $city = $this->model->get($id);
         // Miro si el usuario tiene permisos
-        if($this->authController->isAdmin()){
+        if($this->userController->isAdmin()){
             $this->add($city);
         } else{
             $menuController = new MenuController();
@@ -74,7 +74,7 @@ class CityController {
     // Elimino la ciudad del sistema
     function delete($id) {
         // Miro si el usuario tiene permisos
-        if($this->authController->isAdmin()){
+        if($this->userController->isAdmin()){
             $this->model->remove($id);
             header("Location: " . BASE_URL . "admin");
         } else{
