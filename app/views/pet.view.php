@@ -69,6 +69,16 @@ class PetView{
         $this->menuView->showFooter();
     }
 
+    function showAdminPage($petCategories, $pets = null){
+        $this->menuView->showHeader();
+        $this->menuView->showNavBar();
+        $this->smarty->display('templates/adminmenu.tpl');  
+        $this->showAdminTables($petCategories[0], $petCategories[1]);
+        $this->showAllNotFound($pets);
+        $this->menuView->showFooter();
+    }
+
+
     function showPetFilter($petCategories){
         $this->smarty->assign('animaltypes', $petCategories[0]);
         $this->smarty->assign('cities', $petCategories[1]);
@@ -86,4 +96,5 @@ class PetView{
         $this->smarty->assign('cities', $cities);
         $this->smarty->display('templates/admintables.tpl');
     }
+
 }

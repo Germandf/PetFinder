@@ -18,68 +18,77 @@ class AnimalTypeController {
         $this->menuView = new MenuView();
     }
 
+    // Muestra el formulario para agregar o editar un tipo de animal
     function showAddNewAnimalType($err = null, $animalType = null){
         if($this->userController->isAuth() && $this->userController->isAdmin()){
-            $this->menuView->showHeader();
-            $this->menuView->showNavBar();
             $this->view->showAddNewAnimalType($err, $animalType);
-            $this->menuView->showFooter();
         } else{
-            $menuController = new MenuController();
-            $menuController->showAccessDenied();
+            $this->menuView->showError("Acceso denegado");
         }
     }
 
+    // Agrega o edita un tipo de animal
     function add($animalType = null){
-        $name = $_POST['name'];
-        // Verifico campos obligatorios
-        if (empty($name)) {
-            $this->showAddNewAnimalType('Faltan datos obligatorios');
-            die();
-        }
-        // Si estamos editando, redirige a editar con los datos actualizados
-        if($animalType != null){
-            $this->model->update($name, $animalType->id);
-            header("Location: " . BASE_URL . "admin");
-        }
-        // Si no estamos editando, lo inserta y volvemos a admin
-        else{
-            $this->model->add($name);
-            header("Location: " . BASE_URL . "admin");
+        if($this->userController->isAuth() && $this->userController->isAdmin()){
+            $name = isset($_POST['name']) ? $_POST['name'] : null;
+            // Verifico campos obligatorios
+            if (empty($name)) {
+                $this->showAddNewAnimalType('Faltan datos obligatorios');
+            } else {
+                // Si estamos editando, redirige a editar con los datos actualizados
+                if($animalType != null){
+                    $this->model->update($name, $animalType->id);
+                    header("Location: " . BASE_URL . "admin");
+                } else{ // Si no estamos editando, lo inserta y volvemos a admin
+                    $this->model->add($name);
+                    header("Location: " . BASE_URL . "admin");
+                }
+            }
+        } else{
+            $this->menuView->showError("Acceso denegado");
         }
     }
 
+    // Muestro formulario para actualizar tipo de animal
     function edit($id){
         $animalType = $this->model->get($id);
-        if($this->userController->isAdmin()){
-            $this->showAddNewAnimalType(null, $animalType);
-        }else{
-            $menuController = new MenuController();
-            $menuController->showAccessDenied();
+        if($animalType){
+            if($this->userController->isAuth() && $this->userController->isAdmin()){
+                $this->showAddNewAnimalType(null, $animalType);
+            }else{
+                $this->menuView->showError("Acceso denegado");
+            }
+        } else{
+            $this->menuView->showError("No se encontró el tipo de animal");
         }
     }
 
+    // Actualizo tipo de animal
     function update($id){
-        // Primero obtengo la ciudad a partir del ID
         $animalType = $this->model->get($id);
-        // Miro si el usuario tiene permisos
-        if($this->userController->isAdmin()){
-            $this->add($animalType);
+        if($animalType){
+            if($this->userController->isAuth() && $this->userController->isAdmin()){
+                $this->add($animalType);
+            } else{
+                $this->menuView->showError("Acceso denegado");
+            }
         } else{
-            $menuController = new MenuController();
-            $menuController->showAccessDenied();
+            $this->menuView->showError("No se encontró el tipo de animal");
         }
     }
 
-    // Elimino la ciudad del sistema
+    // Elimino el tipo de animal del sistema
     function delete($id) {
-        // Miro si el usuario tiene permisos
-        if($this->userController->isAdmin()){
-            $this->model->remove($id);
-            header("Location: " . BASE_URL . "admin");
+        $animalType = $this->model->get($id);
+        if($animalType){
+            if($this->userController->isAuth() && $this->userController->isAdmin()){
+                $this->model->remove($id);
+                header("Location: " . BASE_URL . "admin");
+            } else{
+                $this->menuView->showError("Acceso denegado");
+            }
         } else{
-            $menuController = new MenuController();
-            $menuController->showAccessDenied();
+            $this->menuView->showError("No se encontró el tipo de animal");
         }
     }
 }

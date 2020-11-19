@@ -25,10 +25,6 @@ class MenuView{
         $this->smarty->display('templates/footer.tpl');  
     }
 
-    function showAdminMenu(){
-        $this->smarty->display('templates/adminmenu.tpl');  
-    }
-
     function showAbout(){
         $this->showHeader();
         $this->showNavbar();

@@ -1,5 +1,6 @@
 <?php
 
+include_once('app/controllers/pet.controller.php');
 include_once('app/controllers/menu.controller.php');
 include_once('app/controllers/user.controller.php');
 include_once('app/controllers/city.controller.php');
@@ -44,8 +45,8 @@ switch ($params[0]) {
         $controller = new PetController();
         $controller->showHome();
         break;
-    case 'admin': // TODO
-        $controller = new MenuController();
+    case 'admin':
+        $controller = new PetController();
         $controller->showAdmin();
         break;
     case 'mis-mascotas':
@@ -107,17 +108,17 @@ switch ($params[0]) {
         break;
     case 'editar-ciudad':
         $controller = new CityController();
-        $id = $params[1];
+        $id = isset($params[1]) ? $params[1] : null;
         $controller->edit($id);
         break;
     case 'actualizar-ciudad':
         $controller = new CityController();
-        $id = $params[1];
+        $id = isset($params[1]) ? $params[1] : null;
         $controller->update($id);
         break;
     case 'eliminar-ciudad':
         $controller = new CityController();
-        $id = $params[1];
+        $id = isset($params[1]) ? $params[1] : null;
         $controller->delete($id);
         break;
     case 'agregar-tipo-de-animal':
@@ -130,17 +131,17 @@ switch ($params[0]) {
         break;
     case 'editar-tipo-de-animal':
         $controller = new AnimalTypeController();
-        $id = $params[1];
+        $id = isset($params[1]) ? $params[1] : null;
         $controller->edit($id);
         break;
     case 'actualizar-tipo-de-animal':
         $controller = new AnimalTypeController();
-        $id = $params[1];
+        $id = isset($params[1]) ? $params[1] : null;
         $controller->update($id);
         break;
     case 'eliminar-tipo-de-animal':
         $controller = new AnimalTypeController();
-        $id = $params[1];
+        $id = isset($params[1]) ? $params[1] : null;
         $controller->delete($id);
         break;
     default:

@@ -250,4 +250,15 @@ class PetController {
             $this->menuView->showError('No se encontró la mascota');
         }
     }
+
+    // Cargo la pagina admin
+    function showAdmin(){
+        if($this->userController->isAuth() && $this->userController->isAdmin()){
+            $petCategories = $this->getPetCategories();
+            $pets = $this->getAllNotFound();
+            $this->view->showAdminPage($petCategories, $pets);
+        }else{
+            $this->menuView->showError("Acceso denegado");
+        }
+    }
 }
