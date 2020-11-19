@@ -6,7 +6,7 @@ include_once 'app/models/gender.model.php';
 include_once 'app/models/animaltype.model.php';
 include_once 'app/views/pet.view.php';
 include_once 'app/views/menu.view.php';
-include_once 'app/controllers/user.controller.php';
+include_once 'app/helpers/auth.helper.php';
 include_once 'app/helpers/file.helper.php';
 
 class PetController {
@@ -17,7 +17,7 @@ class PetController {
     private $animalTypeModel;
     private $view;
     private $menuView;
-    private $userController;
+    private $authHelper;
     private $fileHelper; 
     
     function __construct() {
@@ -27,7 +27,7 @@ class PetController {
         $this->animalTypeModel = new AnimalTypeModel();
         $this->view = new PetView();
         $this->menuView = new MenuView();
-        $this->userController = new UserController();
+        $this->authHelper = new AuthHelper();
         $this->fileHelper = new FileHelper();
     }
 
@@ -40,12 +40,12 @@ class PetController {
 
     // Muestro las ultimas mascotas perdidas
     function showMyPets(){
-        if($this->userController->isAuth()){
-            $userId = $this->userController->getUserId();
+        if($this->authHelper->isAuth()){
+            $userId = $this->authHelper->getUserId();
             $pets = $this->model->getAllNotFoundByUser($userId);
             $this->view->showAllMyPets($pets);
         }else{
-            $this->userController->redirectLogin();
+            $this->authHelper->redirectLogin();
         }
     }
 
@@ -67,9 +67,9 @@ class PetController {
         // Primero obtengo la mascota a partir del ID
         $pet = $this->model->get($id);
         // Obtengo el usuario
-        $currentUserId = $this->userController->getUserId();
+        $currentUserId = $this->authHelper->getUserId();
         // Miro si el usuario es dueño o tiene permisos
-        if($pet->userId == $currentUserId || $this->userController->isAdmin()){
+        if($pet->userId == $currentUserId || $this->authHelper->isAdmin()){
             $this->showAddPetForm(null, $pet);
         } else{
             $this->menuView->showError("Acceso denegado");
@@ -77,12 +77,12 @@ class PetController {
     }
 
     function showAddPetForm($err = null, $pet = null){
-        if($this->userController->isAuth()){
+        if($this->authHelper->isAuth()){
             //Obtengo los generos y las ciudades
             $petCategories = $this->getPetCategories();
             $this->view->showAddPetForm($err, $petCategories, $pet);
         } else{
-            $this->userController->redirectLogin();
+            $this->authHelper->redirectLogin();
         }
     }
 
@@ -142,8 +142,8 @@ class PetController {
             $this->menuView->showError('No se encontró la mascota para editar');
         } else{
             $pet = $this->model->get($id);
-            $currentUserId = $this->userController->getUserId();
-            if($pet->userId == $currentUserId || $this->userController->isAdmin()){
+            $currentUserId = $this->authHelper->getUserId();
+            if($pet->userId == $currentUserId || $this->authHelper->isAdmin()){
                 //Tenemos que mostrar todos los datos en el form
                 $this->add($pet);
                 $this->showAddPetForm(null, $pet); //Estamos editando
@@ -172,7 +172,7 @@ class PetController {
         $phone_number = isset($_POST['phone']) ? $_POST['phone'] : null;
         $description = isset($_POST['description']) ? $_POST['description'] : null;
         // Obtengo el usuario que esta subiendo la mascota
-        $user_id = $this->userController->getUserId();
+        $user_id = $this->authHelper->getUserId();
         
         // Verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
@@ -194,7 +194,7 @@ class PetController {
                 if($pet == null){
                     $id = $this->model->add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $resultImageUpload, $description, $user_id);
                     if($id!=0){
-                        $this->userController->redirectHome();
+                        $this->authHelper->redirectHome();
                     }
                 }
                 // Si estoy editando
@@ -220,9 +220,9 @@ class PetController {
     // Elimino la mascota del sistema
     function delete($id) {
         $pet = $this->model->get($id);
-        $currentUserId = $this->userController->getUserId();
+        $currentUserId = $this->authHelper->getUserId();
         if($pet){
-            if($pet->userId == $currentUserId || $this->userController->isAdmin()){
+            if($pet->userId == $currentUserId || $this->authHelper->isAdmin()){
                 // Eliminamos
                 $this->model->remove($id);
                 header("Location: " . BASE_URL);
@@ -237,9 +237,9 @@ class PetController {
     // Finalizo la busqueda de la mascota
     function setFound($id) {
         $pet = $this->model->get($id);
-        $currentUserId = $this->userController->getUserId();
+        $currentUserId = $this->authHelper->getUserId();
         if($pet){
-            if($pet->userId == $currentUserId || $this->userController->isAdmin()){
+            if($pet->userId == $currentUserId || $this->authHelper->isAdmin()){
                 // Encontramos
                 $this->model->setFound($id);
                 header("Location: " . BASE_URL);
@@ -253,7 +253,7 @@ class PetController {
 
     // Cargo la pagina admin
     function showAdmin(){
-        if($this->userController->isAuth() && $this->userController->isAdmin()){
+        if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
             $petCategories = $this->getPetCategories();
             $pets = $this->getAllNotFound();
             $this->view->showAdminPage($petCategories, $pets);

@@ -78,7 +78,8 @@ class PetModel {
                                         INNER JOIN `user` as `u` ON `p`.`user_id` = `u`.`id`
                                         WHERE c.`id` = IFNULL(?, c.`id`)
                                         AND a.`id` = IFNULL(?, a.`id`)
-                                        AND g.`id` = IFNULL(?, g.`id`)');
+                                        AND g.`id` = IFNULL(?, g.`id`)
+                                        AND p.`found` = 0');
         $query->execute([$cityId, $animalTypeId, $genderId]);
         $pets = $query->fetchAll(PDO::FETCH_OBJ);
         return $pets;

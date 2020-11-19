@@ -2,18 +2,21 @@
 
 include_once 'app/models/user.model.php';
 include_once 'app/views/user.view.php';
+include_once 'app/helpers/auth.helper.php';
 
 class UserController {
     private $model;
     private $view;
+    private $authHelper;
 
     function __construct() {
         $this->model = new UserModel();
         $this->view = new UserView();
+        $this->authHelper = new AuthHelper();
     }
 
     function showLogin($err = null) {
-        if($this->isAuth()){
+        if($this->authHelper->isAuth()){
             $this->redirectHome();
             die();
         }
@@ -21,7 +24,7 @@ class UserController {
     }
 
     function showSignUp($err = null) {
-        if($this->isAuth()){
+        if($this->authHelper->isAuth()){
             $this->redirectHome();
             die();
         }
@@ -32,39 +35,15 @@ class UserController {
         header("Location: " . BASE_URL);
     }
 
-    function isAuth(){
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        if(isset($_SESSION['ID_USER'])){
-            return true;
-        }
-        return false;
-    }
-
-    public function getUserId(){
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        if(isset($_SESSION['ID_USER'])){
-            return $_SESSION['ID_USER'];
-        }
-        return 0;
-    }
-
     public function logOut(){
         session_start();
         session_destroy();
         $this->redirectHome();
     }
 
-    public function redirectLogin(){
-        header("Location: login");
-    }
-
     public function logIn() {
         // Compruebo que no este logeado
-        if($this->isAuth()){
+        if($this->authHelper->isAuth()){
             $this->redirectHome();
             die();
         }
@@ -91,17 +70,6 @@ class UserController {
             $this->view->showLoginForm("Contraseña incorrecta");
         }
     }
-
-    // Consulta si el usuario es admin
-    function isAdmin(){
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        if(isset($_SESSION['PERMISSION_USER'])){
-            return ($_SESSION['PERMISSION_USER'] == 1);
-        }
-        return false;
-    }
     
     // Logea al usuario, inicia la sesion
     function loginUserByEmail($email){
@@ -119,7 +87,7 @@ class UserController {
 
     // Agrega un usuario
     function addUser(){
-        if($this->isAuth()){
+        if($this->authHelper->isAuth()){
             $this->redirectHome();
             die();
         }
