@@ -41,19 +41,19 @@ switch ($params[0]) {
         $controller->logOut();
         break;
     case 'home':
-        $controller = new MenuController();
+        $controller = new PetController();
         $controller->showHome();
         break;
-    case 'admin':
+    case 'admin': // TODO
         $controller = new MenuController();
         $controller->showAdmin();
         break;
     case 'mis-mascotas':
-        $controller = new MenuController();
+        $controller = new PetController();
         $controller->showMyPets();
         break;
     case 'categorias':
-        $controller = new MenuController();
+        $controller = new PetController();
         $controller->showCategories();
         break;
     case 'sobre-nosotros':
@@ -61,13 +61,13 @@ switch ($params[0]) {
         $controller->showAbout();
         break;
     case 'filtrar':
-        $controller = new MenuController();
+        $controller = new PetController();
         $controller->showFilterPets();
         break;
     case 'ver':
-        $controller = new MenuController();
+        $controller = new PetController();
         $id = $params[1];
-        $controller->showPet($id);
+        $controller->show($id);
         break;
     case 'agregar':
         $controller = new PetController();
@@ -84,18 +84,18 @@ switch ($params[0]) {
         break;
     case 'actualizar-mascota':
         $controller = new PetController();
-        $id = $params[1];
+        $id = isset($params[1]) ? $params[1] : null;
         $controller->update($id);
         break;
     case 'eliminar':
         $controller = new PetController();
-        $id = $params[1];
+        $id = isset($params[1]) ? $params[1] : null;
         $controller->delete($id);
         break;
     case 'encontrar':
         $controller = new PetController();
-        $id = $params[1];
-        $controller->find($id);
+        $id = isset($params[1]) ? $params[1] : null;
+        $controller->setFound($id);
         break;
     case 'agregar-ciudad':
         $controller = new CityController();

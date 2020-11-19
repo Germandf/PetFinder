@@ -109,7 +109,7 @@ class PetModel {
     }
 
     // Finaliza la busqueda de la mascota
-    function find($id) {
+    function setFound($id) {
         $query = $this->db->prepare('UPDATE pet SET found = 1 WHERE id = ?');
         $query->execute([$id]);
     }

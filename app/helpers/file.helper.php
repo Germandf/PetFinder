@@ -1,5 +1,5 @@
 <?php
-    class FileController{
+    class FileHelper{
 
         function generateFileName($length = 12){
             // Pasamos todos los caracteres que vamos a utilizar

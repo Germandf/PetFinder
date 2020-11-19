@@ -4,12 +4,10 @@ include_once 'app/models/pet.model.php';
 include_once 'app/models/city.model.php';
 include_once 'app/models/gender.model.php';
 include_once 'app/models/animaltype.model.php';
-
 include_once 'app/views/pet.view.php';
 include_once 'app/views/menu.view.php';
-
 include_once 'app/controllers/user.controller.php';
-include_once 'app/controllers/file.controller.php';
+include_once 'app/helpers/file.helper.php';
 
 class PetController {
 
@@ -17,42 +15,52 @@ class PetController {
     private $cityModel;
     private $genderModel;
     private $animalTypeModel;
-
     private $view;
     private $menuView;
-
     private $userController;
-    private $fileController; 
+    private $fileHelper; 
     
     function __construct() {
         $this->model = new PetModel();
-        $this->view = new PetView();
-        $this->userController = new UserController();
-        $this->menuView = new MenuView();
         $this->cityModel = new CityModel();
         $this->genderModel = new GenderModel();
         $this->animalTypeModel = new AnimalTypeModel();
-        $this->fileController = new FileController();
+        $this->view = new PetView();
+        $this->menuView = new MenuView();
+        $this->userController = new UserController();
+        $this->fileHelper = new FileHelper();
+    }
+
+    // Muestro el home
+    function showHome(){
+        $petCategories = $this->getPetCategories();
+        $pets = $this->getAllNotFound();
+        $this->view->showHome($petCategories, $pets);
     }
 
     // Muestro las ultimas mascotas perdidas
-    function showAllNotFound() {
-        $pets = $this->model->getAllNotFound();
-        $this->view->showAllNotFound($pets);
-    }
-
-    // Muestro las ultimas mascotas perdidas
-    function showAllMyPets($userId) {
-        $pets = $this->model->getAllNotFoundByUser($userId);
-        $this->view->showAllMyPets($pets);
+    function showMyPets(){
+        if($this->userController->isAuth()){
+            $userId = $this->userController->getUserId();
+            $pets = $this->model->getAllNotFoundByUser($userId);
+            $this->view->showAllMyPets($pets);
+        }else{
+            $this->userController->redirectLogin();
+        }
     }
 
     // Muestro los filtros en index segun la informacion en la db
-    function showPetFilter() {
-        $animaltypes = $this->animalTypeModel->getAllAnimalTypes();
+    function getPetCategories() {
+        $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
         $cities = $this->cityModel->getAllCities();
         $genders = $this->genderModel->getAllGenders();
-        $this->view->showPetFilter($animaltypes, $cities, $genders);
+        return [$animalTypes, $cities, $genders];
+    }
+
+    // Muestro las ultimas mascotas perdidas
+    function getAllNotFound() {
+        $pets = $this->model->getAllNotFound();
+        return $pets;
     }
     
     function edit($id){
@@ -64,21 +72,15 @@ class PetController {
         if($pet->userId == $currentUserId || $this->userController->isAdmin()){
             $this->showAddPetForm(null, $pet);
         } else{
-            $menuController = new MenuController();
-            $menuController->showAccessDenied();
+            $this->menuView->showError("Acceso denegado");
         }
     }
 
     function showAddPetForm($err = null, $pet = null){
         if($this->userController->isAuth()){
-            $this->menuView->showHeader();
-            $this->menuView->showNavBar();
             //Obtengo los generos y las ciudades
-            $cities = $this->cityModel->getAllCities();
-            $genders = $this->genderModel->getAllGenders();
-            $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
-            $this->view->showAddPetForm($err, $cities, $genders, $animalTypes, $pet);
-            $this->menuView->showFooter();
+            $petCategories = $this->getPetCategories();
+            $this->view->showAddPetForm($err, $petCategories, $pet);
         } else{
             $this->userController->redirectLogin();
         }
@@ -92,40 +94,13 @@ class PetController {
     }
 
     // Muestro las tablas en categories segun la informacion en la db
-    function showCategoriesTables(){
-        $animalTypes = $this->animalTypeModel->getAllAnimalTypes();
-        $cities = $this->cityModel->getAllCities();
-        $genders = $this->genderModel->getAllGenders();
-        $this->view->showCategoriesTables($animalTypes, $cities, $genders);
+    function showCategories(){
+        $petCategories = $this->getPetCategories();
+        $this->view->showCategories($petCategories);
     }
 
-    // Muestro mas informacion de la mascota
-    function show($id) {
-        $pet = $this->model->get($id);
-        if($pet) {
-            $this->view->show($pet);
-        }
-        else {
-            $this->menuView->showError('Mascota no encontrada');
-        }
-    }
-
-    function update($id){
-        $pet = $this->model->get($id);
-        $currentUserId = $this->userController->getUserId();
-        if($pet->userId == $currentUserId || $this->userController->isAdmin()){
-            //Tenemos que mostrar todos los datos en el form
-            
-            $this->add($pet);
-            $this->showAddPetForm(null, $pet); //Estamos editando
-        }else{
-            $menuController = new MenuController();
-            $menuController->showAccessDenied();
-        }
-    }
-
-    // Filtro mascotas utilizando uno o tres parametros
-    function filter(){
+    // Muestro todas las mascotas que correspondan con el filtro // Filtro mascotas utilizando uno o tres parametros
+    function showFilterPets(){
         // Me aseguro que haya insertado al menos un dato
         if(isset($_GET["city"]) || isset($_GET["animalType"]) || isset($_GET["gender"])){
             if(isset($_GET["city"])){
@@ -140,7 +115,8 @@ class PetController {
             $pets = $this->model->getByFilter($cityId, $animalTypeId, $genderId);
             // Me aseguro que al menos una mascota corresponda con los datos insertados
             if (!empty($pets)){
-                $this->view->showByFilter($pets);
+                $petCategories = $this->getPetCategories();
+                $this->view->showByFilter($petCategories, $pets);
             } else{
                 $this->menuView->showError('No se encontraron mascotas con esos filtros');
             }
@@ -149,23 +125,39 @@ class PetController {
         }
     }
 
+    // Muestro mas informacion de la mascota
+    function show($id) {
+        $pet = $this->model->get($id);
+        if($pet) {
+            $this->view->show($pet);
+        }
+        else {
+            $this->menuView->showError('Mascota no encontrada');
+        }
+    }
+
+    // Actualizo la mascota con los nuevos datos
+    function update($id = null){
+        if($id == null){
+            $this->menuView->showError('No se encontró la mascota para editar');
+        } else{
+            $pet = $this->model->get($id);
+            $currentUserId = $this->userController->getUserId();
+            if($pet->userId == $currentUserId || $this->userController->isAdmin()){
+                //Tenemos que mostrar todos los datos en el form
+                $this->add($pet);
+                $this->showAddPetForm(null, $pet); //Estamos editando
+            }else{
+                $this->menuView->showError('Acceso denegado');
+            }
+        }
+    }
+
     // Inserto una mascota en el sistema o edito una
     function add($pet = null) {
-        if(isset($_POST['animalType'])){
-            $animal_type_id = $_POST['animalType'];
-        }else{
-            $animal_type_id = null;
-        }
-        if(isset($_POST['city'])){
-            $city_id = $_POST['city'];
-        }else{
-            $city_id = null;
-        }
-        if(isset($_POST['genderType'])){
-            $gender_id = $_POST['genderType'];
-        }else{
-            $gender_id = null;
-        }
+        $animal_type_id = isset($_POST['animalType']) ? $_POST['animalType'] : null;
+        $city_id = isset($_POST['city']) ? $_POST['city'] : null;
+        $gender_id = isset($_POST['animalType']) ? $_POST['animalType'] : null;
         if(isset($_FILES['photo'])){
             $photo = $_FILES['photo'];
             // Compruebo si estamos editando y no envio foto
@@ -175,12 +167,13 @@ class PetController {
         }else{
             $photo = null;
         }
-        $name = $_POST['name'];
-        $date = $_POST['date'];
-        $phone_number = $_POST['phone'];
-        $description = $_POST['description'];
+        $name = isset($_POST['name']) ? $_POST['name'] : null;
+        $date = isset($_POST['date']) ? $_POST['date'] : null;
+        $phone_number = isset($_POST['phone']) ? $_POST['phone'] : null;
+        $description = isset($_POST['description']) ? $_POST['description'] : null;
+        // Obtengo el usuario que esta subiendo la mascota
         $user_id = $this->userController->getUserId();
-
+        
         // Verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
             $this->showAddPetForm('Faltan datos obligatorios');
@@ -189,7 +182,7 @@ class PetController {
         // Detecto si estamos subiendo una foto
         if($_FILES['photo']['size']>0){
             // Devuelve la ruta de la foto una vez que se subio o false en caso de que no
-            $resultImageUpload = $this->fileController->uploadImage('photo');
+            $resultImageUpload = $this->fileHelper->uploadImage('photo');
             // Si no se subio
             if(!$resultImageUpload){
                 $this->showAddPetForm('Ocurrio un error en el servidor');
@@ -226,13 +219,35 @@ class PetController {
 
     // Elimino la mascota del sistema
     function delete($id) {
-        $this->model->remove($id);
-        header("Location: " . BASE_URL);
+        $pet = $this->model->get($id);
+        $currentUserId = $this->userController->getUserId();
+        if($pet){
+            if($pet->userId == $currentUserId || $this->userController->isAdmin()){
+                // Eliminamos
+                $this->model->remove($id);
+                header("Location: " . BASE_URL);
+            }else{
+                $this->menuView->showError('Acceso denegado');
+            }
+        } else{
+            $this->menuView->showError('No se encontró la mascota');
+        }
     }
 
     // Finalizo la busqueda de la mascota
-    function find($id) {
-        $this->model->find($id);
-        header("Location: " . BASE_URL);
+    function setFound($id) {
+        $pet = $this->model->get($id);
+        $currentUserId = $this->userController->getUserId();
+        if($pet){
+            if($pet->userId == $currentUserId || $this->userController->isAdmin()){
+                // Encontramos
+                $this->model->setFound($id);
+                header("Location: " . BASE_URL);
+            }else{
+                $this->menuView->showError('Acceso denegado');
+            }
+        } else{
+            $this->menuView->showError('No se encontró la mascota');
+        }
     }
 }

@@ -29,20 +29,18 @@ class MenuView{
         $this->smarty->display('templates/adminmenu.tpl');  
     }
 
-    function showMisMascotas(){
-        $this->smarty->display('templates/mypetsmenu.tpl');  
-    }
-
     function showAbout(){
+        $this->showHeader();
+        $this->showNavbar();
         $this->smarty->display('templates/about.tpl');
-    }
-
-    function showSignup(){
-        $this->smarty->display('templates/signup.tpl');
+        $this->showFooter();
     }
 
     function showError($msg){
+        $this->showHeader();
+        $this->showNavbar();
         $this->smarty->assign('msg', $msg);
         $this->smarty->display('templates/error.tpl');
+        $this->showFooter();
     }
 }
