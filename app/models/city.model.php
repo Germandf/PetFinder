@@ -1,19 +1,15 @@
 <?php
 
-include_once 'app/helpers/config.php';
+include_once 'app/helpers/db.helper.php';
 
 class CityModel {
     
     private $db;
+    private $dbHelper;
 
     function __construct() {
-        $this->db = $this->connect();
-    }
-
-    // Abre conexión a la base de datos
-    private function connect() {
-        $db = new PDO('mysql:host='.DB_HOST.';'.'dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASSWORD);
-        return $db;
+        $this->dbHelper = new DbHelper();
+        $this->db = $this->dbHelper->connect();
     }
 
     // Obtengo una ciudad de la base de datos

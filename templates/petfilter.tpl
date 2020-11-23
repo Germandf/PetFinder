@@ -5,7 +5,10 @@
                 <select id="inputCity" class="d-inline form-control mt-3" name="city">
                     <option value="none" selected disabled hidden>Ciudad</option>
                     {foreach from=$cities item=city}
-                        <option value="{$city->id}">{$city->name}</option>
+                        <option value="{$city->id}">
+                            {$city->name}
+                        
+                        </option>
                     {/foreach}
                 </select>
             </div>

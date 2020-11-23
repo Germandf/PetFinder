@@ -1,13 +1,15 @@
 <?php
 
-include_once 'app/helpers/config.php';
+include_once 'app/helpers/db.helper.php';
 
 class AnimalTypeModel {
     
     private $db;
+    private $dbHelper;
 
     function __construct() {
-        $this->db = $this->connect();
+        $this->dbHelper = new DbHelper();
+        $this->db = $this->dbHelper->connect();
     }
 
     // Abre conexión a la base de datos

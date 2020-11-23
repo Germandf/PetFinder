@@ -174,7 +174,7 @@ class PetController {
         // Verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
             $this->showAddPetForm('Faltan datos obligatorios');
-            die();
+            return;
         }
         // Detecto si estamos subiendo una foto
         if($_FILES['photo']['size']>0){
@@ -183,7 +183,7 @@ class PetController {
             // Si no se subio
             if(!$resultImageUpload){
                 $this->showAddPetForm('Hubo un error al subir la imagen, asegúrese que la extensión de la misma sea compatible');
-                die();
+                return;
             }
             // Si se subio
             else{
