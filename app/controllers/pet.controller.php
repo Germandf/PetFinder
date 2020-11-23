@@ -144,9 +144,7 @@ class PetController {
             $pet = $this->model->get($id);
             $currentUserId = $this->authHelper->getUserId();
             if($pet->userId == $currentUserId || $this->authHelper->isAdmin()){
-                //Tenemos que mostrar todos los datos en el form
                 $this->add($pet);
-                $this->showAddPetForm(null, $pet); //Estamos editando
             }else{
                 $this->menuView->showError('Acceso denegado');
             }
@@ -173,7 +171,6 @@ class PetController {
         $description = isset($_POST['description']) ? $_POST['description'] : null;
         // Obtengo el usuario que esta subiendo la mascota
         $user_id = $this->authHelper->getUserId();
-        
         // Verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
             $this->showAddPetForm('Faltan datos obligatorios');
@@ -185,7 +182,7 @@ class PetController {
             $resultImageUpload = $this->fileHelper->uploadImage('photo');
             // Si no se subio
             if(!$resultImageUpload){
-                $this->showAddPetForm('Ocurrio un error en el servidor');
+                $this->showAddPetForm('Hubo un error al subir la imagen, asegúrese que la extensión de la misma sea compatible');
                 die();
             }
             // Si se subio
@@ -207,7 +204,7 @@ class PetController {
         elseif($pet != null){
             $this->model->update($pet->id, $name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description);
         }
-        // Si estamos editando, redirige a editar con los datos actualizados
+        // Si estamos editando, redirige a mis mascotas
         if($pet != null){
             header("Location: ".BASE_URL.'mis-mascotas'); 
         }

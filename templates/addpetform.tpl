@@ -1,12 +1,11 @@
 <!-- Si estamos editando, tomamos los valores de la DB. En el caso de los selects, seleccionamos por defecto el que sea igual al asignado a la mascota (si esta editando) -->
-
 <div class="row">
     <div class="col-12 mt-5 text-center">
         <!-- Consulta si esta editando o agregando una mascota y lo envia a la URL correspondiente -->
         {if isset($pet)}
-        <form id="addPetForm" method="post"  enctype= "multipart/form-data" action="actualizar-mascota/{$pet->id}" class="form-signin text-left shadow rounded">
+        <form id="addPetForm" method="post" enctype= "multipart/form-data" action="actualizar-mascota/{$pet->id}" class="form-signin text-left shadow rounded">
         {else}
-        <form id="addPetForm" method="post"  enctype= "multipart/form-data" action="insertar-mascota" class="form-signin text-left shadow rounded">
+        <form id="addPetForm" method="post" enctype= "multipart/form-data" action="insertar-mascota" class="form-signin text-left shadow rounded">
         {/if}
             <!-- Muestra el titulo correspondiente -->
             {if isset($pet)}
@@ -101,7 +100,9 @@
                     <label class="custom-file-label" for="photo">Elegir foto</label>
                 </div>
                 {if isset($pet)}
-                    <img src="{$pet->photo}" class="w-100 mt-2">
+                    <img src="{$pet->photo}" class="w-100 mt-2" id="loadedPhoto">
+                {else}
+                    <img src="" class="w-100 mt-2" id="loadedPhoto">
                 {/if}
             </div>
             <!-- Description -->
@@ -122,3 +123,5 @@
         </form>
     </div>
 </div>
+<!-- Script para detectar cambio de foto -->
+<script src="js/addpetform.js"></script>
