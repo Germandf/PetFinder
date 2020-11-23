@@ -57,8 +57,8 @@ CREATE TABLE `city` (
 
 INSERT INTO `city` (`id`, `name`) VALUES
 (1, 'Tres Arroyos'),
-(5, 'Tandil'),
-(6, 'Rauch');
+(2, 'Tandil'),
+(3, 'Rauch');
 
 -- --------------------------------------------------------
 
@@ -77,7 +77,7 @@ CREATE TABLE `gender` (
 
 INSERT INTO `gender` (`id`, `name`) VALUES
 (1, 'Macho'),
-(3, 'Hembra');
+(2, 'Hembra');
 
 -- --------------------------------------------------------
 
