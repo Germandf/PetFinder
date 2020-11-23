@@ -38,12 +38,20 @@ class AnimalTypeController {
             } else {
                 // Si estamos editando, redirige a editar con los datos actualizados
                 if($animalType != null){
-                    $this->model->update($name, $animalType->id);
-                    header("Location: " . BASE_URL . "admin");
+                    if($this->model->animalTypeExists($name)){
+                        $this->menuView->showError("Este tipo de animal ya existe");
+                    }else{
+                        $this->model->update($name, $animalType->id);
+                        header("Location: " . BASE_URL . "admin");
+                    }
                 } else{ // Si no estamos editando, lo inserta y volvemos a admin
-                    $this->model->add($name);
-                    header("Location: " . BASE_URL . "admin");
-                }
+                    if($this->model->animalTypeExists($name)){
+                        $this->menuView->showError("Este tipo de animal ya existe");
+                    }else{
+                        $this->model->add($name);
+                        header("Location: " . BASE_URL . "admin");
+                    }
+                }   
             }
         } else{
             $this->menuView->showError("Acceso denegado");

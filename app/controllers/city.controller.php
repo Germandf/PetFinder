@@ -38,11 +38,19 @@ class CityController {
             } else {
                 // Si estamos editando, redirige a editar con los datos actualizados
                 if($city != null){
-                    $this->model->update($name, $city->id);
-                    header("Location: " . BASE_URL . "admin");
+                    if($this->model->cityExists($name)){
+                        $this->menuView->showError("Esta ciudad ya existe");
+                    }else{
+                        $this->model->update($name, $city->id);
+                        header("Location: " . BASE_URL . "admin");
+                    }
                 } else{ // Si no estamos editando, lo inserta y volvemos a admin
-                    $this->model->add($name);
-                    header("Location: " . BASE_URL . "admin");
+                    if($this->model->cityExists($name)){
+                        $this->menuView->showError("Esta ciudad ya existe");
+                    }else{
+                        $this->model->add($name);
+                        header("Location: " . BASE_URL . "admin");
+                    }
                 }
             }
         } else{

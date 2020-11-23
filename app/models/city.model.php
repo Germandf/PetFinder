@@ -39,6 +39,7 @@ class CityModel {
         return $this->db->lastInsertId();
     }
     
+   
     // Actualiza los datos de una ciudad en la base de datos
     function update($name, $id) {
         $query = $this->db->prepare('   UPDATE `city` 
@@ -52,5 +53,12 @@ class CityModel {
     function remove($id) {
         $query = $this->db->prepare('DELETE FROM city WHERE id = ?');
         $query->execute([$id]);
+    }
+
+    function cityExists($name){
+        $query = $this->db->prepare('SELECT id FROM city WHERE `name` = ?');
+        $result = $query->execute([$name]);
+        $row = $query->fetchAll(PDO::FETCH_OBJ);
+        return count($row); //Si encontro alguna ciudad devuelve true
     }
 }

@@ -59,4 +59,11 @@ class AnimalTypeModel {
         $query = $this->db->prepare('DELETE FROM animal_type WHERE id = ?');
         $query->execute([$id]);
     }
+
+    function animalTypeExists($name){
+        $query = $this->db->prepare('SELECT id FROM animal_type WHERE `name` = ?');
+        $result = $query->execute([$name]);
+        $row = $query->fetchAll(PDO::FETCH_OBJ);
+        return count($row); //Si encontro alguna ciudad devuelve true
+    }
 }
