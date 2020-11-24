@@ -79,6 +79,7 @@ class UserController {
                 session_start();
             }
             $_SESSION['ID_USER'] = $user->id;
+            $_SESSION['NAME_USER'] = $user->name;
             $_SESSION['EMAIL_USER'] = $user->email;
             $_SESSION['PERMISSION_USER'] = $user->permission_id;
             $this->redirectHome();            
