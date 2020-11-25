@@ -12,7 +12,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
 h1, h2, h3, .card-title, .list-group-item.card-title{
     font-family: 'VAG-Rounded-Bold';
     color: #CF5D28;
@@ -34,7 +33,6 @@ body button, body .btn, body select, body input, .list-group, .list-group-item, 
         font-size: 32px;
     }
 }
-
 @media (min-width: 1024px) {
     .lastPetsTitle, .categoriesTitle, .petTitle{
         font-size: 40px;
@@ -46,7 +44,6 @@ body button, body .btn, body select, body input, .list-group, .list-group-item, 
     padding: 15px;
     margin: 0 auto;
 }
-
 .nav-link{
     font-family: 'VAG-Rounded-Bold';
     letter-spacing: 1px;

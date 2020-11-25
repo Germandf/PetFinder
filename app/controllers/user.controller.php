@@ -20,6 +20,7 @@ class UserController {
         $this->menuView = new MenuView();
     }
 
+    // Muestra formulario de inicio de sesion
     function showLogin($err = null) {
         if($this->authHelper->isAuth()){
             $this->redirectHome();
@@ -28,6 +29,7 @@ class UserController {
         $this->view->showLoginForm($err);
     }
 
+    // Muestra formulario de registro
     function showSignUp($err = null) {
         if($this->authHelper->isAuth()){
             $this->redirectHome();
@@ -36,16 +38,14 @@ class UserController {
         $this->view->showSignUpForm($err);
     }
 
-    function redirectHome(){
-        header("Location: " . BASE_URL);
-    }
-
+    // Deslogea al usuario
     public function logOut(){
         session_start();
         session_destroy();
         $this->redirectHome();
     }
 
+    // Logea al usuario
     public function logIn() {
         // Compruebo que no este logeado
         if($this->authHelper->isAuth()){
@@ -76,7 +76,7 @@ class UserController {
         }
     }
     
-    // Logea al usuario, inicia la sesion
+    // Una vez logeado, armo la sesion del usuario
     function loginUserByEmail($email){
         $user = $this->model->getByEmail($email);
         if($user){
@@ -103,11 +103,11 @@ class UserController {
         $email = $_POST['email'];
         $password = $_POST['password'];
         $passwordRepeat = $_POST['passwordrepeat'];
-        // Si hay algun error, hace un die
+        // Valido los datos
         $this->validateAddUserForm($email, $password, $passwordRepeat, $name, $surname);
-         
+        // Hasheo la password
         $hashedPassword = password_hash($password , PASSWORD_DEFAULT);
-
+        // Si no devuelve error, logea automaticamente
         if($this->model->add($email, $hashedPassword, $name, $surname)){
             $this->loginUserByEmail($email);
         }
@@ -140,56 +140,15 @@ class UserController {
         }  
     }
 
-
     // Chequea si ya existe un usuario con ese mail
     function userExistsByEmail($email){
-        // Obtengo el usuario
         $user = $this->model->getByEmail($email);
-        // Si el usuario no existe devuelvo false
         if(!$user){
             return false;
         }
-        // Si existe devuelvo true
         return true;
-    }   
-
-    function deleteUser($userId){
-        if($this->authHelper->isAdmin()){
-            if($this->model->getById($userId)){ //Si existe el usuario
-                //Checkeo que el usuario no tenga ninguna mascota asociada antes de eliminar
-                if($this->petModel->getPetsByUser($userId)){
-                    $this->menuView->showError("Debe eliminar las mascotas asociadas al usuario antes.");
-                }elseif($this->model->delete($userId)){
-                    header("Location: " . BASE_URL. 'usuarios');
-                }else{
-                    $this->menuView->showError("Ocurrió un error al cambiar el permiso. Por favor comuniquese con un administrador");
-                }
-                
-            }else{
-                $this->menuView->showError("No se encontró el usuario");
-            }
-        }else{
-            $this->menuView->showError("Acceso denegado");
-
-        }
     }
-    function updateUserPermissions($userId, $userPermission){
-        if($this->authHelper->isAdmin()){
-            if($this->model->getById($userId)){ //Si existe el usuario
-                if($this->model->setUserPermission($userId, $userPermission)){
-                    header("Location: " . BASE_URL. 'usuarios');
-                }else{
-                    $this->menuView->showError("Ocurrió un error al cambiar el permiso. Por favor comuniquese con un administrador");
-                }
-            }else{
-                $this->menuView->showError("No se encontró el usuario");
-            }
-        }else{
-            $this->menuView->showError("Acceso denegado");
-
-        }
-    }
-
+    
     // Muestra la tabla usuarios
     function showAll(){
         if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
@@ -198,5 +157,45 @@ class UserController {
         }else{
             $this->menuView->showError("Acceso denegado");
         }
+    }
+
+    // Cambia los privilegios de un usuario
+    function updateUserPermissions($userId, $userPermission){
+        if($this->authHelper->isAdmin()){
+            if($this->model->getById($userId)){ //Si existe el usuario
+                if($this->model->setUserPermission($userId, $userPermission)){
+                    header("Location: " . BASE_URL. 'usuarios');
+                }else{
+                    $this->menuView->showError("Ocurrió un error al cambiar el permiso. Por favor comuniquese con un administrador.");
+                }
+            }else{
+                $this->menuView->showError("No se encontró el usuario");
+            }
+        }else{
+            $this->menuView->showError("Acceso denegado");
+        }
+    }
+
+    // Borra un usuario de la base de datos
+    function deleteUser($userId){
+        if($this->authHelper->isAdmin()){
+            if($this->model->getById($userId)){ //Si existe el usuario
+                //Checkeo que el usuario no tenga ninguna mascota asociada antes de eliminar
+                if(!($this->petModel->getAllByUser($userId))){
+                    $this->model->delete($userId);
+                    header("Location: " . BASE_URL. 'usuarios');
+                }else{
+                    $this->menuView->showError("El usuario que intenta eliminar tiene mascotas perdidas asociadas, elimine éstas primero e intente nuevamente");
+                }
+            }else{
+                $this->menuView->showError("No se encontró el usuario");
+            }
+        }else{
+            $this->menuView->showError("Acceso denegado");
+        }
+    }
+
+    function redirectHome(){
+        header("Location: " . BASE_URL);
     }
 }

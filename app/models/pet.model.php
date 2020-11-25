@@ -27,6 +27,13 @@ class PetModel {
         return $pets;
     }
 
+    // Devuelve todas las mascotas de un usuario de la base de datos
+    function getAllByUser($userId){
+        $query = $this->db->prepare('SELECT * FROM `pet` WHERE `user_id`= ?');
+        $query->execute([$userId]);
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
     // Devuelve todas las mascotas de un usuario sin encontrar de la base de datos
     function getAllNotFoundByUser($userId) {
         $query = $this->db->prepare('   SELECT p.`id`, p.`name`, a.`name` as `animalType`, c.`name` as `city`, g.`name` as `gender`, p.`date`, p.`phone_number` as `phoneNumber`, p.`photo`, p.`description`, u.`id` as `userId`, p.`found`
@@ -97,12 +104,6 @@ class PetModel {
                                         WHERE `pet`.`id` = ?');
         $result = $query->execute([$name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $id]);
         return $result;
-    }
-
-    function getPetsByUser($userId){
-        $query = $this->db->prepare('SELECT * FROM `pet` WHERE `user_id`= ?');
-        $query->execute([$userId]);
-        return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
     // Elimina la mascota de la base de datos

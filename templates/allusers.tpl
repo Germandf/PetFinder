@@ -20,7 +20,7 @@
                         <div class="text-center">
                             {if $user->permission_id == 1}
                             <a href="modificar-permiso-usuario/{$user->id}/2" class="btn bg-orange text-white mb-1 mb-md-0">Degradar</a>
-                            {else}
+                            {else if $user->permission_id == 2}
                             <a href="modificar-permiso-usuario/{$user->id}/1" class="btn bg-success text-white mb-1 mb-md-0">Promover</a>
                             {/if}
                             <a href="eliminar-usuario/{$user->id}" class="btn bg-red text-white mb-1 mb-md-0">Eliminar</a>

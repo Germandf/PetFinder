@@ -41,18 +41,6 @@ switch ($params[0]) {
         $controller = new UserController();
         $controller->logOut();
         break;
-    case 'modificar-permiso-usuario':
-        //La url debe estar formada así: 'modificar-permiso-usuario/[userId]/[permiso]'
-        $userId = isset($params[1]) ? $params[1] : null;
-        $permissionId = isset($params[2]) ? $params[2] : null;
-        $controller = new UserController();
-        $controller->updateUserPermissions($userId,$permissionId);
-        break;
-    case 'eliminar-usuario':
-        $userId = isset($params[1]) ? $params[1] : null;
-        $controller = new UserController();
-        $controller->deleteUser($userId);
-        break;  
     case 'home':
         $controller = new PetController();
         $controller->showHome();
@@ -160,6 +148,18 @@ switch ($params[0]) {
         $controller = new UserController();
         $controller->showAll();
         break;
+    case 'modificar-permiso-usuario':
+        //La url debe estar formada así: 'modificar-permiso-usuario/[userId]/[permiso]'
+        $userId = isset($params[1]) ? $params[1] : null;
+        $permissionId = isset($params[2]) ? $params[2] : null;
+        $controller = new UserController();
+        $controller->updateUserPermissions($userId,$permissionId);
+        break;
+    case 'eliminar-usuario':
+        $userId = isset($params[1]) ? $params[1] : null;
+        $controller = new UserController();
+        $controller->deleteUser($userId);
+        break;  
     default:
         header("HTTP/1.0 404 Not Found");
         $controller = new MenuController();

@@ -76,6 +76,7 @@ class PetController {
         }
     }
 
+    // Muestra formulario de agregar mascota
     function showAddPetForm($err = null, $pet = null){
         if($this->authHelper->isAuth()){
             //Obtengo los generos y las ciudades
