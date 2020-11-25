@@ -36,6 +36,10 @@ class UserModel {
         return $query->execute([$permissionId,$userId]);
     }
 
+    public function delete($userId){
+        $query = $this->db->prepare('DELETE FROM `user` WHERE `user`.`id` = ?');
+        return $query->execute([$userId]);
+    }
     public function add($email, $password, $name, $surname){
         $query = $this->db->prepare('   INSERT INTO `user` (`name`, `surname`, `email`, `password`, `permission_id`)
                                         VALUES (?, ?, ?, ?, ?);');        

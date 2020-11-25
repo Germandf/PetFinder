@@ -99,6 +99,12 @@ class PetModel {
         return $result;
     }
 
+    function getPetsByUser($userId){
+        $query = $this->db->prepare('SELECT * FROM `pet` WHERE `user_id`= ?');
+        $query->execute([$userId]);
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
+
     // Elimina la mascota de la base de datos
     function remove($id) {
         $query = $this->db->prepare('DELETE FROM pet WHERE id = ?');
