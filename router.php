@@ -151,8 +151,13 @@ switch ($params[0]) {
         $id = isset($params[1]) ? $params[1] : null;
         $controller->delete($id);
         break;
+    case 'usuarios':
+        $controller = new UserController();
+        $controller->showAll();
+        break;
     default:
         header("HTTP/1.0 404 Not Found");
-        echo('404 Page not found');
+        $controller = new MenuController();
+        $controller->showNotFound();
         break;
 }

@@ -29,4 +29,12 @@ class UserView{
         $this->menuView->showFooter();
     }
 
+    function showAll($users){
+        $this->menuView->showHeader();
+        $this->menuView->showNavbar();
+        $this->smarty->assign('users', $users);
+        $this->smarty->display('templates/allusers.tpl');
+        $this->menuView->showFooter();
+    }
+
 }

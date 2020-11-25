@@ -1,6 +1,6 @@
 <section class="container">
     <div class="row justify-content-center">
-        <h1 class="mt-5 mb-4 categoriesTitle">Categorías</h1>
+        <h1 class="mt-4 mb-2 mt-md-5 mb-md-3 lastPetsTitle">Categorías</h1>
     </div>
     <div class="row">
         <div class="col-12 col-md-6 mt-4">
