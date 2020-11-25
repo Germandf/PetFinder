@@ -4,18 +4,12 @@ include_once 'app/helpers/db.helper.php';
 
 class AnimalTypeModel {
     
-    private $db;
     private $dbHelper;
+    private $db;
 
     function __construct() {
         $this->dbHelper = new DbHelper();
         $this->db = $this->dbHelper->connect();
-    }
-
-    // Abre conexión a la base de datos
-    private function connect() {
-        $db = new PDO('mysql:host='.DB_HOST.';'.'dbname='.DB_NAME.';charset=utf8', DB_USER, DB_PASSWORD);
-        return $db;
     }
 
     // Obtengo un tipo de animal de la base de datos
