@@ -2,17 +2,20 @@
 
 include_once 'app/models/user.model.php';
 include_once 'app/views/user.view.php';
+include_once 'app/views/menu.view.php';
 include_once 'app/helpers/auth.helper.php';
 
 class UserController {
     private $model;
     private $view;
     private $authHelper;
+    private $menuView;
 
     function __construct() {
         $this->model = new UserModel();
         $this->view = new UserView();
         $this->authHelper = new AuthHelper();
+        $this->menuView = new MenuView();
     }
 
     function showLogin($err = null) {
@@ -135,6 +138,7 @@ class UserController {
         }  
     }
 
+
     // Chequea si ya existe un usuario con ese mail
     function userExistsByEmail($email){
         // Obtengo el usuario
@@ -145,5 +149,23 @@ class UserController {
         }
         // Si existe devuelvo true
         return true;
+    }   
+
+
+    function updateUserPermissions($userId, $userPermission){
+        if($this->authHelper->isAdmin()){
+            if($this->model->getById($userId)){ //Si existe el usuario
+                if($this->model->setUserPermission($userId, $userPermission)){
+                    header("Location: " . BASE_URL. 'users');
+                }else{
+                    $this->menuView->showError("Ocurrió un error al cambiar el permiso. Por favor comuniquese con un administrador");
+                }
+            }else{
+                $this->menuView->showError("No se encontró el usuario");
+            }
+        }else{
+            $this->menuView->showError("Acceso denegado");
+
+        }
     }
 }

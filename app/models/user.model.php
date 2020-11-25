@@ -18,6 +18,16 @@ class UserModel {
         $query->execute([$email]);
         return $query->fetch(PDO::FETCH_OBJ);
     }
+    // Devuelve un usuario dado un email.
+    public function getById($id) {
+        $query = $this->db->prepare('SELECT * FROM user WHERE id = ?');
+        $query->execute([$id]);
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
+    public function setUserPermission($userId, $permissionId){
+        $query = $this->db->prepare('UPDATE `user` SET `permission_id` = ? WHERE `user`.`id` = ?');
+        return $query->execute([$permissionId,$userId]);
+    }
 
     public function add($email, $password, $name, $surname){
         $query = $this->db->prepare('   INSERT INTO `user` (`name`, `surname`, `email`, `password`, `permission_id`)
