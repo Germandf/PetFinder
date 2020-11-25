@@ -14,4 +14,9 @@ class MenuController{
     function showAbout(){
         $this->view->showAbout();
     }
+
+    // Cargo la pagina notfound
+    function showNotFound(){
+        $this->view->showError("Error 404: Not Found");
+    }
 }

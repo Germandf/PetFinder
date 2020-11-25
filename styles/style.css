@@ -23,7 +23,7 @@ body, li{
 body .navbar-brand{
     font-family: '-apple-system,BlinkMacSystemFont',"Segoe UI",'Roboto';
 }
-body button, body .btn, body select, body input, .list-group, .list-group-item, p{
+body button, body .btn, body select, body input, .list-group, .list-group-item, p, th, td{
     font-family: 'VAGRoundedLtNormal';
 }
 .lastPetsTitle, .categoriesTitle, .petTitle{

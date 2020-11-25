@@ -146,4 +146,14 @@ class UserController {
         // Si existe devuelvo true
         return true;
     }
+
+    // Muestra la tabla usuarios
+    function showAll(){
+        if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
+            $users = $this->model->getAll();
+            $this->view->showAll($users);
+        }else{
+            $this->menuView->showError("Acceso denegado");
+        }
+    }
 }
