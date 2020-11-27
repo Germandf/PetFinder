@@ -9,6 +9,10 @@ let petPage = document.querySelector("#pet-page");
 if(petPage){ //Si estamos en la pagina de comentarios
     getComments();
 
+
+    let rateInput = document.querySelector('#rate');
+    let messageTextArea = document.querySelector('#message');
+    
     let urlComment = "api/comentarios"; 
     if(formComment){
         formComment.addEventListener("submit", (event)=>{
@@ -22,6 +26,8 @@ if(petPage){ //Si estamos en la pagina de comentarios
                 body: JSON.stringify(Object.fromEntries(data))
             }).then(Response=>{
                 if(Response.status = 200){
+                    rateInput.value = 1;
+                    messageTextArea.value = "";
                     getComments();
                 }
             });
@@ -40,12 +46,29 @@ if(petPage){ //Si estamos en la pagina de comentarios
             remove: function (event) {
                 event.preventDefault();
                 let dataId = event.currentTarget.getAttribute("data-id");
-                removeMessage(dataId);
+                let modalDeleteComment = $('#modalDeleteComment');
+                modalDeleteComment.modal('show'); //Muestro el modal y pido confirmación
+                
+                
+                let btnDeleteComment = document.querySelector("#btn-delete-comment");
+                
+                
+                btnDeleteComment.addEventListener('click',()=>{
+                    removeMessage(dataId); //Elimino el comentario
+                    modalDeleteComment.modal('hide'); //Oculto el modal
+                    //Elimino todos los event listener del btn de confirmación
+                    removeEventListeners('btn-delete-comment'); 
+                });
+                //removeMessage(dataId);
             }
           }
         
     });
-
+    function removeEventListeners(elementId){
+        var el = document.getElementById(elementId),
+        elClone = el.cloneNode(true);
+        el.parentNode.replaceChild(elClone, el);
+    }
     function removeMessage(idPet){
         fetch(`api/comentarios/${idPet}`,{
             method: "DELETE"

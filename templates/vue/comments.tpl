@@ -22,4 +22,24 @@
             </div>
         </div>
     </section>
+    <div id="modalDeleteComment" class="modal fade" aria-hidden="true">
+	    <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header flex-column">
+                    <div class="icon-box">
+                        <i class="fas fa-exclamation"></i>
+                    </div>						
+                    <h4 class="modal-title w-100">¿Estas seguro? </h4>	
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Realmente queres eliminar este comentario? está acción no puede ser revertida</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button"  class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btn-delete-comment" class="btn btn-danger">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {/literal}

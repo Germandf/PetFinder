@@ -31,6 +31,10 @@ class ApiCommentController {
     }
     public function add() {
         $body = $this->getData();
+        if(empty($body)){
+            return $this->view->response("Faltan datos obligatorios", 400);
+        }
+        
         $userId = $this->authHelper->getUserId();
         $petId = $body->petId;
         $message = $body->message;
