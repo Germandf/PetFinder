@@ -7,7 +7,7 @@ $router = new Router();
 
 // Armo la tabla de ruteo
 $router->addRoute('comentarios', 'GET', 'ApiCommentController', 'getAll');
-$router->addRoute('comentarios/:ID', 'GET', 'ApiCommentController', 'get');
+$router->addRoute('comentarios/:ID', 'GET', 'ApiCommentController', 'getFromPet');
 $router->addRoute('comentarios', 'POST', 'ApiCommentController', 'add');
 $router->addRoute('comentarios/:ID', 'DELETE', 'ApiCommentController', 'delete');
 

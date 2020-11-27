@@ -21,6 +21,14 @@ class ApiCommentController {
         return json_decode($this->data); 
     }
 
+    public function getFromPet($params = null){
+        //Con esta función obtenemos todos los comentarios de una mascota
+        $idPet = $params[':ID'];
+        $comments = $this->model->getFromPet($idPet);
+        if($comments){
+            $this->view->response($comments, 200);
+        }
+    }
     public function add() {
         $body = $this->getData();
         $userId = $this->authHelper->getUserId();
@@ -55,11 +63,15 @@ class ApiCommentController {
     public function delete($params = null) {
         $idComment = $params[':ID'];
         $success = $this->model->remove($idComment);
-        if ($success) {
-            $this->view->response("La tarea con el id=$idComment se borró exitosamente", 200);
-        }
-        else { 
-            $this->view->response("La tarea con el id=$idComment no existe", 404);
+        if($this->authHelper->isAdmin()){
+            if ($success) {
+                $this->view->response("La tarea con el id=$idComment se borró exitosamente", 200);
+            }
+            else { 
+                $this->view->response("La tarea con el id=$idComment no existe", 404);
+            }
+        }else{
+            $this->view->response("Acceso denegado", 403);
         }
     }
 

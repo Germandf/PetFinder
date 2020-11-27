@@ -20,11 +20,17 @@ class CommentModel {
         return $this->db->lastInsertId();
     }
 
+    function getFromPet($idPet){
+        $query = $this->db->prepare('SELECT com.id, com.message, com.rate, usr.name 
+            FROM comment AS com   INNER JOIN `user` as `usr` ON
+         `com`.`user_id` = `usr`.`id` WHERE pet_id = ?');
+        $query->execute([$idPet]);
+        return $query->fetchAll(PDO::FETCH_OBJ);
+    }
     function get($id) {
         $query = $this->db->prepare('SELECT * FROM comment WHERE id = ?');
         $query->execute([$id]);
-        $comment = $query->fetch(PDO::FETCH_OBJ);
-        return $comment;
+        return $query->fetch(PDO::FETCH_OBJ);;
     }
 
     function getAll() {
