@@ -6,6 +6,8 @@ require_once 'app/api/api.comment.controller.php';
 $router = new Router();
 
 // Armo la tabla de ruteo
+$router->addRoute('comentario/:ID', 'GET', 'ApiCommentController', 'get');
+
 $router->addRoute('comentarios', 'GET', 'ApiCommentController', 'getAll');
 $router->addRoute('comentarios/:ID', 'GET', 'ApiCommentController', 'getFromPet');
 $router->addRoute('comentarios', 'POST', 'ApiCommentController', 'add');

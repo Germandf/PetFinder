@@ -21,20 +21,47 @@ class ApiCommentController {
         return json_decode($this->data); 
     }
 
+    // Obtiene un comentario
+    public function get($params = null) {
+        $idComment = $params[':ID'];
+        $comment = $this->model->get($idComment);
+        if ($comment) {
+            $this->view->response($comment, 200);
+        }
+        else{
+            $this->view->response("El comentario con el id $idComment no existe", 404);
+        }
+    }
+
+    // Obtiene todos los comentarios
+    public function getAll() {
+        $comments = $this->model->getAll();
+        if($comments){
+            $this->view->response($comments, 200);
+        }
+        else{
+            $this->view->response("No se encontraron comentarios", 404);
+        }
+    }
+
+    // Obtiene todos los comentarios de una mascota
     public function getFromPet($params = null){
-        //Con esta función obtenemos todos los comentarios de una mascota
         $idPet = $params[':ID'];
         $comments = $this->model->getFromPet($idPet);
         if($comments){
             $this->view->response($comments, 200);
         }
+        else{
+            $this->view->response("La mascota con id $idPet no tiene comentarios o bien no existe", 404);
+        }
     }
+
+    // Agrega un comentario
     public function add() {
         $body = $this->getData();
         if(empty($body)){
             return $this->view->response("Faltan datos obligatorios", 400);
         }
-        
         $userId = $this->authHelper->getUserId();
         $petId = $body->petId;
         $message = $body->message;
@@ -59,26 +86,23 @@ class ApiCommentController {
         }
     }
 
-    public function getAll() {
-        $comments = $this->model->getAll();
-        $this->view->response($comments, 200);
-    }
-
+    // Borra un comentario
     public function delete($params = null) {
         $idComment = $params[':ID'];
         $success = $this->model->remove($idComment);
         if($this->authHelper->isAdmin()){
             if ($success) {
-                $this->view->response("La tarea con el id=$idComment se borró exitosamente", 200);
+                $this->view->response("El comentario con el id $idComment se borró exitosamente", 200);
             }
             else { 
-                $this->view->response("La tarea con el id=$idComment no existe", 404);
+                $this->view->response("El comentario con el id $idComment no existe", 404);
             }
         }else{
             $this->view->response("Acceso denegado", 403);
         }
     }
 
+    // Muestra error 404
     public function show404($params = null) {
         $this->view->response("El recurso solicitado no existe", 404);
     }
