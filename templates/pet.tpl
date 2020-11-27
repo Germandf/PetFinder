@@ -62,5 +62,6 @@
             {/if}
         </div>
     </div>
-    
 </section>
+<!-- Script para comentarios CSR -->
+<script src="js/comments.js"></script>

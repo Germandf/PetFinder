@@ -51,9 +51,6 @@ class ApiCommentController {
         if($comments){
             $this->view->response($comments, 200);
         }
-        else{
-            $this->view->response("La mascota con id $idPet no tiene comentarios o bien no existe", 404);
-        }
     }
 
     // Agrega un comentario
