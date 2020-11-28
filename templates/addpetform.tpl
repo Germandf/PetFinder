@@ -39,7 +39,7 @@
                 {/if}
             </select>
             <!-- Pet Type -->
-            <label for="inputAnimalType" class="sr-only mt-3 ">Email</label>
+            <label for="inputAnimalType" class="sr-only mt-3 ">Tipo de animal</label>
             <select id="inputAnimalType" class="d-inline form-control mt-3" required name="animalType">
                 <option value="none" selected disabled hidden>Tipo de mascota</option>
                 {if isset($pet)}
@@ -49,7 +49,6 @@
                     {else}
                     <option value="{$animalType->id}">{$animalType->name}</option>
                     {/if}
-                    
                     {/foreach}
                 {else}
                     {foreach from=$animaltypes item=animalType}
@@ -59,7 +58,7 @@
             </select>
             <!-- Gender -->
             <label for="inputGenderType" class="sr-only mt-3 ">Genero</label>
-            <select id="inputGenderType" class="d-inline form-control mt-3"  required name="genderType">
+            <select id="inputGenderType" class="d-inline form-control mt-3" required name="gender">
                 <option value="none" selected disabled hidden>Genero</option>
                 {if isset($pet)}
                     {foreach from=$genders item=gender}

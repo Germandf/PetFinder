@@ -13,11 +13,11 @@ class PetView{
         $this->menuView = new MenuView();
     }
 
-    function showHome($petCategories, $pets){
+    function showHome($petCategories, $pets, $petsToShow, $amount){
         $this->menuView->showHeader();
         $this->menuView->showNavBar();
         $this->showPetFilter($petCategories);
-        $this->showAllNotFound($pets);
+        $this->showAllNotFound($pets, $petsToShow, $amount, false);
         $this->menuView->showFooter();
     }
 
@@ -69,12 +69,12 @@ class PetView{
         $this->menuView->showFooter();
     }
 
-    function showAdminPage($petCategories, $pets = null){
+    function showAdminPage($petCategories, $pets = null, $petsToShow, $amount){
         $this->menuView->showHeader();
         $this->menuView->showNavBar();
         $this->smarty->display('templates/adminmenu.tpl');  
         $this->showAdminTables($petCategories[0], $petCategories[1]);
-        $this->showAllNotFound($pets);
+        $this->showAllNotFound($pets, $petsToShow, $amount, true);
         $this->menuView->showFooter();
     }
 
@@ -86,8 +86,11 @@ class PetView{
         $this->smarty->display('templates/petfilter.tpl');
     }
 
-    function showAllNotFound($pets){
+    function showAllNotFound($pets, $petsToShow, $amount, $isAdminPage){
         $this->smarty->assign('pets', $pets);
+        $this->smarty->assign('petsToShow', $petsToShow);
+        $this->smarty->assign('amount', $amount);
+        $this->smarty->assign('isAdminPage', $isAdminPage);
         $this->smarty->display('templates/allpetsnotfound.tpl');
     }
 
