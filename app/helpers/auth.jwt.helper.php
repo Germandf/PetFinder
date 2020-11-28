@@ -48,7 +48,7 @@ class AuthJwtHelper
         $time = time();
 
         $token = array(
-            'exp' => $time + (60 * 60 * 24 * 15), //Expira en 15 días
+            'exp' => $time + EXP_TIME,
             'data' => $data
         );
 
