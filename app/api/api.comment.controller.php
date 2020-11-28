@@ -2,18 +2,22 @@
 require_once 'app/models/comment.model.php';
 require_once 'app/api/api.view.php';
 include_once 'app/helpers/auth.helper.php';
+include_once 'app/helpers/auth.jwt.helper.php';
 
 class ApiCommentController {
 
     private $model;
     private $view;
     private $authHelper;
+    private $authJwtHelper;
 
     function __construct() {
         $this->model = new CommentModel();
         $this->view = new APIView();
         $this->authHelper = new AuthHelper();
         $this->data = file_get_contents("php://input");
+        $this->authJwtHelper = new AuthJwtHelper();
+
     }
 
     // Lee la variable asociada a la entrada estandar y la convierte en JSON
@@ -34,12 +38,16 @@ class ApiCommentController {
         if(empty($body)){
             return $this->view->response("Faltan datos obligatorios", 400);
         }
-        
         $userId = $this->authHelper->getUserId();
-        $petId = $body->petId;
-        $message = $body->message;
-        $rate = $body->rate;
-        if($this->authHelper->isAuth()){
+
+        if(empty($userId) ){
+            //No estamos mediante TOKEN
+            $userId = $this->authJwtHelper->getUser()->id;
+        }
+        $petId = isset($body->petId) ? $body->petId : null;
+        $message = isset($body->message) ? $body->message : null;
+        $rate = isset($body->rate) ? $body->rate : null;
+        if($this->authHelper->isAuth() || $this->authJwtHelper->isAuth()){
             if (empty($petId) || empty($message) || empty($rate)) {
                 $this->view->response("Faltan datos obligatorios", 400);
             }
@@ -67,7 +75,9 @@ class ApiCommentController {
     public function delete($params = null) {
         $idComment = $params[':ID'];
         $success = $this->model->remove($idComment);
-        if($this->authHelper->isAdmin()){
+        
+    
+        if($this->authHelper->isAdmin() ||  $this->authJwtHelper->isAdmin()){
             if ($success) {
                 $this->view->response("La tarea con el id=$idComment se borró exitosamente", 200);
             }

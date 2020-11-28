@@ -59,7 +59,6 @@ if(petPage){ //Si estamos en la pagina de comentarios
                     //Elimino todos los event listener del btn de confirmación
                     removeEventListeners('btn-delete-comment'); 
                 });
-                //removeMessage(dataId);
             }
           }
         
@@ -86,6 +85,7 @@ if(petPage){ //Si estamos en la pagina de comentarios
             if(response.status = 200){
                 return response.json()
             }
+            app.comments = [];
         })
         .then(comments => {
             app.comments = comments; 
