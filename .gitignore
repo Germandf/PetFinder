@@ -1,2 +1,5 @@
 images/*
 templates_c/*
+vendor/*
+composer.json
+composer.lock
