@@ -43,11 +43,13 @@ switch ($params[0]) {
         break;
     case 'home':
         $controller = new PetController();
-        $controller->showHome();
+        $startingFromAmount = isset($params[1]) ? $params[1] : 0;
+        $controller->showHome($startingFromAmount);
         break;
     case 'admin':
         $controller = new PetController();
-        $controller->showAdmin();
+        $startingFromAmount = isset($params[1]) ? $params[1] : 0;
+        $controller->showAdmin($startingFromAmount);
         break;
     case 'mis-mascotas':
         $controller = new PetController();

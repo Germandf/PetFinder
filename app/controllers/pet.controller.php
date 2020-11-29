@@ -31,11 +31,15 @@ class PetController {
         $this->fileHelper = new FileHelper();
     }
 
-    // Muestro el home
-    function showHome(){
+    // Muestro el home a partir de x cantidad de mascotas
+    function showHome($amount = 0){
+        if($amount < 0 || !is_numeric($amount)){
+            $amount = 0;
+        }
         $petCategories = $this->getPetCategories();
         $pets = $this->getAllNotFound();
-        $this->view->showHome($petCategories, $pets);
+        $petsToShow = array_slice($pets, $amount, 12);
+        $this->view->showHome($petCategories, $pets, $petsToShow, $amount);
     }
 
     // Muestro las ultimas mascotas perdidas
@@ -156,7 +160,7 @@ class PetController {
     function add($pet = null) {
         $animal_type_id = isset($_POST['animalType']) ? $_POST['animalType'] : null;
         $city_id = isset($_POST['city']) ? $_POST['city'] : null;
-        $gender_id = isset($_POST['animalType']) ? $_POST['animalType'] : null;
+        $gender_id = isset($_POST['gender']) ? $_POST['gender'] : null;
         if(isset($_FILES['photo'])){
             $photo = $_FILES['photo'];
             // Compruebo si estamos editando y no envio foto
@@ -250,11 +254,15 @@ class PetController {
     }
 
     // Cargo la pagina admin
-    function showAdmin(){
+    function showAdmin($amount = 0){
         if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
+            if($amount < 0 || !is_numeric($amount)){
+                $amount = 0;
+            }
             $petCategories = $this->getPetCategories();
             $pets = $this->getAllNotFound();
-            $this->view->showAdminPage($petCategories, $pets);
+            $petsToShow = array_slice($pets, $amount, 12);
+            $this->view->showAdminPage($petCategories, $pets, $petsToShow, $amount);
         }else{
             $this->menuView->showError("Acceso denegado");
         }
