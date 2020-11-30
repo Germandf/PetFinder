@@ -46,11 +46,11 @@
         </div>
     </div>
     <div class="row">
-        <h1> Comentarios </div>
+        <h3 class="petSubTitle mt-3 mx-4">Comentarios</h3>
         {include file="vue/comments.tpl"}
         <div class="mb-2 col-12">
             {if isset($smarty.session.ID_USER)}
-                <form id="form-new-comment" class="g-bg-secondary rounded shadow mt-2 -100 text-left p-2 u-shadow-v18 ">
+                <form id="form-new-comment" class="g-bg-secondary rounded shadow mt-2 w-100 text-left p-2 u-shadow-v18 ">
                     <p class="mt-2">Agregar nuevo comentario... </p>
                     <textarea class="w-100 p-2" type="text" id="message" name="message" maxlength="200"></textarea>
                     <p class="mt-2 mb-2">

@@ -7,7 +7,7 @@
                 <li class="list-group-item d-flex align-items-center">
                     <div class="col-6 text-left">{$city->name}</div>
                     <div class="col-6 text-right">
-                        <a href="editar-ciudad/{$city->id}" class="btn bg-orange text-white">Editar</a>
+                        <a href="editar-ciudad/{$city->id}" class="btn bg-gray text-white">Editar</a>
                         <a href="eliminar-ciudad/{$city->id}" class="btn bg-red text-white">Eliminar</a>
                     </div>
                 </li>
@@ -21,7 +21,7 @@
                 <li class="list-group-item d-flex align-items-center">
                     <div class="col-6 text-left">{$animaltype->name}</div>
                     <div class="col-6 text-right">
-                        <a href="editar-tipo-de-animal/{$animaltype->id}" class="btn bg-orange text-white">Editar</a>
+                        <a href="editar-tipo-de-animal/{$animaltype->id}" class="btn bg-gray text-white">Editar</a>
                         <a href="eliminar-tipo-de-animal/{$animaltype->id}" class="btn bg-red text-white">Eliminar</a>
                     </div>
                 </li>

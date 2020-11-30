@@ -47,7 +47,7 @@ body button, body .btn, body select, body input, .list-group, .list-group-item, 
 .nav-link{
     font-family: 'VAG-Rounded-Bold';
     letter-spacing: 1px;
-    color: #646365 !important;
+    color: white !important;
 }
 .nav-link.active{
     background-color: #CF5D28;
@@ -91,37 +91,29 @@ body .bg-red{
         margin-top: 0.21429rem !important;
     }
 }
-
 .g-height-50 {
     height: 50px;
 }
-
 .g-width-50 {
     width: 50px !important;
 }
-
 @media (min-width: 0){
     .g-pa-30 {
         padding: 2.14286rem !important;
     }
 }
-
 .g-bg-secondary {
     background-color: #fafafa !important;
 }
-
 .u-shadow-v18 {
     box-shadow: 0 5px 10px -6px rgba(0, 0, 0, 0.15);
 }
-
 .g-color-gray-dark-v4 {
     color: #777 !important;
 }
-
 .media-comment {
     margin-top:20px
 }
-
 
 /*Modal confirmation*/
 .modal-confirm {		

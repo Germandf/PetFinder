@@ -23,14 +23,15 @@ class AuthJwtHelper
         }
         return false;
     }
-    public function isAdmin(){
 
+    public function isAdmin(){
         $user = $this->getUser();
         if(!empty($user)){
             return $user->permission == 1;
         }
         return false;
     }
+    
     public function isAuth()
     {
         $bearer = $this->getBearerToken();
@@ -41,17 +42,15 @@ class AuthJwtHelper
             return true;
         }
         return false;
-    
     }
+
     public  function Login($data)
     {
         $time = time();
-
         $token = array(
             'exp' => $time + EXP_TIME,
             'data' => $data
         );
-
         return JWT::encode($token, SECRET_KEY);
     }
     

@@ -10,18 +10,18 @@
     <div class="mb-3 text-right">
         {if $amount > 0}
             {if $isAdminPage == true}
-                <a href="admin/{$amount - 12}" class="btn btn-secondary text-white"><< Anteriores</a>
-                <a href="admin" class="btn btn-secondary text-white">Portada</a>
+                <a href="admin/{$amount - 12}" class="btn bg-gray text-white"><< Anteriores</a>
+                <a href="admin" class="btn bg-gray text-white">Portada</a>
             {else}
-                <a href="home/{$amount - 12}" class="btn btn-secondary text-white"><< Anteriores</a>
-                <a href="home" class="btn btn-secondary text-white">Portada</a>
+                <a href="home/{$amount - 12}" class="btn bg-gray text-white"><< Anteriores</a>
+                <a href="home" class="btn bg-gray text-white">Portada</a>
             {/if}
         {/if}
         {if ($amount + 12) < $pets|count}
             {if $isAdminPage == true}
-                <a href="admin/{$amount + 12}" class="btn btn-secondary text-white">Siguientes >></a>
+                <a href="admin/{$amount + 12}" class="btn bg-gray text-white">Siguientes >></a>
             {else}
-                <a href="home/{$amount + 12}" class="btn btn-secondary text-white">Siguientes >></a>
+                <a href="home/{$amount + 12}" class="btn bg-gray text-white">Siguientes >></a>
             {/if}
         {/if}
     </div>
