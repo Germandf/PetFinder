@@ -24,7 +24,7 @@ class AnimalTypeController {
         if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
             $this->view->showAddNewAnimalType($err, $animalType);
         } else{
-            $this->menuView->showError("Acceso denegado");
+            $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
         }
     }
 
@@ -34,19 +34,19 @@ class AnimalTypeController {
             $name = isset($_POST['name']) ? $_POST['name'] : null;
             // Verifico campos obligatorios
             if (empty($name)) {
-                $this->showAddNewAnimalType('Faltan datos obligatorios');
+                $this->showAddNewAnimalType(DATA_MISSING);
             } else {
                 // Si estamos editando, redirige a editar con los datos actualizados
                 if($animalType != null){
                     if($this->model->animalTypeExists($name)){
-                        $this->menuView->showError("Este tipo de animal ya existe");
+                        $this->menuView->showError(ANIMAL_TYPE_EXISTS, ANIMAL_TYPE_EXISTS_MSG);
                     }else{
                         $this->model->update($name, $animalType->id);
                         header("Location: " . BASE_URL . "admin");
                     }
                 } else{ // Si no estamos editando, lo inserta y volvemos a admin
                     if($this->model->animalTypeExists($name)){
-                        $this->menuView->showError("Este tipo de animal ya existe");
+                        $this->menuView->showError(ANIMAL_TYPE_EXISTS, ANIMAL_TYPE_EXISTS_MSG);
                     }else{
                         $this->model->add($name);
                         header("Location: " . BASE_URL . "admin");
@@ -54,7 +54,7 @@ class AnimalTypeController {
                 }   
             }
         } else{
-            $this->menuView->showError("Acceso denegado");
+            $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
         }
     }
 
@@ -65,10 +65,10 @@ class AnimalTypeController {
             if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
                 $this->showAddNewAnimalType(null, $animalType);
             }else{
-                $this->menuView->showError("Acceso denegado");
+                $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
             }
         } else{
-            $this->menuView->showError("No se encontró el tipo de animal");
+            $this->menuView->showError(ANIMAL_TYPE_NOT_FOUND, ANIMAL_TYPE_NOT_FOUND_MSG);
         }
     }
 
@@ -79,10 +79,10 @@ class AnimalTypeController {
             if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
                 $this->add($animalType);
             } else{
-                $this->menuView->showError("Acceso denegado");
+                $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
             }
         } else{
-            $this->menuView->showError("No se encontró el tipo de animal");
+            $this->menuView->showError(ANIMAL_TYPE_NOT_FOUND, ANIMAL_TYPE_NOT_FOUND_MSG);
         }
     }
 
@@ -94,10 +94,10 @@ class AnimalTypeController {
                 $this->model->remove($id);
                 header("Location: " . BASE_URL . "admin");
             } else{
-                $this->menuView->showError("Acceso denegado");
+                $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
             }
         } else{
-            $this->menuView->showError("No se encontró el tipo de animal");
+            $this->menuView->showError(ANIMAL_TYPE_NOT_FOUND, ANIMAL_TYPE_NOT_FOUND_MSG);
         }
     }
 }

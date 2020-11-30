@@ -28,7 +28,7 @@
                 <p class="mx-4">Género: {$pet->gender}</p>
             </div>
             <div class="row">
-                <p class="mx-4">Fecha de extravío: {$pet->date}</p>
+                <p class="mx-4">Fecha de extravío: {$pet->date|date_format:"%e/%m/%Y"}</p>
             </div>
             <!-- Contacto -->
             <div class="row">

@@ -76,7 +76,7 @@ class PetController {
         if($pet->userId == $currentUserId || $this->authHelper->isAdmin()){
             $this->showAddPetForm(null, $pet);
         } else{
-            $this->menuView->showError("Acceso denegado");
+            $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
         }
     }
 
@@ -123,10 +123,10 @@ class PetController {
                 $petCategories = $this->getPetCategories();
                 $this->view->showByFilter($petCategories, $pets);
             } else{
-                $this->menuView->showError('No se encontraron mascotas con esos filtros');
+                $this->menuView->showError(FILTERED_PETS_NOT_FOUND, FILTERED_PETS_NOT_FOUND_MSG);
             }
         } else{
-            $this->menuView->showError('No insertó ningún dato para filtrar');
+            $this->menuView->showError(FILTERS_MISSING, FILTERS_MISSING_MSG);
         }
     }
 
@@ -137,21 +137,21 @@ class PetController {
             $this->view->show($pet);
         }
         else {
-            $this->menuView->showError('Mascota no encontrada');
+            $this->menuView->showError(PET_NOT_FOUND, PET_NOT_FOUND_MSG);
         }
     }
 
     // Actualizo la mascota con los nuevos datos
     function update($id = null){
         if($id == null){
-            $this->menuView->showError('No se encontró la mascota para editar');
+            $this->menuView->showError(PET_NOT_FOUND, PET_NOT_FOUND_MSG);
         } else{
             $pet = $this->model->get($id);
             $currentUserId = $this->authHelper->getUserId();
             if($pet->userId == $currentUserId || $this->authHelper->isAdmin()){
                 $this->add($pet);
             }else{
-                $this->menuView->showError('Acceso denegado');
+                $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
             }
         }
     }
@@ -178,7 +178,7 @@ class PetController {
         $user_id = $this->authHelper->getUserId();
         // Verifico campos obligatorios
         if (empty($name) || empty($animal_type_id) || empty($city_id) || empty($gender_id) || empty($date) || empty($phone_number) || empty($photo) || empty($user_id)) {
-            $this->showAddPetForm('Faltan datos obligatorios');
+            $this->showAddPetForm(DATA_MISSING);
             return;
         }
         // Detecto si estamos subiendo una foto
@@ -187,7 +187,7 @@ class PetController {
             $resultImageUpload = $this->fileHelper->uploadImage('photo');
             // Si no se subio
             if(!$resultImageUpload){
-                $this->showAddPetForm('Hubo un error al subir la imagen, asegúrese que la extensión de la misma sea compatible');
+                $this->showAddPetForm("Error al subir la imagen, asegúrese que la extensión sea compatible");
                 return;
             }
             // Si se subio
@@ -229,10 +229,10 @@ class PetController {
                 $this->model->remove($id);
                 header("Location: " . BASE_URL);
             }else{
-                $this->menuView->showError('Acceso denegado');
+                $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
             }
         } else{
-            $this->menuView->showError('No se encontró la mascota');
+            $this->menuView->showError(PET_NOT_FOUND, PET_NOT_FOUND_MSG);
         }
     }
 
@@ -246,10 +246,10 @@ class PetController {
                 $this->model->setFound($id);
                 header("Location: " . BASE_URL);
             }else{
-                $this->menuView->showError('Acceso denegado');
+                $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
             }
         } else{
-            $this->menuView->showError('No se encontró la mascota');
+            $this->menuView->showError(PET_NOT_FOUND, PET_NOT_FOUND_MSG);
         }
     }
 
@@ -264,7 +264,7 @@ class PetController {
             $petsToShow = array_slice($pets, $amount, 12);
             $this->view->showAdminPage($petCategories, $pets, $petsToShow, $amount);
         }else{
-            $this->menuView->showError("Acceso denegado");
+            $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
         }
     }
 }

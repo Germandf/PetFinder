@@ -17,6 +17,6 @@ class MenuController{
 
     // Cargo la pagina notfound
     function showNotFound(){
-        $this->view->showError("Error 404: Not Found");
+        $this->view->showError(NOT_FOUND, NOT_FOUND_MSG);
     }
 }

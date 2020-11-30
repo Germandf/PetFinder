@@ -24,7 +24,7 @@ class CityController {
         if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
             $this->view->showAddNewCity($err, $city);
         } else{
-            $this->menuView->showError("Acceso denegado");
+            $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
         }
     }
 
@@ -34,19 +34,19 @@ class CityController {
             $name = isset($_POST['name']) ? $_POST['name'] : null;
             // Verifico campos obligatorios
             if (empty($name)) {
-                $this->showAddNewCity('Faltan datos obligatorios');
+                $this->showAddNewCity(DATA_MISSING);
             } else {
                 // Si estamos editando, redirige a editar con los datos actualizados
                 if($city != null){
                     if($this->model->cityExists($name)){
-                        $this->menuView->showError("Esta ciudad ya existe");
+                        $this->menuView->showError(CITY_EXISTS, CITY_EXISTS_MSG);
                     }else{
                         $this->model->update($name, $city->id);
                         header("Location: " . BASE_URL . "admin");
                     }
                 } else{ // Si no estamos editando, lo inserta y volvemos a admin
                     if($this->model->cityExists($name)){
-                        $this->menuView->showError("Esta ciudad ya existe");
+                        $this->menuView->showError(CITY_EXISTS, CITY_EXISTS_MSG);
                     }else{
                         $this->model->add($name);
                         header("Location: " . BASE_URL . "admin");
@@ -54,7 +54,7 @@ class CityController {
                 }
             }
         } else{
-            $this->menuView->showError("Acceso denegado");
+            $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
         }
     }
 
@@ -65,10 +65,10 @@ class CityController {
             if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
                 $this->showAddNewCity(null, $city);
             }else{
-                $this->menuView->showError("Acceso denegado");
+                $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
             }
         } else{
-            $this->menuView->showError("No se encontró la ciudad");
+            $this->menuView->showError(CITY_NOT_FOUND, CITY_NOT_FOUND_MSG);
         }
     }
 
@@ -79,10 +79,10 @@ class CityController {
             if($this->authHelper->isAuth() && $this->authHelper->isAdmin()){
                 $this->add($city);
             } else{
-                $this->menuView->showError("Acceso denegado");
+                $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
             }
         } else{
-            $this->menuView->showError("No se encontró la ciudad");
+            $this->menuView->showError(CITY_NOT_FOUND, CITY_NOT_FOUND_MSG);
         }
     }
 
@@ -94,10 +94,10 @@ class CityController {
                 $this->model->remove($id);
                 header("Location: " . BASE_URL . "admin");
             } else{
-                $this->menuView->showError("Acceso denegado");
+                $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
             }
         } else{
-            $this->menuView->showError("No se encontró la ciudad");
+            $this->menuView->showError(CITY_NOT_FOUND, CITY_NOT_FOUND_MSG);
         }
     }
 }

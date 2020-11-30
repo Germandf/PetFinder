@@ -5,7 +5,7 @@
             <h3 class="card-title">{$pet->name}</h3>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item pl-0">Perdido en: {$pet->city}</li>
-                <li class="list-group-item pl-0">El día: {$pet->date}</li>
+                <li class="list-group-item pl-0">El día: {$pet->date|date_format:"%e/%m/%Y"}</li>
                 <li class="list-group-item pl-0">{$pet->animalType}</li>
             </ul>
             <div class="text-right">

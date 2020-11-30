@@ -53,11 +53,11 @@ class UserController {
             die();
         }
         // Seteo datos
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $email = isset($_POST['email']) ? $_POST['email'] : null;
+        $password = isset($_POST['password']) ? $_POST['password'] : null;
         // Verifico campos obligatorios
         if (empty($email) || empty($password)) {
-            $this->view->showLoginForm("Debe ingresar un email y contraseña");
+            $this->view->showLoginForm(DATA_MISSING);
             die();
         }
         // Obtengo el usuario
@@ -98,11 +98,11 @@ class UserController {
             die();
         }
         // Seteo datos
-        $name = $_POST['name'];
-        $surname = $_POST['surname'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $passwordRepeat = $_POST['passwordrepeat'];
+        $name = isset($_POST['name']) ? $_POST['name'] : null;
+        $surname = isset($_POST['surname']) ? $_POST['surname'] : null;
+        $email = isset($_POST['email']) ? $_POST['email'] : null;
+        $password = isset($_POST['password']) ? $_POST['password'] : null;
+        $passwordRepeat = isset($_POST['passwordRepeat']) ? $_POST['passwordRepeat'] : null;
         // Valido los datos
         $this->validateAddUserForm($email, $password, $passwordRepeat, $name, $surname);
         // Hasheo la password
@@ -112,7 +112,7 @@ class UserController {
             $this->loginUserByEmail($email);
         }
         else{
-            $this->view->showSignupForm('Ocurrió un error en el servidor, intente nuevamente más tarde');
+            $this->view->showSignupForm(SERVER_ERROR);
         }
     }
 
@@ -120,7 +120,7 @@ class UserController {
     function validateAddUserForm($email, $password, $passwordRepeat, $name, $surname){
         // Valido los datos
         if (empty($email) || empty($password) || empty($name) || empty($surname) || empty($passwordRepeat)) {
-            $this->view->showSignupForm('Debe completar todos los campos.');
+            $this->view->showSignupForm(DATA_MISSING);
             die();
         }
         // Si las contraseñas no son iguales
@@ -155,7 +155,7 @@ class UserController {
             $users = $this->model->getAll();
             $this->view->showAll($users);
         }else{
-            $this->menuView->showError("Acceso denegado");
+            $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
         }
     }
 
@@ -166,13 +166,13 @@ class UserController {
                 if($this->model->setUserPermission($userId, $userPermission)){
                     header("Location: " . BASE_URL. 'usuarios');
                 }else{
-                    $this->menuView->showError("Ocurrió un error al cambiar el permiso. Por favor comuniquese con un administrador.");
+                    $this->menuView->showError(SERVER_ERROR, SERVER_ERROR_MSG);
                 }
             }else{
-                $this->menuView->showError("No se encontró el usuario");
+                $this->menuView->showError(USER_NOT_FOUND, USER_NOT_FOUND_MSG);
             }
         }else{
-            $this->menuView->showError("Acceso denegado");
+            $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
         }
     }
 
@@ -188,10 +188,10 @@ class UserController {
                     $this->menuView->showError("El usuario que intenta eliminar tiene mascotas perdidas asociadas, elimine éstas primero e intente nuevamente");
                 }
             }else{
-                $this->menuView->showError("No se encontró el usuario");
+                $this->menuView->showError(USER_NOT_FOUND, USER_NOT_FOUND_MSG);
             }
         }else{
-            $this->menuView->showError("Acceso denegado");
+            $this->menuView->showError(ACCESS_DENIED, ACCESS_DENIED_MSG);
         }
     }
 

@@ -18,7 +18,7 @@
                 <input type="password" id="inputPassword" name="password" class="mt-3 form-control" placeholder="Contraseña" required="">
                 
                 <label for="inputPasswordRepeat" class="sr-only mt-3 ">Repetir contraseña</label>
-                <input type="password" id="inputPasswordRepeat" name="passwordrepeat" class="mt-3 form-control" placeholder="Repetir contraseña" required="">
+                <input type="password" id="inputPasswordRepeat" name="passwordRepeat" class="mt-3 form-control" placeholder="Repetir contraseña" required="">
                 
                 <div class="d-block text-right">
                     <button class="mt-2  text-white btn-lg bg-orange" type="submit">Registrar</button>

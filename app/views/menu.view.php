@@ -32,10 +32,11 @@ class MenuView{
         $this->showFooter();
     }
 
-    function showError($msg){
+    function showError($error, $errorMsg = ""){
         $this->showHeader();
         $this->showNavbar();
-        $this->smarty->assign('msg', $msg);
+        $this->smarty->assign('error', $error);
+        $this->smarty->assign('errorMsg', $errorMsg);
         $this->smarty->display('templates/error.tpl');
         $this->showFooter();
     }
