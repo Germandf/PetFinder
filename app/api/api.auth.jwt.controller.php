@@ -19,8 +19,6 @@ class AuthJwtController
         $this->authJwtHelper = new AuthJwtHelper();
     }
     
-   
-    
     public function signIn()
     {
         $body = $this->getData();
@@ -29,11 +27,9 @@ class AuthJwtController
         }
         $email = isset($body->email) ? $body->email : null;
         $password = isset($body->password) ? $body->password : null;
-
         if (empty($email) || empty($password)) {
             return $this->view->response("Faltan datos obligatorios", 400);
         }
-
         // Obtengo el usuario
         $user = $this->userModel->getByEmail($email);
         // Si el usuario no existe le informo que el mail es incorrecto
@@ -44,13 +40,13 @@ class AuthJwtController
         if (password_verify($password, $user->password)) {
             //Obtengo el JWT y lo devuelvo
             $token = $this->authJwtHelper->Login(json_encode(['id' => $user->id, 'name' => $user->name, 'permission' => $user->permission_id]));
-
             return $this->view->response(["token" => $token], 200);
         }
         //Si la contraseña es erronea
         return $this->view->response("Contraseña incorrecta", 401);
 
     }
+    
     // Lee la variable asociada a la entrada estandar y la convierte en JSON
     function getData()
     {

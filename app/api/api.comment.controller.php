@@ -64,7 +64,6 @@ class ApiCommentController {
             return $this->view->response("Faltan datos obligatorios", 400);
         }
         $userId = $this->authHelper->getUserId();
-
         if(empty($userId) ){
             //No estamos mediante TOKEN
             $user = $this->authJwtHelper->getUser();
@@ -100,8 +99,6 @@ class ApiCommentController {
     public function delete($params = null) {
         $idComment = $params[':ID'];
         $success = $this->model->remove($idComment);
-        
-    
         if($this->authHelper->isAdmin() ||  $this->authJwtHelper->isAdmin()){
             if ($success) {
                 $this->view->response("El comentario con el id $idComment se borró exitosamente", 200);

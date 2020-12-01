@@ -35,16 +35,26 @@ class PetView{
         $this->menuView->showNavBar();
         $this->smarty->assign('animaltypes', $petCategories[0]);
         $this->smarty->assign('cities', $petCategories[1]);
-        $this->smarty->assign('genders', $petCategories[2]);
         $this->smarty->display('templates/categories.tpl');
         $this->menuView->showFooter();
     }
+
+    function showAllNotFound($pets, $petsToShow, $amount, $isAdminPage){
+        $this->smarty->assign('pets', $pets);
+        $this->smarty->assign('petsToShow', $petsToShow);
+        $this->smarty->assign('amount', $amount);
+        $this->smarty->assign('isAdminPage', $isAdminPage);
+        $this->smarty->display('templates/allpetsnotfound.tpl');
+    }
     
-    function showByFilter($petCategories, $pets){
+    function showByFilter($petCategories, $pets, $petsToShow, $amount, $query){
         $this->menuView->showHeader();
         $this->menuView->showNavBar();
         $this->showPetFilter($petCategories);
         $this->smarty->assign('pets', $pets);
+        $this->smarty->assign('petsToShow', $petsToShow);
+        $this->smarty->assign('amount', $amount);
+        $this->smarty->assign('query', $query);
         $this->smarty->display('templates/filteredpets.tpl');
         $this->menuView->showFooter();
     }
@@ -84,14 +94,6 @@ class PetView{
         $this->smarty->assign('cities', $petCategories[1]);
         $this->smarty->assign('genders', $petCategories[2]);
         $this->smarty->display('templates/petfilter.tpl');
-    }
-
-    function showAllNotFound($pets, $petsToShow, $amount, $isAdminPage){
-        $this->smarty->assign('pets', $pets);
-        $this->smarty->assign('petsToShow', $petsToShow);
-        $this->smarty->assign('amount', $amount);
-        $this->smarty->assign('isAdminPage', $isAdminPage);
-        $this->smarty->display('templates/allpetsnotfound.tpl');
     }
 
     function showAdminTables($animaltypes, $cities){

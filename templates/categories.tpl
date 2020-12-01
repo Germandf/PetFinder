@@ -19,13 +19,5 @@
                 {/foreach}
             </ul>
         </div>
-        <div class="col-12 col-md-6 mt-4">
-            <ul class="list-group">
-                <li class="list-group-item bg-orange text-white m-0">Género</li>
-                {foreach from=$genders item=gender}
-                <li class="list-group-item">{$gender->name}</li>
-                {/foreach}
-            </ul>
-        </div>
     </div>
 </section>

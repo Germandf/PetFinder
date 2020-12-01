@@ -43,13 +43,13 @@ switch ($params[0]) {
         break;
     case 'home':
         $controller = new PetController();
-        $startingFromAmount = isset($params[1]) ? $params[1] : 0;
-        $controller->showHome($startingFromAmount);
+        $amount = isset($params[1]) ? $params[1] : 0;
+        $controller->showHome($amount);
         break;
     case 'admin':
         $controller = new PetController();
-        $startingFromAmount = isset($params[1]) ? $params[1] : 0;
-        $controller->showAdmin($startingFromAmount);
+        $amount = isset($params[1]) ? $params[1] : 0;
+        $controller->showAdmin($amount);
         break;
     case 'mis-mascotas':
         $controller = new PetController();
@@ -65,12 +65,14 @@ switch ($params[0]) {
         break;
     case 'filtrar':
         $controller = new PetController();
-        $controller->showFilterPets();
+        $amount = isset($params[1]) ? $params[1] : 0;
+        $controller->showByFilter($amount);
         break;
     case 'buscar':
-            $controller = new PetController();
-            $controller->showSearch();
-            break;
+        $controller = new PetController();
+        $amount = isset($params[1]) ? $params[1] : 0;
+        $controller->showBySearch($amount);
+        break;
     case 'ver':
         $controller = new PetController();
         $id = $params[1];

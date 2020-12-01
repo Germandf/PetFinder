@@ -194,6 +194,7 @@ ALTER TABLE `pet`
   ADD KEY `animal_type_id` (`animal_type_id`),
   ADD KEY `user_id` (`user_id`);
 ALTER TABLE `pet` ADD FULLTEXT KEY `description` (`description`);
+ALTER TABLE `pet` ADD FULLTEXT KEY `name` (`name`);
 
 --
 -- Indices de la tabla `user`
