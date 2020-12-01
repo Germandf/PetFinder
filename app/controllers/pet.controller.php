@@ -107,11 +107,12 @@ class PetController {
     // Muestro todas las mascotas que correspondan con el filtro utilizando uno o tres parametros
     function showByFilter($amount = 0){
         // Me aseguro que haya insertado al menos un dato
-        if(isset($_GET["city"]) || isset($_GET["animalType"]) || isset($_GET["gender"])){
+        if(isset($_GET["city"]) || isset($_GET["animalType"]) || isset($_GET["gender"]) || isset($_GET["search"])){
             $cityId = isset($_GET['city']) ? $_GET['city'] : null;
             $animalTypeId = isset($_GET['animalType']) ? $_GET['animalType'] : null;
             $genderId = isset($_GET['gender']) ? $_GET['gender'] : null;
-            $pets = $this->model->getByFilter($cityId, $animalTypeId, $genderId);
+            $search = isset($_GET['search']) ? $_GET['search'] : null;
+            $pets = $this->model->getByFilter($cityId, $animalTypeId, $genderId, $search);
             // Me aseguro que al menos una mascota corresponda con los datos insertados
             if (!empty($pets)){
                 if($amount < 0 || !is_numeric($amount)){
@@ -119,31 +120,13 @@ class PetController {
                 }
                 $petCategories = $this->getPetCategories();
                 $petsToShow = array_slice($pets, $amount, 12);
-                $query = http_build_query(array('city'=>$cityId, 'animalType'=>$animalTypeId, 'gender'=>$genderId));
+                $query = http_build_query(array('city'=>$cityId, 'animalType'=>$animalTypeId, 'gender'=>$genderId, 'buscar'=>$search));
                 $this->view->showByFilter($petCategories, $pets, $petsToShow, $amount, $query);
             } else{
                 $this->menuView->showError(FILTERED_PETS_NOT_FOUND, FILTERED_PETS_NOT_FOUND_MSG);
             }
         } else{
             $this->menuView->showError(FILTERS_MISSING, FILTERS_MISSING_MSG);
-        }
-    }
-    
-    // Muestro todas las mascotas que correspondan con la busqueda
-    function showBySearch($amount = 0){
-        $search = isset($_GET['buscar']) ? $_GET['buscar'] : null;
-        $pets = $this->model->getBySearch($search);
-        // Me aseguro que al menos una mascota corresponda con los datos insertados
-        if (!empty($pets)){
-            if($amount < 0 || !is_numeric($amount)){
-                $amount = 0;
-            }
-            $petCategories = $this->getPetCategories();
-            $petsToShow = array_slice($pets, $amount, 12);
-            $query = http_build_query(array('buscar'=>$search));
-            $this->view->showByFilter($petCategories, $pets, $petsToShow, $amount, $query);
-        } else{
-            $this->menuView->showError(FILTERED_PETS_NOT_FOUND, FILTERED_PETS_NOT_FOUND_MSG);
         }
     }
 

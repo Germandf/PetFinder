@@ -68,11 +68,6 @@ switch ($params[0]) {
         $amount = isset($params[1]) ? $params[1] : 0;
         $controller->showByFilter($amount);
         break;
-    case 'buscar':
-        $controller = new PetController();
-        $amount = isset($params[1]) ? $params[1] : 0;
-        $controller->showBySearch($amount);
-        break;
     case 'ver':
         $controller = new PetController();
         $id = $params[1];
