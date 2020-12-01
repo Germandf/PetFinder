@@ -18,7 +18,7 @@ class AuthJwtHelper
             return false;
         }
         $data = $this->GetData($bearer);
-        if($this->GetData($bearer)){
+        if($data){
             return json_decode($data);
         }
         return false;
@@ -55,7 +55,8 @@ class AuthJwtHelper
     }
     
     function getAuthorizationHeader()
-    {
+    {   
+        //De aca sacamos el parametro Authorization, que tiene un bearer con el JWT
         $headers = null;
         if (isset($_SERVER['Authorization'])) {
             $headers = trim($_SERVER["Authorization"]);
@@ -63,7 +64,9 @@ class AuthJwtHelper
             $headers = trim($_SERVER["HTTP_AUTHORIZATION"]);
         } elseif (function_exists('apache_request_headers')) {
             $requestHeaders = apache_request_headers();
-            $requestHeaders = array_combine(array_map('ucwords', array_keys($requestHeaders)), array_values($requestHeaders));
+            $arrayKeys = array_keys($requestHeaders);
+            $arrayValues = array_values($requestHeaders);
+            $requestHeaders = array_combine($arrayKeys,  $arrayValues );
             if (isset($requestHeaders['Authorization'])) {
                 $headers = trim($requestHeaders['Authorization']);
             }
@@ -76,7 +79,9 @@ class AuthJwtHelper
         $headers = $this->getAuthorizationHeader();
         // HEADER: Get the access token from the header
         if (!empty($headers)) {
+            //Sacamos el bearer y devolvemos el JWT
             if (preg_match('/Bearer\s(\S+)/', $headers, $matches)) {
+                //Devolvemos el JWT solo, sin el bearer
                 return $matches[1];
             }
         }

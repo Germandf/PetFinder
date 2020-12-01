@@ -43,10 +43,13 @@ class AuthJwtController
         // Si la contraseña es correcta
         if (password_verify($password, $user->password)) {
             //Obtengo el JWT y lo devuelvo
-            $token = $this->authJwtHelper->Login(json_encode(["id" => $user->id, "name" => $user->name, "permission" => $user->permission_id]));
+            $token = $this->authJwtHelper->Login(json_encode(['id' => $user->id, 'name' => $user->name, 'permission' => $user->permission_id]));
 
             return $this->view->response(["token" => $token], 200);
         }
+        //Si la contraseña es erronea
+        return $this->view->response("Contraseña incorrecta", 401);
+
     }
     // Lee la variable asociada a la entrada estandar y la convierte en JSON
     function getData()

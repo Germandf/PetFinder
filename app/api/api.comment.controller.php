@@ -67,7 +67,11 @@ class ApiCommentController {
 
         if(empty($userId) ){
             //No estamos mediante TOKEN
-            $userId = $this->authJwtHelper->getUser()->id;
+            $user = $this->authJwtHelper->getUser();
+            if(empty($user)){
+                return $this->view->response(ACCESS_DENIED, 403);
+            }
+            $userId = $user->id;
         }
         $petId = isset($body->petId) ? $body->petId : null;
         $message = isset($body->message) ? $body->message : null;
@@ -88,7 +92,7 @@ class ApiCommentController {
             }
         }
         else{
-            $this->view->response("Acceso denegado", 403);
+            $this->view->response(ACCESS_DENIED, 403);
         }
     }
 
@@ -106,7 +110,7 @@ class ApiCommentController {
                 $this->view->response("El comentario con el id $idComment no existe", 404);
             }
         }else{
-            $this->view->response("Acceso denegado", 403);
+            $this->view->response(ACCESS_DENIED, 403);
         }
     }
 
