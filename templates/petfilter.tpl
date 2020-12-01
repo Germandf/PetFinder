@@ -1,4 +1,4 @@
-<section class="container-fluid bg-orange-dark ">
+    <section class="container-fluid bg-orange-dark ">
         <form id="petFilterForm" action="filtrar" method="get" class="row">
             <!-- City -->
             <div class="col-12 col-md-auto">
@@ -32,6 +32,18 @@
             <!-- Filter -->
             <div class="col-12 col-md-auto d-flex justify-content-center mt-3 mt-md-0">
                 <button type="submit" class="text-white d-inline btn bg-orange mt-md-3 mb-3">Filtrar</button>
+            </div>
+        </form>
+    </section>
+    <section class="container-fluid bg-orange">
+        <form action="buscar" method="get" class="row">
+            <!-- City -->
+            <div class="col-12 col-md-auto">
+                <input class="d-inline  mt-3" type="text" placeholder="Buscar" id="buscar" name="buscar">
+            </div>
+            <!-- Filter -->
+            <div class="col-12 col-md-auto d-flex justify-content-center mt-3 mt-md-0">
+                <button type="submit" class="text-white d-inline btn bg-orange-dark mt-md-3 mb-3">Buscar</button>
             </div>
         </form>
     </section>

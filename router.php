@@ -67,6 +67,10 @@ switch ($params[0]) {
         $controller = new PetController();
         $controller->showFilterPets();
         break;
+    case 'buscar':
+            $controller = new PetController();
+            $controller->showSearch();
+            break;
     case 'ver':
         $controller = new PetController();
         $id = $params[1];

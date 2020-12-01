@@ -88,6 +88,19 @@ class PetModel {
         return $pets;
     }
 
+    function getBySearch($search){
+        $query = $this->db->prepare('   
+        SELECT p.`id`, p.`name`, a.`name` as `animalType`, c.`name` as `city`, g.`name` as `gender`, p.`date`, p.`phone_number` as `phoneNumber`, p.`photo`, p.`description`, u.`id` as `userId`, u.`name` as `userName`, u.`email` as `userEmail`, p.`found`, c.`id` as `cityId`, a.`id` as `animalTypeId`, g.`id` as `genderId`
+        FROM `pet` as `p`
+        INNER JOIN `animal_type` as `a` ON `p`.`animal_type_id` = `a`.`id`
+        INNER JOIN `city` as `c` ON `p`.`city_id` = `c`.`id`
+        INNER JOIN `gender` as `g` ON `p`.`gender_id` = `g`.`id`
+        INNER JOIN `user` as `u` ON `p`.`user_id` = `u`.`id`
+        WHERE MATCH (p.description) AGAINST(?)');
+        $query->execute([$search]);
+        $pets = $query->fetchAll(PDO::FETCH_OBJ);
+        return $pets;
+    }
     // Inserta la mascota en la base de datos
     function add($name, $animal_type_id, $city_id, $gender_id, $date, $phone_number, $photo, $description, $user_id) {
         $query = $this->db->prepare('   INSERT INTO pet (`name`, `animal_type_id`, `city_id`, `gender_id`, `date`, `phone_number`, `photo`, `description`, `user_id`) 

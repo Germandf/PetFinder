@@ -104,6 +104,17 @@ class PetController {
         $this->view->showCategories($petCategories);
     }
 
+    function showSearch(){
+        $search = isset($_GET['buscar']) ? $_GET['buscar'] : null;
+        $pets = $this->model->getBySearch($search);
+        // Me aseguro que al menos una mascota corresponda con los datos insertados
+        if (!empty($pets)){
+            $petCategories = $this->getPetCategories();
+            $this->view->showByFilter($petCategories, $pets);
+        } else{
+            $this->menuView->showError(FILTERED_PETS_NOT_FOUND, FILTERED_PETS_NOT_FOUND_MSG);
+        }
+    }
     // Muestro todas las mascotas que correspondan con el filtro // Filtro mascotas utilizando uno o tres parametros
     function showFilterPets(){
         // Me aseguro que haya insertado al menos un dato
