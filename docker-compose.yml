@@ -11,12 +11,15 @@ services:
     depends_on:
       - mysql
   mysql:
-    image: "mysql"
+    image: mysql
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: petfinder
   phpmyadmin:
     image: "phpmyadmin/phpmyadmin"
     environment:
