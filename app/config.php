@@ -1,10 +1,10 @@
 <?php
 
 // Settings
-define("DB_HOST", "localhost");
+define("DB_HOST", "mysql");
 define("DB_NAME", "petfinder");
 define("DB_USER", "root");
-define("DB_PASSWORD", "");
+define("DB_PASSWORD", "root");
 define("ADMIN_PERMISSION", "1");
 define("USER_PERMISSION", "2");
 define("DEBUG_MODE", true);

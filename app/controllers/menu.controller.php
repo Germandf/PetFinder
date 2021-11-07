@@ -1,13 +1,16 @@
 <?php
 
 include_once 'app/views/menu.view.php';
+include_once 'app/helpers/auth.helper.php';
 
 class MenuController{
 
     private $view;
+    private $authHelper;
 
     function __construct() {
         $this->view = new MenuView();
+        $this->authHelper = new AuthHelper();
     }
 
     // Cargo la pagina about
